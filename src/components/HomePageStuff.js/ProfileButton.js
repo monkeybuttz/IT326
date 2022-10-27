@@ -4,9 +4,9 @@ import { theme } from '../../core/theme'
 
 
 
-export default function ProfileButton({navigation, children}) {
+export default function ProfileButton({ navigation }) {
     return (
-        <TouchableOpacity style={ styles.button} onPress={()=>{}}>
+        <TouchableOpacity style={ styles.button} onPress={() => { navigation.navigate("Profile") } }>
             <>
                 <Image source={require('../../assets/profile.png')} style={styles.image} />
                 <Text style={styles.text} > Edit Profile </Text>

@@ -6,7 +6,7 @@ import { theme } from '../../core/theme'
 
 export default function MessageButton({navigation}) {
     return (
-        <TouchableOpacity style={ styles.button}>
+        <TouchableOpacity style={styles.button} onPress={() => { navigation.navigate("Inbox") } }>
             <>
                 <Image source={require('../../assets/mail.png')} style={styles.image} />
                 <Text style={styles.text} > Open Inbox</Text>
@@ -23,7 +23,7 @@ const styles = StyleSheet.create({
     },
     button: {
         marginVertical: 0,
-        paddingVertical: 0,
+        paddingVertical: 25,
         alignItems: 'center',
         flexDirection: 'column',
     },
