@@ -1,4 +1,4 @@
-package Backend;
+package Backend.Classes;
 
 public class User {
     
