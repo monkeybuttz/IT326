@@ -1,7 +1,9 @@
 export { default as StartScreen } from './StartScreen'
-export { default as LoginScreen } from './LoginScreen'
-export { default as RegisterScreen } from './RegisterScreen'
-export { default as ResetPasswordScreen } from './ResetPasswordScreen'
+export { default as LoginScreen } from './loginAndRegister/LoginScreen'
+export { default as RegisterScreen } from './loginAndRegister/RegisterScreen'
+export { default as ResetPasswordScreen } from './loginAndRegister/ResetPasswordScreen'
 export { default as VerifyEmail } from './EmailVerification/VerifyEmail'
 export { default as ResendEmail } from './EmailVerification/ResendEmail'
-
+export { default as DeleteAccount } from './DeleteAccount'
+export { default as Home } from './Home'
+export { default as PetPage } from './PetPage'

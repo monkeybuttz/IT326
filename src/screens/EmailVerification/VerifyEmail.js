@@ -13,7 +13,7 @@ export default function VerifyEmail({ navigation, accountID }) {
     const [code, setCode] = useState('');
 
     const onVerifyPressed = () => {
-
+      navigation.navigate('Home');
     }
 
   return (
@@ -24,7 +24,7 @@ export default function VerifyEmail({ navigation, accountID }) {
         label="Verification Code"
         returnKeyType="next"
         value={code}
-        onChangeText={(text) => setEmail({ value: text, error: '' })}
+        onChangeText={(text) => setCode({ value: text, error: '' })}
         autoCapitalize="none"
       />
       <Button mode="contained" onPress={onVerifyPressed}>

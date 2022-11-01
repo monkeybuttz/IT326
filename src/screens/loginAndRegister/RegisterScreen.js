@@ -1,21 +1,23 @@
 import React, { useState } from 'react'
 import { View, StyleSheet, TouchableOpacity } from 'react-native'
 import { Text } from 'react-native-paper'
-import Background from '../components/Background'
-import Logo from '../components/Logo'
-import Header from '../components/Header'
-import Button from '../components/Button'
-import TextInput from '../components/TextInput'
-import BackButton from '../components/BackButton'
-import { theme } from '../core/theme'
-import { emailValidator } from '../helpers/emailValidator'
-import { passwordValidator } from '../helpers/passwordValidator'
-import { nameValidator } from '../helpers/nameValidator'
+import Background from '../../components/Background'
+import Logo from '../../components/Logo'
+import Header from '../../components/Header'
+import Button from '../../components/Button'
+import TextInput from '../../components/TextInput'
+import BackButton from '../../components/BackButton'
+import { theme } from '../../core/theme'
+import { emailValidator } from '../../helpers/emailValidator'
+import { phoneValidator } from '../../helpers/phoneValidator'
+import { passwordValidator } from '../../helpers/passwordValidator'
+import { nameValidator } from '../../helpers/nameValidator'
 import DropDownPicker from 'react-native-dropdown-picker';
 
 
 export default function RegisterScreen({ navigation }) {
   const [name, setName] = useState({ value: '', error: '' })
+  const [phone, setPhone] = useState({ value: '', error: '' })
   const [email, setEmail] = useState({ value: '', error: '' })
   const [password, setPassword] = useState({ value: '', error: '' })
   const [type, setType] = useState({ value: '', label: '' })
@@ -25,10 +27,12 @@ export default function RegisterScreen({ navigation }) {
     const nameError = nameValidator(name.value)
     const emailError = emailValidator(email.value)
     const passwordError = passwordValidator(password.value)
-    if (emailError || passwordError || nameError) {
+    const phoneError = phoneValidator(phone.value)
+    if (emailError || passwordError || nameError || phoneError) {
       setName({ ...name, error: nameError })
       setEmail({ ...email, error: emailError })
       setPassword({ ...password, error: passwordError })
+      setPhone({...phone, error: phoneError})
       return
     }
     navigation.reset({
@@ -40,7 +44,6 @@ export default function RegisterScreen({ navigation }) {
   return (
     <Background>
       <BackButton goBack={navigation.goBack} />
-      <Logo />
       <Header>Create Account</Header>
       <DropDownPicker
         items={[
@@ -64,6 +67,18 @@ export default function RegisterScreen({ navigation }) {
         onChangeText={(text) => setName({ value: text, error: '' })}
         error={!!name.error}
         errorText={name.error}
+      />
+      <TextInput
+        label="Phone Number"
+        returnKeyType="next"
+        value={phone.value}
+        onChangeText={(text) => setPhone({ value: text, error: '' })}
+        error={!!phone.error}
+        errorText={phone.error}
+
+        autoCompleteType="phone"
+        textContentType="phoneNumber"
+        keyboardType="phone-number"
       />
       <TextInput
         label="Email"

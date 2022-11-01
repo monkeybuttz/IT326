@@ -27,7 +27,7 @@ export default function ResendEmail({ navigation, accountID }) {
 
   return (
     <Background>
-      <BackButton goBack={navigation.navigate('Login')} />
+      <BackButton goBack={navigation.navigate('LoginScreen')} />
       <Logo />
         <TextInput
             label="Email"
