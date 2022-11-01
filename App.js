@@ -12,7 +12,7 @@ import {
   ResendEmail,
   DeleteAccount,
   Home,
-  PetPage
+  PetsPage
 } from './src/screens'
 
 const Stack = createStackNavigator()
@@ -38,7 +38,7 @@ export default function App() {
             name="ResetPasswordScreen"
             component={ResetPasswordScreen}
           />
-          <Stack.Screen name="PetPage" component={PetPage} />
+          <Stack.Screen name="PetsPage" component={PetsPage} />
         </Stack.Navigator>
       </NavigationContainer>
     </Provider>

@@ -8,7 +8,7 @@ export default function PetButton({navigation}) {
     return (
         <TouchableOpacity style={ styles.button}>
             <>
-                <Image source={require('../../assets/pets.png')} style={styles.image} onPress={() => { navigation.navigate("Pets") } }/>
+                <Image source={require('../../assets/pets.png')} style={styles.image} onPress={() => { navigation.navigate("PetsPage") } }/>
                 <Text style={styles.text} > View Pets </Text>
             </>
         </TouchableOpacity>
