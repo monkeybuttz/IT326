@@ -1,15 +1,31 @@
 package com.petcare.backend.user;
 
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.Table;
+
+@Entity
+@Table
 public class User {
-    private Long id;
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column
+    private int id;
+    @Column
     private String name;
+    @Column
     private String email;
+    @Column
     private String pwd;
+    @Column
     private Integer phone;
 
     public User() {}
 
-    public User(Long id, String name, String email, String pwd, Integer phone) {
+    public User(int id, String name, String email, String pwd, Integer phone) {
         this.id = id;
         this.name = name;
         this.email = email;
@@ -25,11 +41,11 @@ public class User {
     }
 
 
-    public Long getId() {
+    public int getId() {
         return this.id;
     }
 
-    public void setId(Long id) {
+    public void setId(int id) {
         this.id = id;
     }
 
