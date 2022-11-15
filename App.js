@@ -12,7 +12,9 @@ import {
   ResendEmail,
   DeleteAccount,
   Home,
-  PetsPage
+  PetsPage,
+  EditProfile,
+  Inbox,
 } from './src/screens'
 
 const Stack = createStackNavigator()
@@ -34,11 +36,13 @@ export default function App() {
           <Stack.Screen name="RegisterScreen" component={RegisterScreen} />
           <Stack.Screen name="VerifyEmail" component={VerifyEmail} />
           <Stack.Screen name="ResendEmail" component={ResendEmail} />
+          <Stack.Screen name="Profile" component={EditProfile} />
+          <Stack.Screen name="PetsPage" component={PetsPage} />
+          <Stack.Screen name="Inbox" component={Inbox} />
           <Stack.Screen
             name="ResetPasswordScreen"
             component={ResetPasswordScreen}
           />
-          <Stack.Screen name="PetsPage" component={PetsPage} />
         </Stack.Navigator>
       </NavigationContainer>
     </Provider>
