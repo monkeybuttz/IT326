@@ -9,3 +9,9 @@ export { default as Home } from './Home'
 export { default as PetsPage } from './Pets/PetsPage'
 export { default as EditProfile } from './Profile/EditProfile'
 export { default as Inbox } from './Inbox/Inbox'
+export { default as Pet } from './Pets/Pet'
+export { default as NewPet } from './Pets/NewPet'
+export { default as NewAppointment } from './Pets/Appointments/NewAppointment'
+export { default as Documents } from './Pets/Documents'
+
+

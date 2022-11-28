@@ -13,23 +13,20 @@ import { passwordValidator } from '../../helpers/passwordValidator'
 import { nameValidator } from '../../helpers/nameValidator'
 
 
-export default function EditProfile({ navigation }) {
+export default function NewMessage({ navigation }) {
   const [name, setName] = useState({ value: '', error: '' })
-  const [phone, setPhone] = useState({ value: '', error: '' })
-  const [email, setEmail] = useState({ value: '', error: '' })
-  const [password, setPassword] = useState({ value: '', error: '' })
+    const [subject, setSubject] = useState({ value: '', error: '' })
+    const [content, setContent] = useState({ value: '', error: '' })
 
 
-  const onSignUpPressed = () => {
+  const onSendPressed = () => {
     const nameError = nameValidator(name.value)
-    const emailError = emailValidator(email.value)
-    const passwordError = passwordValidator(password.value)
-    const phoneError = phoneValidator(phone.value)
-    if (emailError || passwordError || nameError || phoneError) {
+    const subjectError = nameValidator(subject.value)
+    const contentError = nameValidator(content.value)
+    if (contentError || subjectError || nameError) {
       setName({ ...name, error: nameError })
-      setEmail({ ...email, error: emailError })
-      setPassword({ ...password, error: passwordError })
-      setPhone({...phone, error: phoneError})
+      setSubject({ ...subject, error: subjectError })
+      setContent({ ...content, error: contentError })
       return
     }
     navigation.reset({
@@ -44,7 +41,7 @@ export default function EditProfile({ navigation }) {
           <BackButton goBack={navigation.goBack} />
       <Header>My Information</Header>
       <TextInput
-        label="Name"
+        label="To"
         returnKeyType="next"
         value={name.value}
         onChangeText={(text) => setName({ value: text, error: '' })}
@@ -52,32 +49,24 @@ export default function EditProfile({ navigation }) {
         errorText={name.error}
       />
       <TextInput
-        label="Phone Number"
+        label="subject"
         returnKeyType="next"
-        value={phone.value}
-        onChangeText={(text) => setPhone({ value: text, error: '' })}
-        error={!!phone.error}
-        errorText={phone.error}
-
-        autoCompleteType="phone"
-        textContentType="phoneNumber"
-        keyboardType="phone-number"
+        value={subject.value}
+        onChangeText={(text) => setSubject({ value: text, error: '' })}
+        error={!!subject.error}
+        errorText={subject.error}
       />
       <TextInput
-        label="Email"
+        label="Message"
         returnKeyType="next"
-        value={email.value}
-        onChangeText={(text) => setEmail({ value: text, error: '' })}
-        error={!!email.error}
-        errorText={email.error}
-        autoCapitalize="none"
-        autoCompleteType="email"
-        textContentType="emailAddress"
-        keyboardType="email-address"
-          />
+        value={content.value}
+        onChangeText={(text) => setSubject({ value: text, error: '' })}
+        error={!!content.error}
+        errorText={content.error}
+      />
       <Button
-        mode="contained"
-        onPress={onSignUpPressed}
+        mode="send"
+        onPress={onSendPressed}
         style={{ marginTop: 24, color: theme.colors.secondary }}
       >
         Update Account

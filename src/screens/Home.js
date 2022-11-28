@@ -8,13 +8,12 @@ import PetButton from '../components/HomePageStuff.js/PetButton'
 import ProfileButton from '../components/HomePageStuff.js/ProfileButton'
 import MessageButton from '../components/HomePageStuff.js/MessageButton'
 
-export default function Home({ navigation, accountID }) {
+export default function Home({ navigation }) {
 
-  const [name, setName] = useState("Braydon")
   const style = {
     header: {
       position: 'absolute',
-      top: 30,
+      top: 55,
       left: 4,
       color: theme.colors.primary,
       fontWeight: 'bold',
@@ -26,7 +25,7 @@ export default function Home({ navigation, accountID }) {
   return (
     <Background>
       <SettingsButton />
-      <Text style={style.header}>Hello {name}</Text>
+      <Text style={style.header}>Welcome Back</Text>
       <Logo />
       <View style={{
         flexDirection: "row",
