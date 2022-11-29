@@ -9,19 +9,18 @@ public class GroomingAppointment {
     String date;
     int groomerId;
     int petId;
-    int ownerId;
     Blob pic;
 
     public GroomingAppointment() {}
 
 
-    public GroomingAppointment(int aptId, String notes, String location, String date, int petId, int ownerId) {
+    public GroomingAppointment(int aptId, String notes, String location, String date, int petId, int groomerId) {
         this.aptId = aptId;
         this.notes = notes;
         this.location = location;
         this.date = date;
         this.petId = petId;
-        this.ownerId = ownerId;
+        this.groomerId = groomerId;
     }
 
     public int getAptId() {
@@ -52,7 +51,7 @@ public class GroomingAppointment {
         return this.date;
     }
 
-    public void setDate(String date) {
+    public void setAptDate(String date) {
         this.date = date;
     }
 
@@ -72,14 +71,6 @@ public class GroomingAppointment {
         this.petId = petId;
     }
 
-    public int getOwnerId() {
-        return this.ownerId;
-    }
-
-    public void setOwnerId(int ownerId) {
-        this.ownerId = ownerId;
-    }
-
     public Blob getPic() {
         return this.pic;
     }
@@ -96,7 +87,6 @@ public class GroomingAppointment {
             ", date='" + getDate() + "'" +
             ", groomerId='" + getGroomerId() + "'" +
             ", petId='" + getPetId() + "'" +
-            ", ownerId='" + getOwnerId() + "'" +
             "}";
     }
     
