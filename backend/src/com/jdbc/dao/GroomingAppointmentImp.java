@@ -15,14 +15,13 @@ public class GroomingAppointmentImp implements GroomingAppointmentDAO {
 
     @Override
     public int add(GroomingAppointment apt) throws SQLException {
-        String query = "INSERT into groomingappointment(groomerID, petID, ownerID, date, location, notes) VALUES (?, ?, ?, ?, ?, ?)";
+        String query = "INSERT into groomingappointment(groomerID, petID, date, location, notes) VALUES (?, ?, ?, ?, ?)";
         PreparedStatement ps = con.prepareStatement(query);
         ps.setInt(1, apt.getGroomerId());
         ps.setInt(2, apt.getPetId());
-        ps.setInt(3, apt.getOwnerId());
-        ps.setString(4, apt.getDate());
-        ps.setString(5, apt.getLocation());
-        ps.setString(6, apt.getNotes());
+        ps.setString(3, apt.getDate());
+        ps.setString(4, apt.getLocation());
+        ps.setString(5, apt.getNotes());
         int n = ps.executeUpdate();
         return n;
     }
@@ -48,8 +47,7 @@ public class GroomingAppointmentImp implements GroomingAppointmentDAO {
             gapt.setAptId(rs.getInt("aptID"));
             gapt.setGroomerId(rs.getInt("groomerID"));
             gapt.setPetId(rs.getInt("petID"));
-            gapt.setOwnerId(rs.getInt("ownerID"));
-            gapt.setDate(rs.getString("date"));
+            gapt.setAptDate(rs.getString("date"));
             gapt.setLocation(rs.getString("location"));
             gapt.setNotes(rs.getString("notes"));
         }
@@ -73,8 +71,7 @@ public class GroomingAppointmentImp implements GroomingAppointmentDAO {
             gapt.setAptId(rs.getInt("aptID"));
             gapt.setGroomerId(rs.getInt("groomerID"));
             gapt.setPetId(rs.getInt("petID"));
-            gapt.setOwnerId(rs.getInt("ownerID"));
-            gapt.setDate(rs.getString("date"));
+            gapt.setAptDate(rs.getString("date"));
             gapt.setLocation(rs.getString("location"));
             gapt.setNotes(rs.getString("notes"));
             ls.add(gapt);

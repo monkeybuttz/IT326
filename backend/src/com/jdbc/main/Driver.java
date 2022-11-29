@@ -11,9 +11,8 @@ public class Driver {
         GroomingAppointment groom = new GroomingAppointment();
         groom.setGroomerId(001);
         groom.setPetId(002);
-        groom.setOwnerId(005);
         groom.setLocation("Grayslake, IL");
-        groom.setDate("5/16/2022");
+        groom.setAptDate("5/16/2022");
         groom.setNotes("Crazy ahh dawg");
         GroomingAppointmentImp aptDAO = new GroomingAppointmentImp();
         aptDAO.add(groom);
