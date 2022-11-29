@@ -1,5 +1,0 @@
-com/petcare/backend/BackendApplication.class
-com/petcare/backend/user/UserService.class
-com/petcare/backend/user/User.class
-com/petcare/backend/user/UserRepository.class
-com/petcare/backend/user/UserController.class
