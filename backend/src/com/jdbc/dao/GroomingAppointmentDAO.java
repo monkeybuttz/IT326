@@ -3,6 +3,8 @@ package com.jdbc.dao;
 import java.sql.SQLException;
 import java.util.List;
 
+import org.junit.Test;
+
 import com.jdbc.model.GroomingAppointment;
 
 public interface GroomingAppointmentDAO {
