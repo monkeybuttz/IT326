@@ -21,6 +21,11 @@ public class UserController {
         this.userService = userService;
     }
 
+    @GetMapping("/")
+    private String getHi() {
+        return "hello";
+    }
+
     @GetMapping("/user")
     private List<User> getUsers() {
         return userService.getUsers();
