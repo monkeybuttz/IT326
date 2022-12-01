@@ -1,4 +1,4 @@
-package com.jdbc.model;
+package model;
 
 import java.sql.Blob;
 

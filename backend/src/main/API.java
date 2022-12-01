@@ -1,6 +1,6 @@
-package com.jdbc.main;
+package main;
 
-import com.jdbc.model.GroomingAppointment;
+import model.GroomingAppointment;
 import com.sun.net.httpserver.HttpServer;
 
 import java.io.IOException;
