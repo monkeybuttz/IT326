@@ -11,6 +11,7 @@ import { emailValidator } from '../../helpers/emailValidator'
 import { phoneValidator } from '../../helpers/phoneValidator'
 import { passwordValidator } from '../../helpers/passwordValidator'
 import { nameValidator } from '../../helpers/nameValidator'
+import { endpoint } from '../../../App'
 
 
 export default function EditProfile({ navigation }) {
@@ -20,7 +21,9 @@ export default function EditProfile({ navigation }) {
   const [password, setPassword] = useState({ value: '', error: '' })
 
 
-  const onSignUpPressed = () => {
+
+
+  const onSignUpPressed = async () => {
     const nameError = nameValidator(name.value)
     const emailError = emailValidator(email.value)
     const passwordError = passwordValidator(password.value)
@@ -29,14 +32,12 @@ export default function EditProfile({ navigation }) {
       setName({ ...name, error: nameError })
       setEmail({ ...email, error: emailError })
       setPassword({ ...password, error: passwordError })
-      setPhone({...phone, error: phoneError})
+      setPhone({ ...phone, error: phoneError })
+      fetch(`${endpoint}/user`, { method: 'POST', body: {name: name.value, email: email.value, password: password.value, phone: phone.value}
+      }).then(() => { navigation.navigate('Home')}).catch()
+      }
       return
     }
-    navigation.reset({
-      index: 0,
-      routes: [{ name: 'VerifyEmail' }],
-    })
-  }
     
 
   return (

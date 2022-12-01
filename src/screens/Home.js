@@ -10,17 +10,6 @@ import MessageButton from '../components/HomePageStuff.js/MessageButton'
 
 export default function Home({ navigation }) {
 
-  const [greeting, setGreeting] = useState('');
-
-  useEffect(() => {
-    fetch("http://localhost:8080/api/greeting", {
-      method: "GET",
-      parameters: JSON.stringify({greeting: "goodbye"}),
-      body: JSON.stringify({greeting: "goodbye"}),
-    }).then(async res => {
-    setGreeting(await res.text())
- console.warn('Reached:', greeting)})},[])
-
   const style = {
     header: {
       position: 'absolute',
@@ -36,7 +25,7 @@ export default function Home({ navigation }) {
   return (
     <Background>
       <SettingsButton />
-      <Text style={style.header}>{greeting}Welcome Back</Text>
+      <Text style={style.header}>Welcome Back</Text>
       <Logo />
       <View style={{
         flexDirection: "row",
