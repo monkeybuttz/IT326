@@ -15,7 +15,7 @@ public class GroomingAppointmentImp implements GroomingAppointmentDAO {
 
     @Override
     public int add(GroomingAppointment apt) throws SQLException {
-        String query = "INSERT into groomingappointment(groomerID, petID, date, location, notes) VALUES (?, ?, ?, ?, ?)";
+        String query = "insert into groomingappointment(groomerID, petID, date, location, notes) VALUES (?, ?, ?, ?, ?)";
         PreparedStatement ps = con.prepareStatement(query);
         ps.setInt(1, apt.getGroomerId());
         ps.setInt(2, apt.getPetId());
