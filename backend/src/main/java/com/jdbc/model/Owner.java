@@ -1,8 +1,5 @@
 package com.jdbc.model;
 
-import java.util.List;
-
-import com.jdbc.model.Message;
 import com.jdbc.util.JDBCConnection;
 
 import java.sql.Connection;
@@ -13,47 +10,33 @@ public class Owner extends User {
 
     static Connection con = JDBCConnection.getConnection();
 
-    public Owner(int id, String name, String username, String email, String password, long phoneNumber,
-            String emailAuthenticateString, List<Message> conversation) {
-        super(id, name, username, email, password, phoneNumber, email, conversation);
+    public Owner(int id, String name, String username, String password, String email, int phuneNumber,
+            String string, boolean isGroomer) {
+        super(id, name, username, password, email, phuneNumber, isGroomer);
     }
 
     @Override
-    public int createAccount(User theUser) throws SQLException {
-        String query = "INSERT into owner(ownerID, name, username, password, email, phoneNUM) VALUES (?, ?, ?, ?, ?, ?)";
+    public int createAccount() throws SQLException {
+        String query = "INSERT into owner(ownerID, name, username, password, email, phoneNUM, isGroomer) VALUES (?, ?, ?, ?, ?, ?, ?)";
         PreparedStatement ps = con.prepareStatement(query);
-        ps.setInt(1, theUser.getOwnerID());
-        ps.setString(2, theUser.getName());
-        ps.setString(3, theUser.getUsername());
-        ps.setString(4, theUser.getPassword());
-        ps.setString(5, theUser.getEmail());
-        ps.setLong(6, theUser.getPhoneNumber());
+        ps.setInt(1, this.getOwnerID());
+        ps.setString(2, this.getName());
+        ps.setString(3, this.getUsername());
+        ps.setString(4, this.getPassword());
+        ps.setString(5, this.getEmail());
+        ps.setLong(6, this.getPhoneNumber());
+        ps.setBoolean(7, this.getIsGroomer());
         ps.executeUpdate();
         return 0;
     }
 
     @Override
-    public boolean updateAccount(User theUser) throws SQLException {
+    public boolean updateAccount(User newUserInfo) throws SQLException {
         return false;
     }
 
     @Override
-    public boolean deleteAccount(User theUser) throws SQLException {
-        return false;
-    }
-
-    @Override
-    public boolean sendMessage() {
-        return false;
-    }
-
-    @Override
-    public List<Message> loadMessages() {
-        return null;
-    }
-
-    @Override
-    public boolean authenticateEmail(String email) {
+    public boolean deleteAccount() throws SQLException {
         return false;
     }
 
@@ -97,13 +80,13 @@ public class Owner extends User {
     }
 
     @Override
-    public String getEmailAuth() {
+    public String getName() {
         return null;
     }
 
     @Override
-    public String getName() {
-        return null;
+    public boolean getIsGroomer() {
+        return false;
     }
 
 }

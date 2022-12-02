@@ -1,49 +1,38 @@
 package com.jdbc.model;
 
-import java.util.List;
-
-import com.jdbc.model.Message;
 import com.jdbc.util.JDBCConnection;
 
 import java.sql.Connection;
 import java.sql.SQLException;
 
 public abstract class User {
-    
+
     public int id;
     public String name;
     public String username;
     public String email;
     public String password;
     public long phoneNumber;
-    public String emailAuthenticate;
-    public List <Message> conversation;
+    public boolean isGroomerr;
 
     static Connection con = JDBCConnection.getConnection();
 
-    public User(int id, String name, String username, String email, String password, long phoneNumber,
-            String emailAuthenticateString, List<Message> conversation) {
+    public User(int id, String name, String username, String password, String email, long phoneNumber,
+            boolean isGroomerr) {
         this.id = id;
         this.name = name;
         this.username = username;
         this.email = email;
         this.password = password;
         this.phoneNumber = phoneNumber;
-        this.emailAuthenticate = emailAuthenticateString;
-        this.conversation = conversation;
+        this.isGroomerr = isGroomerr;
     }
 
-    public abstract int createAccount(User theUser) throws SQLException;
+    public abstract int createAccount() throws SQLException;
 
-    public abstract boolean updateAccount(User theUser) throws SQLException;
+    public abstract boolean updateAccount(User newInfoUser) throws SQLException;
 
-    public abstract boolean deleteAccount(User theUser) throws SQLException;
-
-    public abstract boolean sendMessage() throws SQLException;
-
-    public abstract List<Message> loadMessages() throws SQLException;
-
-    public abstract boolean authenticateEmail(String email) throws SQLException;
+    public abstract boolean deleteAccount() throws SQLException;
 
     public abstract void sendPasswordReset(String email) throws SQLException;
 
@@ -63,6 +52,6 @@ public abstract class User {
 
     public abstract long getPhoneNumber();
 
-    public abstract String getEmailAuth();
+    public abstract boolean getIsGroomer();
 
 }
