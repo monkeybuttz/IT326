@@ -1,4 +1,4 @@
-package backend.src.test;
+
 
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -9,7 +9,7 @@ import org.junit.jupiter.api.Test;
 import com.jdbc.model.Message;
 import com.jdbc.model.Owner;
 
-public class Testing{
+public class Testings{
 
     @Test
     public void testingCases() throws SQLException {

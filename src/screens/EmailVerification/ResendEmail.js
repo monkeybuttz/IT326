@@ -8,6 +8,7 @@ import TextInput from '../../components/TextInput'
 import BackButton from '../../components/BackButton'
 import { emailValidator } from '../../helpers/emailValidator'
 import { theme } from '../../core/theme'
+import {endpoint} from '../../../App'
 
 export default function ResendEmail({ navigation, accountID }) {
 
@@ -19,6 +20,7 @@ export default function ResendEmail({ navigation, accountID }) {
             setEmail({ ...email, error: emailError })
             return
         }
+        fetch(`${endpoint}/email`)
         navigation.reset({
             index: 0,
             routes: [{ name: 'VerifyEmail' }],

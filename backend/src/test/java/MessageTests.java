@@ -1,4 +1,4 @@
-package backend.src.test;
+
 
 import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -9,7 +9,7 @@ import com.jdbc.model.*;
  * Tsts the MessageTest.java Program
  * Name: Grant Lane
  */
-public class MessageTest 
+public class MessageTests 
 {
     @Test
     //Testing creating an empty Message
