@@ -1,10 +1,9 @@
 package com.jdbc.classes;
 
-<<<<<<< Updated upstream
-public class groomer extends user{
-=======
 import java.util.List;
-import com.jdbc.util.JDBCConnection;
+
+import util.JDBCConnection;
+
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -18,7 +17,6 @@ public class groomer extends user {
             String emailAuthenticateString, List<Message> conversation) {
         super(id, username, email, password, emailAuthenticateString, phoneNumber, emailAuthenticateString, conversation);
     }
->>>>>>> Stashed changes
 
     @Override
     public int createAccount(user theUser) {
@@ -45,7 +43,7 @@ public class groomer extends user {
     }
 
     @Override
-    public Message loadMessages() {
+    public List<Message> loadMessages() {
         // TODO Auto-generated method stub
         return null;
     }
@@ -61,9 +59,6 @@ public class groomer extends user {
         // TODO Auto-generated method stub
 
     }
-<<<<<<< Updated upstream
-    
-=======
 
     @Override
     public void resetPassword() {
@@ -119,5 +114,4 @@ public class groomer extends user {
         return null;
     }
 
->>>>>>> Stashed changes
 }

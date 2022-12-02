@@ -1,7 +1,9 @@
 package com.jdbc.classes;
 
 import java.util.List;
-import com.jdbc.util.JDBCConnection;
+
+import util.JDBCConnection;
+
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
@@ -16,7 +18,7 @@ public class owner extends user {
     }
 
     @Override
-    public int createAccount(user theUser)throws SQLException{
+    public int createAccount(user theUser) throws SQLException {
         String query = "INSERT into owner(ownerID, name, username, password, email, phoneNUM) VALUES (?, ?, ?, ?, ?, ?)";
         PreparedStatement ps = con.prepareStatement(query);
         ps.setInt(1, theUser.getOwnerID());
@@ -58,7 +60,6 @@ public class owner extends user {
     public void sendPasswordReset(String email) {
 
     }
-    
 
     @Override
     public void resetPassword() {

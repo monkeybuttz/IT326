@@ -12,7 +12,7 @@ import com.jdbc.classes.owner;
 public class testing {
 
     @Test
-    public void testingCases() {
+    public void testingCases() throws SQLException {
         Message words = new Message("lets try this");
         List<Message> message = new ArrayList<Message>();
         message.add(words);

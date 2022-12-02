@@ -1,38 +1,22 @@
 package com.jdbc.classes; 
 import java.util.List;
-<<<<<<< Updated upstream
-=======
-import com.jdbc.util.JDBCConnection;
+
+import util.JDBCConnection;
+
 import java.sql.Connection;
 import java.sql.SQLException;
->>>>>>> Stashed changes
 
 public abstract class user {
     
     public int id;
     public String name;
     public String username;
-<<<<<<< Updated upstream
-    private String email; 
-    private String password;
-    public int phoneNumber;
-=======
     public String email;
     public String password;
     public long phoneNumber;
->>>>>>> Stashed changes
     public String emailAuthenticate;
     public List <Message> conversation;
 
-<<<<<<< Updated upstream
-    public abstract int createAccount();
-    public abstract boolean updateAccount();
-    public abstract boolean deleteAccount();
-    public abstract boolean sendMessage();
-    public abstract Message loadMessages();
-    public abstract boolean authenticateEmail(String email);
-    public abstract void sendPasswordReset(String email);
-=======
     static Connection con = JDBCConnection.getConnection();
 
     public user(int id, String name, String username, String email, String password, long phoneNumber,
@@ -64,7 +48,6 @@ public abstract class user {
     public abstract void resetPassword() throws SQLException;
 
     public abstract String toString();
->>>>>>> Stashed changes
 
     public abstract int getOwnerID();
 
