@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { View, StyleSheet, TouchableOpacity } from 'react-native'
 import { Text } from 'react-native-paper'
 import Background from '../../components/Background'
@@ -11,18 +11,23 @@ import { emailValidator } from '../../helpers/emailValidator'
 import { phoneValidator } from '../../helpers/phoneValidator'
 import { passwordValidator } from '../../helpers/passwordValidator'
 import { nameValidator } from '../../helpers/nameValidator'
-import DropDownPicker from 'react-native-dropdown-picker';
+import { endpoint } from '../../../App'
 
 
-export default function RegisterScreen({ navigation }) {
+export default function EditProfile({ navigation }) {
+
+  const id = 2;
+
   const [name, setName] = useState({ value: '', error: '' })
   const [phone, setPhone] = useState({ value: '', error: '' })
   const [email, setEmail] = useState({ value: '', error: '' })
   const [password, setPassword] = useState({ value: '', error: '' })
-  const [type, setType] = useState({ value: '', label: '' })
 
+  useEffect(() => { fetch(`${endpoint}/user/${id}`, { method: 'POST', body: {name: name.value, email: email.value, password: password.value, phone: phone.value}
+      }).then(() => { navigation.navigate('Home')}).catch()
+  }, [])
 
-  const onSignUpPressed = () => {
+  const onSignUpPressed = async () => {
     const nameError = nameValidator(name.value)
     const emailError = emailValidator(email.value)
     const passwordError = passwordValidator(password.value)
@@ -31,36 +36,18 @@ export default function RegisterScreen({ navigation }) {
       setName({ ...name, error: nameError })
       setEmail({ ...email, error: emailError })
       setPassword({ ...password, error: passwordError })
-      setPhone({...phone, error: phoneError})
+      setPhone({ ...phone, error: phoneError })
+      fetch(`${endpoint}/user/${id}`, { method: 'POST', body: {name: name.value, email: email.value, password: password.value, phone: phone.value}
+      }).then(() => { navigation.navigate('Home')}).catch()
+      }
       return
     }
-    fetch('/user',{ method: 'POST', body: {name: name.value, email: email.value, password: password.value, phone: phone.value, type: type.value}
-      })
-    navigation.reset({
-      index: 0,
-      routes: [{ name: 'Home' }],
-    })
-  }
+    
 
   return (
     <Background>
-      <BackButton goBack={navigation.goBack} />
-      <Header>Create Account</Header>
-      <DropDownPicker
-        items={[
-            {label: 'Groomer', value: 1},
-            {label: 'Pet Parent', value: 2},
-        ]}
-        value={type}
-        defaultIndex={2}
-        style={{paddingVertical: 18}}
-        containerStyle={{
-          height: 70,
-          marginTop: 2,
-        }}
-        placeholder="Are you a Pet Parent or Groomer?"
-        onChangeItem={item => setType(item)}
-      />
+          <BackButton goBack={navigation.goBack} />
+      <Header>My Information</Header>
       <TextInput
         label="Name"
         returnKeyType="next"
@@ -92,27 +79,18 @@ export default function RegisterScreen({ navigation }) {
         autoCompleteType="email"
         textContentType="emailAddress"
         keyboardType="email-address"
-      />
-      <TextInput
-        label="Password"
-        returnKeyType="done"
-        value={password.value}
-        onChangeText={(text) => setPassword({ value: text, error: '' })}
-        error={!!password.error}
-        errorText={password.error}
-        secureTextEntry
-      />
+          />
       <Button
         mode="contained"
         onPress={onSignUpPressed}
-        style={{ marginTop: 24 }}
+        style={{ marginTop: 24, color: theme.colors.secondary }}
       >
-        Sign Up
+        Update Account
       </Button>
       <View style={styles.row}>
-        <Text>Already have an account? </Text>
-        <TouchableOpacity onPress={() => navigation.replace('LoginScreen')}>
-          <Text style={styles.link}>Login</Text>
+        <Text> Time for a change? </Text>
+        <TouchableOpacity onPress={() => navigation.replace('DeleteAccount')}>
+          <Text style={styles.link}>Delete Account</Text>
         </TouchableOpacity>
       </View>
     </Background>
