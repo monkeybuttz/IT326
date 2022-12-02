@@ -3,7 +3,7 @@ package dao;
 import java.sql.SQLException;
 import java.util.List;
 
-import com.jdbc.model.GroomingAppointment;
+import model.GroomingAppointment;
 
 public interface GroomingAppointmentDAO {
     
@@ -16,4 +16,8 @@ public interface GroomingAppointmentDAO {
     public List<GroomingAppointment> getAppointments() throws SQLException;
     
     public void update(GroomingAppointment apt) throws SQLException;
+
+    public void favoriteGroom(GroomingAppointment apt) throws SQLException;
+
+    public void unfavoriteGroom(GroomingAppointment apt) throws SQLException;
 }

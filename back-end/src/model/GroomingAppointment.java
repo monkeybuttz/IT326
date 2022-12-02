@@ -13,8 +13,7 @@ public class GroomingAppointment {
     public GroomingAppointment() {}
 
 
-    public GroomingAppointment(int aptId, String notes, String location, String date, Pet pet, Groomer groomer) {
-        this.aptId = aptId;
+    public GroomingAppointment(String notes, String location, String date, Pet pet, Groomer groomer) {
         this.notes = notes;
         this.location = location;
         this.date = date;
