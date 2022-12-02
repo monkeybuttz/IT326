@@ -15,7 +15,7 @@ public class GroomingAppointmentImp implements GroomingAppointmentDAO {
 
     @Override
     public int add(GroomingAppointment apt) throws SQLException {
-        String query = "INSERT into groomingappointment(groomerID, petID, date, location, notes) VALUES (?, ?, ?, ?, ?)";
+        String query = "insert into groomingappointment(groomerID, petID, date, location, notes) VALUES (?, ?, ?, ?, ?)";
         PreparedStatement ps = con.prepareStatement(query);
         ps.setInt(1, apt.getGroomerId());
         ps.setInt(2, apt.getPetId());
@@ -25,7 +25,7 @@ public class GroomingAppointmentImp implements GroomingAppointmentDAO {
         int n = ps.executeUpdate();
         return n;
     }
-    
+
     @Override
     public void delete(int id) throws SQLException {
         String query = "delete from groomingappointment where aptID =?";
@@ -42,7 +42,7 @@ public class GroomingAppointmentImp implements GroomingAppointmentDAO {
         GroomingAppointment gapt = new GroomingAppointment();
         ResultSet rs = ps.executeQuery();
         boolean c = false;
-        while(rs.next()) {
+        while (rs.next()) {
             c = true;
             gapt.setAptId(rs.getInt("aptID"));
             gapt.setGroomerId(rs.getInt("groomerID"));
@@ -51,10 +51,9 @@ public class GroomingAppointmentImp implements GroomingAppointmentDAO {
             gapt.setLocation(rs.getString("location"));
             gapt.setNotes(rs.getString("notes"));
         }
-        if(c) {
+        if (c) {
             return gapt;
-        }
-        else {
+        } else {
             return null;
         }
     }
@@ -66,7 +65,7 @@ public class GroomingAppointmentImp implements GroomingAppointmentDAO {
         ResultSet rs = ps.executeQuery();
         List<GroomingAppointment> ls = new ArrayList<GroomingAppointment>();
 
-        while(rs.next()) {
+        while (rs.next()) {
             GroomingAppointment gapt = new GroomingAppointment();
             gapt.setAptId(rs.getInt("aptID"));
             gapt.setGroomerId(rs.getInt("groomerID"));
@@ -78,7 +77,7 @@ public class GroomingAppointmentImp implements GroomingAppointmentDAO {
         }
         return ls;
     }
-    
+
     @Override
     public void update(GroomingAppointment apt) throws SQLException {
         String query = "update groomingappointment set date = ?, location = ?, notes = ? where aptID = ?";

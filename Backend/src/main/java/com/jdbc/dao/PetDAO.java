@@ -4,7 +4,6 @@ import java.sql.SQLException;
 import java.util.List;
 
 import com.jdbc.model.Pet;
-import com.jdbc.model.GroomingAppointment;
 
 public interface PetDAO {
 

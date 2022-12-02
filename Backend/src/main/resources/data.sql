@@ -1,1 +1,0 @@
-INSERT INTO USERS(name, email) VALUES("Braydon", "bhughe2@ilstu.edu"),("Greg", "gyonan@ilstu.edu"), ("Aubrey", "arjumon@ilstu.edu");

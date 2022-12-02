@@ -13,7 +13,7 @@ public class Pet {
     public Pet() {
     }
 
-    public Pet(int petId, int ownerID, int aptId, String name, String breed, String notes, Blob image) {
+    public Pet(int petId, int ownerID, String name, String breed, String notes, Blob image) {
         this.petId = petId;
         this.ownerId = ownerID;
         this.name = name;
