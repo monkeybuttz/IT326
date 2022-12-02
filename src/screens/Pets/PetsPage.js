@@ -1,14 +1,22 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { FlatList, SafeAreaView, View, Image, StyleSheet, Text, TouchableOpacity, TouchableWithoutFeedback } from 'react-native';
 import Background from '../../components/Background'
 import Header from '../../components/Header'
 import BackButton from '../../components/BackButton';
 import TextInput from '../../components/TextInput'
+import { endpoint } from '../../../App'
 
 export default function PetsPage({ navigation }) {
 
   const [pets, setPets] = useState([{ src: '../../../assets/pets.png', name: "Allie" }, {}, {}, {name: "New Pet", src: "../../../assets/pets.png", link: "NewPet"}]);
   const [search, setSearch] = useState('');
+
+
+  useEffect(() => { 
+    useEffect(() => {
+      fetch(`${endpoint}/user/pets/${userId}`, { method: 'GET' }
+      ).then((res) => { return res.json() }).then(data => setPets(data)).catch()
+    }, []);
 
   const style = StyleSheet.create({
     container: {

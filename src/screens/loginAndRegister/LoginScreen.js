@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import { TouchableOpacity, StyleSheet, View } from 'react-native'
 import { Text } from 'react-native-paper'
 import Background from '../../components/Background'
@@ -14,6 +14,7 @@ import { passwordValidator } from '../../helpers/passwordValidator'
 export default function LoginScreen({ navigation }) {
   const [email, setEmail] = useState({ value: '', error: '' })
   const [password, setPassword] = useState({ value: '', error: '' })
+  const [invalid, setInvalid] = useState(false);
 
   const onLoginPressed = () => {
     const emailError = emailValidator(email.value)
@@ -23,9 +24,19 @@ export default function LoginScreen({ navigation }) {
       setPassword({ ...password, error: passwordError })
       return
     }
+    useEffect(() => {useEffect(() => { fetch(`${endpoint}/user/login`, { method: 'GET', body: {email: email.value, password: password.value}
+    }).then(res => res.text() )
+      .then((res) => {
+        if (res){
+          navigation.navigate('Home')
+        } else {
+          setInvalid(true);
+      }
+      }).catch()
+  }, []) } ,[])
     navigation.reset({
       index: 0,
-      routes: [{ name: 'VerifyEmail' }],
+      routes: [{ name: 'Home' }],
     })
   }
 
@@ -62,6 +73,7 @@ export default function LoginScreen({ navigation }) {
           <Text style={styles.forgot}>Forgot your password?</Text>
         </TouchableOpacity>
       </View>
+      {invalid && <Text> Your email and password do not match</Text>}
       <Button mode="contained" onPress={onLoginPressed}>
         Login
       </Button>

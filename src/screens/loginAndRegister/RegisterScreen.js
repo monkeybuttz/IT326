@@ -34,9 +34,11 @@ export default function RegisterScreen({ navigation }) {
       setPhone({...phone, error: phoneError})
       return
     }
+    fetch('/user',{ method: 'POST', body: {name: name.value, email: email.value, password: password.value, phone: phone.value, type: type.value}
+      })
     navigation.reset({
       index: 0,
-      routes: [{ name: 'VerifyEmail' }],
+      routes: [{ name: 'Home' }],
     })
   }
 

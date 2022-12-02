@@ -16,6 +16,9 @@ export default function ResetPasswordScreen({ navigation }) {
       setEmail({ ...email, error: emailError })
       return
     }
+    useEffect(() => { fetch(`${endpoint}/email/resetPassword`, { method: 'POST', body: {name: name.value, email: email.value, password: password.value, phone: phone.value}
+      }).then(() => { navigation.navigate('Home')}).catch()
+  }, [])
     navigation.navigate('LoginScreen')
   }
 

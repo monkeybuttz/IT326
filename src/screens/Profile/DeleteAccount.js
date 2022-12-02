@@ -8,8 +8,11 @@ import { theme } from '../../core/theme'
 
 export default function DeleteAccount({ navigation }) {
 
-    const deleteAccount = () => {
-        navigation.navigate('LoginScreen');
+  const deleteAccount = () => {
+    useEffect(() => {
+      fetch(`${endpoint}/user/${id}`, { method: 'DELETE' })
+      .then(() => { navigation.navigate('LoginScreen') }).catch()
+    }, []);
     }
 
   return (

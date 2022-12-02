@@ -8,19 +8,37 @@ import { theme } from '../../core/theme'
 import { nameValidator } from '../../helpers/nameValidator'
 import ImagePicker from '../../components/ExpoImage'
 import { View } from 'react-native'
+import {endpoint} from '../../../App'
 
  export default function NewPet({ navigation }) {
 
      const [name, setName] = useState({ value: '', error: '' })
      const [image, setImage] = useState()
+     const [breed, setBreed] = useState({ value: '', error: '' })
+     const [notes, setNotes] = useState({ value: '', error: '' })
 
 
-        const onSignUpPressed = () => {
+        const onSavePressed = () => {
             const nameError = nameValidator(name.value)
             if (nameError) {
                 setName({ ...name, error: nameError })
                 return
             }
+            fetch(`${endpoint}/pet`, { method: "POST", body: { ownerId: 2, name: name.value, breed: breed.value, notes: notes.value, image: image } })
+                .then()
+            navigation.reset({
+                index: 0,
+                routes: [{ name: 'VerifyEmail' }],
+            })
+        }
+     
+     const onUpdatePressed = () => {
+                 const nameError = nameValidator(name.value)
+            if (nameError) {
+                setName({ ...name, error: nameError })
+                return
+            }
+            fetch(`${endpoint}/pet/${2}`, {method: "POST", body: {ownerId: 2, name: name.value, breed: breed.value, notes: notes.value, image: image}})
             navigation.reset({
                 index: 0,
                 routes: [{ name: 'VerifyEmail' }],
@@ -43,15 +61,15 @@ import { View } from 'react-native'
                 <TextInput
                     label="Breed"
                     returnKeyType="next"
-                    value={name.value}
+                    value={breed.value}
                     onChangeText={(text) => setName({ value: text, error: '' })}
-                    error={!!name.error}
-                    errorText={name.error}
+                    error={!!breed.error}
+                    errorText={breed.error}
                 />
                 <TextInput
                     label="Notes"
                     returnKeyType="next"
-                    value={name.value}
+                    value={notes.value}
                     onChangeText={(text) => setName({ value: text, error: '' })}
                 />
                 <View style={{height: 200}}>
@@ -59,7 +77,7 @@ import { View } from 'react-native'
                 </View>
                 <Button
                     mode="contained"
-                    onPress={onSignUpPressed}
+                    onPress={onSavePressed}
                     style={{ marginTop: 24, color: theme.colors.secondary }}
                 >
                     Add Pet

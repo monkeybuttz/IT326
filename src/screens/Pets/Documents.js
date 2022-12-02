@@ -9,14 +9,19 @@ import { getStatusBarHeight } from 'react-native-status-bar-height'
 
 export default function Documents({ navigation, route, options  }) {
 
-    const [groomer, setGroomer] = useState({name: "", id:-1 });
     const [photos, setPhotos] = useState([]);
     const [photo, setPhoto] = useState();
 
-    useEffect(()=>{}, [groomer])
+    useEffect(() => {
+      fetch(`${endpoint}/pet/docs/${userId}`, { method: 'GET' }
+      ).then((res) => { return res.json() }).then(data => setPhotos(data)).catch()
+    }, [])
 
     const save = () => {
-        
+        if (photos.length() > 0) {
+            fetch(`${endpoint}/pet/docs/${userId}`, { method: 'POST', body: {images: photos} }
+            ).then((res) => { return res.json() }).then(data => setPhotos(data)).catch()
+        }
     }
 
   return (
