@@ -28,11 +28,11 @@ public abstract class User {
         this.isGroomerr = isGroomerr;
     }
 
-    public abstract int createAccount(User theUser) throws SQLException;
+    public abstract int createAccount() throws SQLException;
 
-    public abstract boolean updateAccount(User theUser) throws SQLException;
+    public abstract boolean updateAccount(User newInfoUser) throws SQLException;
 
-    public abstract boolean deleteAccount(User theUser) throws SQLException;
+    public abstract boolean deleteAccount() throws SQLException;
 
     public abstract void sendPasswordReset(String email) throws SQLException;
 

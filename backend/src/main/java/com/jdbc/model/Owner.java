@@ -16,27 +16,27 @@ public class Owner extends User {
     }
 
     @Override
-    public int createAccount(User theUser) throws SQLException {
+    public int createAccount() throws SQLException {
         String query = "INSERT into owner(ownerID, name, username, password, email, phoneNUM, isGroomer) VALUES (?, ?, ?, ?, ?, ?, ?)";
         PreparedStatement ps = con.prepareStatement(query);
-        ps.setInt(1, theUser.getOwnerID());
-        ps.setString(2, theUser.getName());
-        ps.setString(3, theUser.getUsername());
-        ps.setString(4, theUser.getPassword());
-        ps.setString(5, theUser.getEmail());
-        ps.setLong(6, theUser.getPhoneNumber());
-        ps.setBoolean(7, theUser.getIsGroomer());
+        ps.setInt(1, this.getOwnerID());
+        ps.setString(2, this.getName());
+        ps.setString(3, this.getUsername());
+        ps.setString(4, this.getPassword());
+        ps.setString(5, this.getEmail());
+        ps.setLong(6, this.getPhoneNumber());
+        ps.setBoolean(7, this.getIsGroomer());
         ps.executeUpdate();
         return 0;
     }
 
     @Override
-    public boolean updateAccount(User theUser) throws SQLException {
+    public boolean updateAccount(User newUserInfo) throws SQLException {
         return false;
     }
 
     @Override
-    public boolean deleteAccount(User theUser) throws SQLException {
+    public boolean deleteAccount() throws SQLException {
         return false;
     }
 

@@ -17,19 +17,19 @@ public class Groomer extends User {
     }
 
     @Override
-    public int createAccount(User theUser) {
+    public int createAccount() {
         // TODO Auto-generated method stub
         return 0;
     }
 
     @Override
-    public boolean updateAccount(User theUser) {
+    public boolean updateAccount(User newUserInfo) {
         // TODO Auto-generated method stub
         return false;
     }
 
     @Override
-    public boolean deleteAccount(User theUser) {
+    public boolean deleteAccount() {
         // TODO Auto-generated method stub
         return false;
     }
