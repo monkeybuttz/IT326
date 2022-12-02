@@ -17,7 +17,7 @@ public class Owner extends User {
 
     @Override
     public int createAccount(User theUser) throws SQLException {
-        String query = "INSERT into owner(ownerID, name, username, password, email, phoneNUM) VALUES (?, ?, ?, ?, ?, ?)";
+        String query = "INSERT into owner(ownerID, name, username, password, email, phoneNUM, isGroomer) VALUES (?, ?, ?, ?, ?, ?, ?)";
         PreparedStatement ps = con.prepareStatement(query);
         ps.setInt(1, theUser.getOwnerID());
         ps.setString(2, theUser.getName());
@@ -25,6 +25,7 @@ public class Owner extends User {
         ps.setString(4, theUser.getPassword());
         ps.setString(5, theUser.getEmail());
         ps.setLong(6, theUser.getPhoneNumber());
+        ps.setBoolean(7, theUser.getIsGroomer());
         ps.executeUpdate();
         return 0;
     }
@@ -74,7 +75,7 @@ public class Owner extends User {
     }
 
     @Override
-    public int getPhoneNumber() {
+    public long getPhoneNumber() {
         return 0;
     }
 

@@ -17,7 +17,7 @@ public abstract class User {
 
     static Connection con = JDBCConnection.getConnection();
 
-    public User(int id, String name, String username, String password, String email, Integer phoneNumber,
+    public User(int id, String name, String username, String password, String email, long phoneNumber,
             boolean isGroomerr) {
         this.id = id;
         this.name = name;
@@ -50,7 +50,7 @@ public abstract class User {
 
     public abstract String getPassword();
 
-    public abstract int getPhoneNumber();
+    public abstract long getPhoneNumber();
 
     public abstract boolean getIsGroomer();
 
