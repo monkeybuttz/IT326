@@ -1,8 +1,5 @@
 package com.jdbc.model;
 
-import java.util.List;
-
-import com.jdbc.model.Message;
 import com.jdbc.util.JDBCConnection;
 
 import java.sql.Connection;
@@ -13,9 +10,9 @@ public class Owner extends User {
 
     static Connection con = JDBCConnection.getConnection();
 
-    public Owner(int id, String name, String username, String email, String password, long phoneNumber,
-            String emailAuthenticateString, List<Message> conversation) {
-        super(id, name, username, email, password, phoneNumber, email, conversation);
+    public Owner(int id, String name, String username, String password, String email, int phuneNumber,
+            boolean isGroomer) {
+        super(id, name, username, password, email, phuneNumber, isGroomer);
     }
 
     @Override
@@ -39,21 +36,6 @@ public class Owner extends User {
 
     @Override
     public boolean deleteAccount(User theUser) throws SQLException {
-        return false;
-    }
-
-    @Override
-    public boolean sendMessage() {
-        return false;
-    }
-
-    @Override
-    public List<Message> loadMessages() {
-        return null;
-    }
-
-    @Override
-    public boolean authenticateEmail(String email) {
         return false;
     }
 
@@ -92,18 +74,18 @@ public class Owner extends User {
     }
 
     @Override
-    public long getPhoneNumber() {
+    public int getPhoneNumber() {
         return 0;
-    }
-
-    @Override
-    public String getEmailAuth() {
-        return null;
     }
 
     @Override
     public String getName() {
         return null;
+    }
+
+    @Override
+    public boolean getIsGroomer() {
+        return false;
     }
 
 }

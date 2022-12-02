@@ -1,8 +1,5 @@
 package com.jdbc.model;
 
-import java.util.List;
-
-import com.jdbc.model.Message;
 import com.jdbc.util.JDBCConnection;
 
 import java.sql.Connection;
@@ -14,9 +11,9 @@ public class Groomer extends User {
 
     static Connection con = JDBCConnection.getConnection();
 
-    public Groomer(int id, String username, String email, String password, long phoneNumber,
-            String emailAuthenticateString, List<Message> conversation) {
-        super(id, username, email, password, emailAuthenticateString, phoneNumber, emailAuthenticateString, conversation);
+    public Groomer(int id, String name, String username, String password, String email, int phoneNumber,
+            boolean isGroomerr) {
+        super(id, name, username, password, email, phoneNumber, isGroomerr);
     }
 
     @Override
@@ -33,24 +30,6 @@ public class Groomer extends User {
 
     @Override
     public boolean deleteAccount(User theUser) {
-        // TODO Auto-generated method stub
-        return false;
-    }
-
-    @Override
-    public boolean sendMessage() {
-        // TODO Auto-generated method stub
-        return false;
-    }
-
-    @Override
-    public List<Message> loadMessages() {
-        // TODO Auto-generated method stub
-        return null;
-    }
-
-    @Override
-    public boolean authenticateEmail(String email) {
         // TODO Auto-generated method stub
         return false;
     }
@@ -104,15 +83,15 @@ public class Groomer extends User {
     }
 
     @Override
-    public long getPhoneNumber() {
+    public int getPhoneNumber() {
         // TODO Auto-generated method stub
         return 0;
     }
 
     @Override
-    public String getEmailAuth() {
+    public boolean getIsGroomer() {
         // TODO Auto-generated method stub
-        return null;
+        return false;
     }
 
 }
