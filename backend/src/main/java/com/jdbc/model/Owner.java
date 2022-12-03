@@ -10,7 +10,11 @@ public class Owner extends User {
 
     static Connection con = JDBCConnection.getConnection();
 
-    public Owner(int id, String name, String username, String password, String email, int phuneNumber, boolean isGroomer) {
+    public Owner() {
+    }
+
+    public Owner(int id, String name, String username, String password, String email, int phuneNumber,
+        boolean isGroomer) {
         super(id, name, username, password, email, phuneNumber, isGroomer);
     }
 
@@ -86,6 +90,41 @@ public class Owner extends User {
     @Override
     public boolean getIsGroomer() {
         return false;
+    }
+
+    @Override
+    public void setOwnerID(int id) {
+        this.id = id;
+    }
+
+    @Override
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    @Override
+    public void setUsername(String username) {
+       this.username=username;
+    }
+
+    @Override
+    public void setEmail(String email) {
+        this.email=email;
+    }
+
+    @Override
+    public void setPassword(String password) {
+        this.password=password;
+    }
+
+    @Override
+    public void setPhoneNumber(long pn) {
+        this.phoneNumber=pn;
+    }
+
+    @Override
+    public void setIsGroomer(boolean option) {
+        this.isGroomer=option;
     }
 
 }
