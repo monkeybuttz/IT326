@@ -19,6 +19,8 @@ public abstract class User {
 
     public abstract int createAccount() throws SQLException;
 
+    public abstract boolean readAccount() throws SQLException;
+
     public abstract boolean updateAccount(User newInfoUser) throws SQLException;
 
     public abstract boolean deleteAccount() throws SQLException;
@@ -27,9 +29,7 @@ public abstract class User {
 
     public abstract void resetPassword() throws SQLException;
 
-    public abstract String toString();
-
-    public abstract int getOwnerID();
+    public abstract int getID();
 
     public abstract String getName();
 
@@ -43,7 +43,7 @@ public abstract class User {
 
     public abstract boolean getIsGroomer();
 
-    public abstract void setOwnerID(int id);
+    public abstract void setID(int id);
 
     public abstract void setName(String name);
 
