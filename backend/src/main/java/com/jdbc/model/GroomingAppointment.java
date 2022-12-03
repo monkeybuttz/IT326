@@ -20,7 +20,7 @@ public class GroomingAppointment {
         this.location = location;
         this.date = date;
         this.petId = pet.getPetId();
-        this.groomerId = groomer.getGroomerId();
+        this.groomerId = groomer.getID();
         favorited = false;
     }
 
