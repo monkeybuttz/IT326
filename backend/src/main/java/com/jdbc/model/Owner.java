@@ -1,5 +1,4 @@
 package com.jdbc.model;
-
 import com.jdbc.util.JDBCConnection;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -61,22 +60,22 @@ public class Owner extends User {
 
     @Override
     public String getEmail() {
-        return null;
+        return this.email;
     }
 
     @Override
     public String getPassword() {
-        return null;
+        return this.password;
     }
 
     @Override
     public long getPhoneNumber() {
-        return 0;
+        return this.phoneNumber;
     }
 
     @Override
     public String getName() {
-        return null;
+        return this.name;
     }
 
     @Override
