@@ -22,6 +22,14 @@ public class Pet {
         this.image = image;
     }
 
+    public Pet( int ownerID, String name, String breed, String notes, Blob image) {
+        this.ownerId = ownerID;
+        this.name = name;
+        this.breed = breed;
+        this.notes = notes;
+        this.image = image;
+    }
+
 
     public int getPetId() {
         return this.petId;

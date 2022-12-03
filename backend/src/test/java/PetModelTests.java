@@ -8,6 +8,7 @@ import java.sql.SQLException;
 import javax.sql.rowset.serial.SerialBlob;
 
 import com.jdbc.model.*;
+import com.jdbc.dao.PetDAO;
 
 /*
  * Tsts the PetTest.java Program
@@ -26,16 +27,16 @@ public class PetModelTests {
     // Testing creating a Pet with all parameters
     public void createPetTest() throws SQLException {
         Blob blob = new SerialBlob(new byte[1024]);
-        Pet Pet = new Pet(1,  2, "Name", "Breed", "Notes", blob);
-        assertNotNull(Pet);
+        Pet pet = new Pet(1,  2, "Name", "Breed", "Notes", blob);
+        assertNotNull(pet);
     }
 
     @Test
     // Test get PetId
     public void getPetIdTest() throws SQLException {
         Blob blob = new SerialBlob(new byte[1024]);
-        Pet Pet = new Pet(1,  2, "Name", "Breed", "Notes",  blob);
-        int id = Pet.getPetId();
+        Pet pet = new Pet(1,  2, "Name", "Breed", "Notes",  blob);
+        int id = pet.getPetId();
         assertEquals(1, id);
     }
 
@@ -43,8 +44,8 @@ public class PetModelTests {
     // Test get Pet Notes
     public void getNotesTest() throws SQLException {
         Blob blob = new SerialBlob(new byte[1024]);
-        Pet Pet = new Pet(1,  2, "Name", "Breed", "Notes",  blob);
-        String Notes = Pet.getNotes();
+        Pet pet = new Pet(1,  2, "Name", "Breed", "Notes",  blob);
+        String Notes = pet.getNotes();
         assertEquals("Howdy!", Notes);
     }
 
@@ -52,8 +53,8 @@ public class PetModelTests {
     // Test get PetId
     public void getNameTest() throws SQLException {
         Blob blob = new SerialBlob(new byte[1024]);
-        Pet Pet = new Pet(1,  2, "Name", "Breed", "Notes",  blob);
-        String name = Pet.getName();
+        Pet pet = new Pet(1,  2, "Name", "Breed", "Notes",  blob);
+        String name = pet.getName();
         assertEquals(2, name);
     }
 
@@ -61,8 +62,8 @@ public class PetModelTests {
     // Test get PetId
     public void getBreedTest() throws SQLException {
         Blob blob = new SerialBlob(new byte[1024]);
-        Pet Pet = new Pet(1, 2, "Name", "Breed", "Notes", blob);
-        String breed = Pet.getBreed();
+        Pet pet = new Pet(1, 2, "Name", "Breed", "Notes", blob);
+        String breed = pet.getBreed();
         assertEquals(2, breed);
     }
 
@@ -70,8 +71,8 @@ public class PetModelTests {
     // Test get PetId
     public void getOwnerIdTest() throws SQLException {
         Blob blob = new SerialBlob(new byte[1024]);
-        Pet Pet = new Pet(1, 2, "Name", "Breed", "Notes", blob);
-        int id = Pet.getOwnerId();
+        Pet pet = new Pet(1, 2, "Name", "Breed", "Notes", blob);
+        int id = pet.getOwnerId();
         assertEquals(3, id);
     }
     
@@ -79,8 +80,8 @@ public class PetModelTests {
     // Test get PetId
     public void getImageTest() throws SQLException {
         Blob blob = new SerialBlob(new byte[1024]);
-        Pet Pet = new Pet(1, 2, "Name", "Breed", "Notes", blob);
-        Blob image = Pet.getImage();
+        Pet pet = new Pet(1, 2, "Name", "Breed", "Notes", blob);
+        Blob image = pet.getImage();
         assertEquals(blob, image);
     }
 
@@ -89,10 +90,10 @@ public class PetModelTests {
     public void setPetIdTest() {
         int id = 1;
 
-        Pet Pet = new Pet();
-        Pet.setPetId(id);
+        Pet pet = new Pet();
+        pet.setPetId(id);
 
-        assertEquals(id, Pet.getPetId());
+        assertEquals(id, pet.getPetId());
     }
 
     @Test
@@ -100,10 +101,10 @@ public class PetModelTests {
     public void setNotesTest() {
         String Notes = "Hi! How are ya?";
 
-        Pet Pet = new Pet();
-        Pet.setNotes(Notes);
+        Pet pet = new Pet();
+        pet.setNotes(Notes);
 
-        assertEquals(Notes, Pet.getNotes());
+        assertEquals(Notes, pet.getNotes());
     }
 
     @Test
@@ -111,10 +112,10 @@ public class PetModelTests {
     public void setNameTest() {
         String name = "name";
 
-        Pet Pet = new Pet();
-        Pet.setName(name);
+        Pet pet = new Pet();
+        pet.setName(name);
 
-        assertEquals(name, Pet.getName());
+        assertEquals(name, pet.getName());
     }
 
     @Test
@@ -122,10 +123,10 @@ public class PetModelTests {
     public void setBreedTest() {
         String breed = "Breed";
 
-        Pet Pet = new Pet();
-        Pet.setBreed(breed);
+        Pet pet = new Pet();
+        pet.setBreed(breed);
 
-        assertEquals(breed, Pet.getBreed());
+        assertEquals(breed, pet.getBreed());
     }
 
     @Test
@@ -133,10 +134,10 @@ public class PetModelTests {
     public void setOwnerTest() {
         int id = 1;
 
-        Pet Pet = new Pet();
-        Pet.setOwnerId(id);
+        Pet pet = new Pet();
+        pet.setOwnerId(id);
 
-        assertEquals(id, Pet.getOwnerId());
+        assertEquals(id, pet.getOwnerId());
     }
 
     @Test
@@ -144,10 +145,10 @@ public class PetModelTests {
     public void setImageTest() throws SQLException {
         Blob blob = new SerialBlob(new byte[1024]);
 
-        Pet Pet = new Pet();
-        Pet.setImage(blob);
+        Pet pet = new Pet();
+        pet.setImage(blob);
 
-        assertEquals(blob, Pet.getImage());
+        assertEquals(blob, pet.getImage());
     }
 
 }
