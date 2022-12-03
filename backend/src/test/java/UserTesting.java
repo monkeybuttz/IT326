@@ -1,4 +1,6 @@
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+
 import java.sql.SQLException;
 
 import com.jdbc.model.Groomer;
@@ -38,6 +40,24 @@ public class UserTesting {
         groom.setIsGroomer(true);
         int test = groom.createAccount();
         assertEquals(0, test);
+    }
+
+    // readAccount() owner (userID must be in table)
+    @Test
+    public void testingReadOwnerAccount() throws SQLException {
+        Owner owner1 = new Owner();
+        owner1.setID(5);
+        Owner owner2 = owner1.readAccount();
+        assertNotNull(owner2);
+    }
+
+    // readAccount() groomer (userID must be in table)
+    @Test
+    public void testingReadGroomerAccount() throws SQLException {
+        Groomer groom = new Groomer();
+        groom.setID(5);
+        Groomer groom2 = groom.readAccount();
+        assertNotNull(groom2);
     }
 
     // updateAccount() owner (make sure ownerID matches in sql before each test,

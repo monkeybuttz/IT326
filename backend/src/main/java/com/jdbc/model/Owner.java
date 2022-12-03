@@ -3,6 +3,7 @@ package com.jdbc.model;
 import com.jdbc.util.JDBCConnection;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 
 public class Owner extends User {
@@ -25,12 +26,28 @@ public class Owner extends User {
     }
 
     @Override
-    public boolean readAccount() throws SQLException {
+    public Owner readAccount() throws SQLException {
         String query = "select * from user where userID =?";
         PreparedStatement ps = con.prepareStatement(query);
         ps.setInt(1, this.getID());
-        ps.executeUpdate();
-        return true;
+        Owner own = new Owner();
+        ResultSet rs = ps.executeQuery();
+        boolean c = false;
+        while (rs.next()) {
+            c = true;
+            own.setName(rs.getString("name"));
+            own.setUsername(rs.getString("username"));
+            own.setPassword(rs.getString("password"));
+            own.setEmail(rs.getString("email"));
+            own.setPhoneNumber(rs.getInt("phoneNUM"));
+            own.setIsGroomer(rs.getBoolean("isGroomer"));
+        }
+        if (c) {
+            return own;
+        } 
+        else {
+            return null;
+        }
     }
 
     @Override

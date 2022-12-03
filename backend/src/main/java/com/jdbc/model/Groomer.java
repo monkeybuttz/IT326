@@ -4,6 +4,7 @@ import com.jdbc.util.JDBCConnection;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 
 public class Groomer extends User {
@@ -26,12 +27,28 @@ public class Groomer extends User {
     }
 
     @Override
-    public boolean readAccount() throws SQLException {
+    public Groomer readAccount() throws SQLException {
         String query = "select * from user where userID =?";
         PreparedStatement ps = con.prepareStatement(query);
         ps.setInt(1, this.getID());
-        ps.executeUpdate();
-        return true;
+        Groomer groom = new Groomer();
+        ResultSet rs = ps.executeQuery();
+        boolean c = false;
+        while (rs.next()) {
+            c = true;
+            groom.setName(rs.getString("name"));
+            groom.setUsername(rs.getString("username"));
+            groom.setPassword(rs.getString("password"));
+            groom.setEmail(rs.getString("email"));
+            groom.setPhoneNumber(rs.getInt("phoneNUM"));
+            groom.setIsGroomer(rs.getBoolean("isGroomer"));
+        }
+        if (c) {
+            return groom;
+        } 
+        else {
+            return null;
+        }
     }
 
     @Override

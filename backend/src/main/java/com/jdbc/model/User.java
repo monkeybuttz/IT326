@@ -19,7 +19,7 @@ public abstract class User {
 
     public abstract int createAccount() throws SQLException;
 
-    public abstract boolean readAccount() throws SQLException;
+    public abstract User readAccount() throws SQLException;
 
     public abstract boolean updateAccount(User newInfoUser) throws SQLException;
 
