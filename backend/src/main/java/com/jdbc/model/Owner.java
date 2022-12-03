@@ -7,11 +7,11 @@ import java.sql.SQLException;
 
 public class Owner extends User {
 
-    static Connection con = JDBCConnection.getConnection();
 
     @Override
     public int createAccount() throws SQLException {
         String query = "INSERT into user(userID, name, username, password, email, phoneNUM, isGroomer) VALUES (?, ?, ?, ?, ?, ?, ?)";
+        Connection con = JDBCConnection.getConnection();
         PreparedStatement ps = con.prepareStatement(query);
         ps.setInt(1, this.getOwnerID());
         ps.setString(2, this.getName());

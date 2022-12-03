@@ -5,12 +5,12 @@ import java.sql.DriverManager;
 import java.sql.SQLException;
 
 public class JDBCConnection {
-    private static Connection con = null;
+    static Connection con = null;
 
     static {
         String url = "jdbc:mysql://localhost:3306/petcare";
         String username = "root";
-        String password ="Petcare_326";
+        String password ="G2Yonan1210";
         try {
             Class.forName("com.mysql.cj.jdbc.Driver");
 
