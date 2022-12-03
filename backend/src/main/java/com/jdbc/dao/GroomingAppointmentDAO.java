@@ -16,4 +16,6 @@ public interface GroomingAppointmentDAO {
     public List<GroomingAppointment> getAppointments() throws SQLException;
 
     public void update(GroomingAppointment apt) throws SQLException;
+
+    public void favorite(GroomingAppointment apt) throws SQLException;
 }
