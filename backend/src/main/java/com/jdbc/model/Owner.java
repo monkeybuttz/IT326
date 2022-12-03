@@ -1,7 +1,6 @@
 package com.jdbc.model;
 
 import com.jdbc.util.JDBCConnection;
-
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
