@@ -35,7 +35,7 @@ CREATE TABLE GroomingAppointment(
 	groomerID INT,
     petID INT,
     ownerID INT,
-    date DATE,
+    date VARCHAR(10),
     location VARCHAR(50),
     notes LONGTEXT,
     image BLOB,

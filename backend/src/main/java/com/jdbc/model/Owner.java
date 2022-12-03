@@ -5,6 +5,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
 
 public class Owner extends User {
 
@@ -13,7 +14,7 @@ public class Owner extends User {
     @Override
     public int createAccount() throws SQLException {
         String query = "INSERT into user(userID, name, username, password, email, phoneNUM, isGroomer) VALUES (?, ?, ?, ?, ?, ?, ?)";
-        PreparedStatement ps = con.prepareStatement(query);
+        PreparedStatement ps = con.prepareStatement(query, Statement.RETURN_GENERATED_KEYS);
         ps.setInt(1, this.getID());
         ps.setString(2, this.getName());
         ps.setString(3, this.getUsername());
@@ -22,7 +23,12 @@ public class Owner extends User {
         ps.setLong(6, this.getPhoneNumber());
         ps.setBoolean(7, this.getIsGroomer());
         ps.executeUpdate();
-        return 0;
+        int id = -1;
+        ResultSet rs = ps.getGeneratedKeys();
+        if (rs.next()) {
+            id = rs.getInt(1);
+        }
+        return id;
     }
 
     @Override
@@ -82,12 +88,6 @@ public class Owner extends User {
     @Override
     public void resetPassword() {
         // TODO Auto-generated method stub
-    }
-
-    @Override
-    public String toString() {
-        // TODO Auto-generated method stub
-        return null;
     }
 
     @Override
