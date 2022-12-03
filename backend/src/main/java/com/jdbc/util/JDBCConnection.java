@@ -10,16 +10,15 @@ public class JDBCConnection {
     static {
         String url = "jdbc:mysql://localhost:3306/petcare";
         String username = "root";
-        String password ="Petcare_326";
+        String password = "BanSit00";
         try {
             Class.forName("com.mysql.cj.jdbc.Driver");
 
             con = DriverManager.getConnection(url, username, password);
-            if(con != null) {
+            if (con != null) {
                 System.out.println("Connection successful!");
             }
-        }
-        catch (ClassNotFoundException | SQLException e) {
+        } catch (ClassNotFoundException | SQLException e) {
             System.out.println(e);
         }
     }
@@ -27,5 +26,5 @@ public class JDBCConnection {
     public static Connection getConnection() {
         return con;
     }
-    
+
 }

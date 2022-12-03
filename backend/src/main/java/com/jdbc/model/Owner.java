@@ -10,8 +10,7 @@ public class Owner extends User {
 
     static Connection con = JDBCConnection.getConnection();
 
-    public Owner(int id, String name, String username, String password, String email, int phuneNumber,
-            String string, boolean isGroomer) {
+    public Owner(int id, String name, String username, String password, String email, int phuneNumber, boolean isGroomer) {
         super(id, name, username, password, email, phuneNumber, isGroomer);
     }
 

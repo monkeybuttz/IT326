@@ -22,8 +22,7 @@ public class PetImp implements PetDAO {
         ps.setString(3, pet.getBreed());
         ps.setString(4, pet.getNotes());
         ps.setBlob(5, pet.getImage());
-        int n = ps.executeUpdate();
-        return n;
+        return ps.executeUpdate();
     }
 
     @Override
