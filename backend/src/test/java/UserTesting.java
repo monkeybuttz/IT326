@@ -11,17 +11,18 @@ import org.junit.jupiter.api.Test;
 public class UserTesting {
     /*
      * Greg Yonan
+     * Testing for User, Owner, and Groomer classes
      */
 
     // createAccount() owner (clear row in sql before each test)
     @Test
     public void testingCreateOwnerAccount() throws SQLException {
         Owner owner1 = new Owner();
-        owner1.setEmail("gyonan@ilstu.edu");
-        owner1.setName("Greg Yonan");
-        owner1.setUsername("gyonan");
+        owner1.setEmail("jfergu2@ilstu.edu");
+        owner1.setName("Jack Ferguson");
+        owner1.setUsername("jfergu2");
         owner1.setPassword("Password123!");
-        owner1.setPhoneNumber(8424747);
+        owner1.setPhoneNumber(2706280);
         owner1.setIsGroomer(false);
         int test = owner1.createAccount();
         assertNotEquals(0, test);
