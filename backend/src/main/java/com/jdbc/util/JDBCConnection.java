@@ -15,11 +15,10 @@ public class JDBCConnection {
             Class.forName("com.mysql.cj.jdbc.Driver");
 
             con = DriverManager.getConnection(url, username, password);
-            if(con != null) {
+            if (con != null) {
                 System.out.println("Connection successful!");
             }
-        }
-        catch (ClassNotFoundException | SQLException e) {
+        } catch (ClassNotFoundException | SQLException e) {
             System.out.println(e);
         }
     }
@@ -27,5 +26,5 @@ public class JDBCConnection {
     public static Connection getConnection() {
         return con;
     }
-    
+
 }

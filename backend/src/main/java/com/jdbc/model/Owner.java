@@ -7,6 +7,7 @@ import java.sql.SQLException;
 
 public class Owner extends User {
 
+    static Connection con = JDBCConnection.getConnection();
 
     @Override
     public int createAccount() throws SQLException {
