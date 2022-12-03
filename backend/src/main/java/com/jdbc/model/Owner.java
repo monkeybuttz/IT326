@@ -12,7 +12,6 @@ public class Owner extends User {
     @Override
     public int createAccount() throws SQLException {
         String query = "INSERT into user(userID, name, username, password, email, phoneNUM, isGroomer) VALUES (?, ?, ?, ?, ?, ?, ?)";
-        Connection con = JDBCConnection.getConnection();
         PreparedStatement ps = con.prepareStatement(query);
         ps.setInt(1, this.getOwnerID());
         ps.setString(2, this.getName());
@@ -27,12 +26,22 @@ public class Owner extends User {
 
     @Override
     public boolean updateAccount(User newUserInfo) throws SQLException {
-        return false;
+        String query = "update user set name = ?, username = ?, password = ?, email = ?, phoneNUM = ?, isGroomer = ? where userId = ? ";        
+        PreparedStatement ps = con.prepareStatement(query);
+        ps.setString(1, newUserInfo.getName());
+        ps.setString(2, newUserInfo.getUsername());
+        ps.setString(3, newUserInfo.getPassword());
+        ps.setString(4, newUserInfo.getEmail());
+        ps.setLong(5, newUserInfo.getPhoneNumber());
+        ps.setBoolean(6, newUserInfo.getIsGroomer());
+        ps.setInt(7, this.getOwnerID());
+        ps.executeUpdate();
+        return true;
     }
 
     @Override
     public boolean deleteAccount() throws SQLException {
-        return false;
+        return true;
     }
 
     @Override
@@ -61,22 +70,22 @@ public class Owner extends User {
 
     @Override
     public String getEmail() {
-        return null;
+        return this.email;
     }
 
     @Override
     public String getPassword() {
-        return null;
+        return this.password;
     }
 
     @Override
     public long getPhoneNumber() {
-        return 0;
+        return this.phoneNumber;
     }
 
     @Override
     public String getName() {
-        return null;
+        return this.name;
     }
 
     @Override
@@ -96,27 +105,27 @@ public class Owner extends User {
 
     @Override
     public void setUsername(String username) {
-       this.username=username;
+        this.username = username;
     }
 
     @Override
     public void setEmail(String email) {
-        this.email=email;
+        this.email = email;
     }
 
     @Override
     public void setPassword(String password) {
-        this.password=password;
+        this.password = password;
     }
 
     @Override
     public void setPhoneNumber(long pn) {
-        this.phoneNumber=pn;
+        this.phoneNumber = pn;
     }
 
     @Override
     public void setIsGroomer(boolean option) {
-        this.isGroomer=option;
+        this.isGroomer = option;
     }
 
 }
