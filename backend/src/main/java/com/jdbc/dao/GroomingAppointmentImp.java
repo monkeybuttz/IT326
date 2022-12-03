@@ -4,29 +4,33 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
 import com.jdbc.model.GroomingAppointment;
 import com.jdbc.util.JDBCConnection;
 
-public class GroomingAppointmentImp implements GroomingAppointmentDAO {
+public class GroomingAppointmentImp {
     static Connection con = JDBCConnection.getConnection();
 
-    @Override
     public int add(GroomingAppointment apt) throws SQLException {
         String query = "insert into groomingappointment(groomerID, petID, date, location, notes) VALUES (?, ?, ?, ?, ?)";
-        PreparedStatement ps = con.prepareStatement(query);
+        PreparedStatement ps = con.prepareStatement(query, Statement.RETURN_GENERATED_KEYS);
         ps.setInt(1, apt.getGroomerId());
         ps.setInt(2, apt.getPetId());
         ps.setString(3, apt.getDate());
         ps.setString(4, apt.getLocation());
         ps.setString(5, apt.getNotes());
-        int n = ps.executeUpdate();
-        return n;
+        ps.executeUpdate();
+        int id = -1;
+        ResultSet rs = ps.getGeneratedKeys();
+        if (rs.next()) {
+            id = rs.getInt(1);
+        }
+        return id;
     }
 
-    @Override
     public void delete(int id) throws SQLException {
         String query = "delete from groomingappointment where aptID =?";
         PreparedStatement ps = con.prepareStatement(query);
@@ -34,7 +38,6 @@ public class GroomingAppointmentImp implements GroomingAppointmentDAO {
         ps.executeUpdate();
     }
 
-    @Override
     public GroomingAppointment getGroomingAppointment(int id) throws SQLException {
         String query = "select * from groomingappointment where aptID =?";
         PreparedStatement ps = con.prepareStatement(query);
@@ -50,7 +53,7 @@ public class GroomingAppointmentImp implements GroomingAppointmentDAO {
             gapt.setAptDate(rs.getString("date"));
             gapt.setLocation(rs.getString("location"));
             gapt.setNotes(rs.getString("notes"));
-            gapt.setFavorited(rs.getBoolean("favorited"))
+            gapt.setFavorited(rs.getBoolean("favorited"));
         }
         if (c) {
             return gapt;
@@ -59,7 +62,6 @@ public class GroomingAppointmentImp implements GroomingAppointmentDAO {
         }
     }
 
-    @Override
     public List<GroomingAppointment> getAppointments() throws SQLException {
         String query = "select * from groomingappointment";
         PreparedStatement ps = con.prepareStatement(query);
@@ -79,7 +81,6 @@ public class GroomingAppointmentImp implements GroomingAppointmentDAO {
         return ls;
     }
 
-    @Override
     public void update(GroomingAppointment apt) throws SQLException {
         String query = "update groomingappointment set date = ?, location = ?, notes = ? where aptID = ?";
         PreparedStatement ps = con.prepareStatement(query);
@@ -90,19 +91,19 @@ public class GroomingAppointmentImp implements GroomingAppointmentDAO {
         ps.executeUpdate();
     }
 
-    @Override
-    public void favorite(int id) throws SQLException {
+    public boolean favorite(int id) throws SQLException {
         String query = "update groomingappointment set favorited = true where aptID = ?";
         PreparedStatement ps = con.prepareStatement(query);
         ps.setInt(1, id);
         ps.executeUpdate();
+        return true;
     }
 
-    @Override
-    public void unfavorite(int id) throws SQLException {
+    public boolean unfavorite(int id) throws SQLException {
         String query = "update groomingappointment set favorited = false where aptID = ?";
         PreparedStatement ps = con.prepareStatement(query);
         ps.setInt(1, id);
         ps.executeUpdate();
+        return false;
     }
 }

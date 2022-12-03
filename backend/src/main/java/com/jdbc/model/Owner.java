@@ -5,6 +5,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
 
 public class Owner extends User {
 
@@ -13,16 +14,20 @@ public class Owner extends User {
     @Override
     public int createAccount() throws SQLException {
         String query = "INSERT into user(name, username, password, email, phoneNUM, isGroomer) VALUES (?, ?, ?, ?, ?, ?)";
-        PreparedStatement ps = con.prepareStatement(query);
-        ps.setInt(1, this.getID());
-        ps.setString(2, this.getName());
-        ps.setString(3, this.getUsername());
-        ps.setString(4, this.getPassword());
-        ps.setString(5, this.getEmail());
-        ps.setLong(6, this.getPhoneNumber());
-        ps.setBoolean(7, this.getIsGroomer());
+        PreparedStatement ps = con.prepareStatement(query, Statement.RETURN_GENERATED_KEYS);
+        ps.setString(1, this.getName());
+        ps.setString(2, this.getUsername());
+        ps.setString(3, this.getPassword());
+        ps.setString(4, this.getEmail());
+        ps.setLong(5, this.getPhoneNumber());
+        ps.setBoolean(6, this.getIsGroomer());
         ps.executeUpdate();
-        return 0;
+        int id = -1;
+        ResultSet rs = ps.getGeneratedKeys();
+        if (rs.next()) {
+            id = rs.getInt(1);
+        }
+        return id;
     }
 
     @Override
