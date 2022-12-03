@@ -11,7 +11,7 @@ public class Groomer extends User {
     static Connection con = JDBCConnection.getConnection();
 
     @Override
-    public int createAccount() throws SQLException{
+    public int createAccount() throws SQLException {
         String query = "INSERT into user(userID, name, username, password, email, phoneNUM, isGroomer) VALUES (?, ?, ?, ?, ?, ?, ?)";
         PreparedStatement ps = con.prepareStatement(query);
         ps.setInt(1, this.getOwnerID());
@@ -92,44 +92,37 @@ public class Groomer extends User {
 
     @Override
     public void setOwnerID(int id) {
-        // TODO Auto-generated method stub
-        
+        this.id = id;
     }
 
     @Override
     public void setName(String name) {
-        // TODO Auto-generated method stub
-        
+        this.name = name;
     }
 
     @Override
     public void setUsername(String username) {
-        // TODO Auto-generated method stub
-        
+        this.username = username;
     }
 
     @Override
     public void setEmail(String email) {
-        // TODO Auto-generated method stub
-        
+        this.email = email;
     }
 
     @Override
     public void setPassword(String password) {
-        // TODO Auto-generated method stub
-        
+        this.password = password;
     }
 
     @Override
     public void setPhoneNumber(long pn) {
-        // TODO Auto-generated method stub
-        
+        this.phoneNumber = pn;
     }
 
     @Override
     public void setIsGroomer(boolean option) {
-        // TODO Auto-generated method stub
-        
+        this.isGroomer = option;
     }
 
 }

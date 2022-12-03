@@ -1,4 +1,5 @@
 package com.jdbc.model;
+
 import com.jdbc.util.JDBCConnection;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -94,27 +95,27 @@ public class Owner extends User {
 
     @Override
     public void setUsername(String username) {
-       this.username=username;
+        this.username = username;
     }
 
     @Override
     public void setEmail(String email) {
-        this.email=email;
+        this.email = email;
     }
 
     @Override
     public void setPassword(String password) {
-        this.password=password;
+        this.password = password;
     }
 
     @Override
     public void setPhoneNumber(long pn) {
-        this.phoneNumber=pn;
+        this.phoneNumber = pn;
     }
 
     @Override
     public void setIsGroomer(boolean option) {
-        this.isGroomer=option;
+        this.isGroomer = option;
     }
 
 }
