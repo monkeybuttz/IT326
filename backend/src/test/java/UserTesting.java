@@ -1,4 +1,5 @@
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 import java.sql.SQLException;
@@ -17,14 +18,13 @@ public class UserTesting {
     public void testingCreateOwnerAccount() throws SQLException {
         Owner owner1 = new Owner();
         owner1.setEmail("gyonan@ilstu.edu");
-        owner1.setID(5);
         owner1.setName("Greg Yonan");
         owner1.setUsername("gyonan");
         owner1.setPassword("Password123!");
         owner1.setPhoneNumber(8424747);
         owner1.setIsGroomer(false);
         int test = owner1.createAccount();
-        assertEquals(0, test);
+        assertNotEquals(0, test);
     }
 
     // createAccount() groomer (clear row in sql before each test)
@@ -32,14 +32,13 @@ public class UserTesting {
     public void testingCreateGroomerAccount() throws SQLException {
         Groomer groom = new Groomer();
         groom.setEmail("gyonan@ilstu.edu");
-        groom.setID(5);
         groom.setName("Greg Yonan");
         groom.setUsername("gyonan");
         groom.setPassword("Password123!");
         groom.setPhoneNumber(8424747);
         groom.setIsGroomer(true);
         int test = groom.createAccount();
-        assertEquals(0, test);
+        assertNotEquals(0, test);
     }
 
     // readAccount() owner (userID must be in table)
