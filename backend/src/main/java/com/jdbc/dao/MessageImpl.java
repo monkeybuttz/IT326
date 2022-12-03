@@ -1,9 +1,6 @@
 package com.jdbc.dao;
 
 import java.sql.*;
-import java.util.ArrayList;
-import java.util.List;
-import java.io.*;
 
 import com.jdbc.util.JDBCConnection;
 

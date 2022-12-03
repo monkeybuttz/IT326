@@ -11,15 +11,14 @@ public class Owner extends User {
 
     @Override
     public int createAccount() throws SQLException {
-        String query = "INSERT into user(userID, name, username, password, email, phoneNUM, isGroomer) VALUES (?, ?, ?, ?, ?, ?, ?)";
+        String query = "INSERT into user(name, username, password, email, phoneNUM, isGroomer) VALUES (?, ?, ?, ?, ?, ?)";
         PreparedStatement ps = con.prepareStatement(query);
-        ps.setInt(1, this.getOwnerID());
-        ps.setString(2, this.getName());
-        ps.setString(3, this.getUsername());
-        ps.setString(4, this.getPassword());
-        ps.setString(5, this.getEmail());
-        ps.setLong(6, this.getPhoneNumber());
-        ps.setBoolean(7, this.getIsGroomer());
+        ps.setString(1, this.getName());
+        ps.setString(2, this.getUsername());
+        ps.setString(3, this.getPassword());
+        ps.setString(4, this.getEmail());
+        ps.setLong(5, this.getPhoneNumber());
+        ps.setBoolean(6, this.getIsGroomer());
         ps.executeUpdate();
         return 0;
     }
