@@ -11,6 +11,9 @@ public class Groomer extends User {
 
     static Connection con = JDBCConnection.getConnection();
 
+    public Groomer() {
+    }
+
     public Groomer(int id, String name, String username, String password, String email, long phoneNumber,
             boolean isGroomerr) {
         super(id, name, username, password, email, phoneNumber, isGroomerr);
@@ -92,6 +95,48 @@ public class Groomer extends User {
     public boolean getIsGroomer() {
         // TODO Auto-generated method stub
         return false;
+    }
+
+    @Override
+    public void setOwnerID(int id) {
+        // TODO Auto-generated method stub
+        
+    }
+
+    @Override
+    public void setName(String name) {
+        // TODO Auto-generated method stub
+        
+    }
+
+    @Override
+    public void setUsername(String username) {
+        // TODO Auto-generated method stub
+        
+    }
+
+    @Override
+    public void setEmail(String email) {
+        // TODO Auto-generated method stub
+        
+    }
+
+    @Override
+    public void setPassword(String password) {
+        // TODO Auto-generated method stub
+        
+    }
+
+    @Override
+    public void setPhoneNumber(long pn) {
+        // TODO Auto-generated method stub
+        
+    }
+
+    @Override
+    public void setIsGroomer(boolean option) {
+        // TODO Auto-generated method stub
+        
     }
 
 }

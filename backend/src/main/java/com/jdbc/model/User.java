@@ -13,19 +13,22 @@ public abstract class User {
     public String email;
     public String password;
     public long phoneNumber;
-    public boolean isGroomerr;
+    public boolean isGroomer;
 
     static Connection con = JDBCConnection.getConnection();
 
+    public User() {
+    }
+
     public User(int id, String name, String username, String password, String email, long phoneNumber,
-            boolean isGroomerr) {
+            boolean isGroomer) {
         this.id = id;
         this.name = name;
         this.username = username;
         this.email = email;
         this.password = password;
         this.phoneNumber = phoneNumber;
-        this.isGroomerr = isGroomerr;
+        this.isGroomer = isGroomer;
     }
 
     public abstract int createAccount() throws SQLException;
@@ -53,5 +56,19 @@ public abstract class User {
     public abstract long getPhoneNumber();
 
     public abstract boolean getIsGroomer();
+
+    public abstract void setOwnerID(int id);
+
+    public abstract void setName(String name);
+
+    public abstract void setUsername(String username);
+
+    public abstract void setEmail(String email);
+
+    public abstract void setPassword(String password);
+
+    public abstract void setPhoneNumber(long pn);
+
+    public abstract void setIsGroomer(boolean option);
 
 }
