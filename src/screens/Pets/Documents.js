@@ -6,11 +6,16 @@ import Header from '../../components/Header'
 import Button from '../../components/Button'
 import ImagePicker from '../../components/ExpoImage'
 import { getStatusBarHeight } from 'react-native-status-bar-height'
+import endpoint from '../../helpers/endpoint'
+
+
 
 export default function Documents({ navigation, route, options  }) {
 
     const [photos, setPhotos] = useState([]);
     const [photo, setPhoto] = useState();
+
+    const userId = 1;
 
     useEffect(() => {
       fetch(`${endpoint}/pet/docs/${userId}`, { method: 'GET' }

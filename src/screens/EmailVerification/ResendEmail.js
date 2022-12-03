@@ -8,7 +8,8 @@ import TextInput from '../../components/TextInput'
 import BackButton from '../../components/BackButton'
 import { emailValidator } from '../../helpers/emailValidator'
 import { theme } from '../../core/theme'
-import {endpoint} from '../../../App'
+import endpoint from '../../helpers/endpoint'
+
 
 export default function ResendEmail({ navigation, accountID }) {
 

@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import { View, StyleSheet, Image, TouchableOpacity, FlatList } from 'react-native'
 import { Text } from 'react-native-paper'
 import Button from '../../components/Button'
@@ -8,16 +8,31 @@ import BackButton from '../../components/BackButton'
 import { theme } from '../../core/theme'
 import { getStatusBarHeight } from 'react-native-status-bar-height'
 import SettingsButton from '../../components/SettingsButton'
+import endpoint from '../../helpers/endpoint'
 
 
 export default function Pet({ navigation }) {
 
   const [pet, setPet] = useState({ src: '../../../assets/pets.png', name: "Allie", breed: "Pitbull", notes: "Submissive and breedable.", appointments: [{date: (new Date()).toDateString(), id: -1}] });
+  const id = 22
 
-  useEffect(() => { 
-      fetch(`${endpoint}/pet/${id}`, { method: 'GET' }
-      ).then((res) => { return res.json() }).then(data => setPet(data)).catch()
-    }, []);
+  // useEffect(() => { 
+  //     fetch(`${endpoint}/pet/${id}`, { method: 'GET' }
+  //     ).then((res) => { return res.json() }).then(data => setPet(data)).catch()
+  // }, []);
+  
+  const favoriteGroom = (item) => {
+    fetch(`${endpoint}/groomingapt/${item.id}`, { method: 'POST' }
+    ).then(
+        setPet({...pet, appointments: pet.appointments.map(ap => {
+          if (ap.id == item.id) {
+          return ({...item, favorite: !item.favorite})
+          } else {
+            return ap
+          }
+        })
+      }) )
+  }
 
 const style = StyleSheet.create({
     container: {
@@ -91,14 +106,7 @@ const style = StyleSheet.create({
                   {item.date}
                   </Text>
                 <TouchableOpacity
-                  onPress={() => {
-                    setPet({...pet, appointments: pet.appointments.map(ap => {
-                      if (ap.id == item.id) {
-                      return ({...item, favorite: !item.favorite})
-                      } else {
-                        return ap
-                    }
-                  })})}}>
+                  onPress={() => {favoriteGroom(item)}}>
                   <Text style={{...style.favorite, color: item.favorite ? theme.colors.secondary : 'black'}}>{item.favorite ? '★' : '☆'}</Text>
                 </TouchableOpacity>
               </View>
