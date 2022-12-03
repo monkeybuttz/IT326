@@ -17,5 +17,8 @@ public interface GroomingAppointmentDAO {
 
     public void update(GroomingAppointment apt) throws SQLException;
 
-    public void favorite(GroomingAppointment apt) throws SQLException;
+    public void favorite(int id) throws SQLException;
+    
+    public void unfavorite(int id) throws SQLException;
 }
+

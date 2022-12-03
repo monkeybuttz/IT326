@@ -1,9 +1,6 @@
 package com.jdbc.dao;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -16,13 +13,19 @@ public class PetImp implements PetDAO {
     @Override
     public int add(Pet pet) throws SQLException {
         String query = "INSERT into pet(ownerID, name, breed, notes, image) VALUES (?, ?, ?, ?, ? )";
-        PreparedStatement ps = con.prepareStatement(query);
+        PreparedStatement ps = con.prepareStatement(query, Statement.RETURN_GENERATED_KEYS);
         ps.setInt(1, pet.getOwnerId());
         ps.setString(2, pet.getName());
         ps.setString(3, pet.getBreed());
         ps.setString(4, pet.getNotes());
         ps.setBlob(5, pet.getImage());
-        return ps.executeUpdate();
+        ps.executeUpdate();
+        int id = -1;
+        ResultSet rs = ps.getGeneratedKeys();
+        if (rs.next()) {
+            id = rs.getInt(1);
+        }
+        return id;
     }
 
     @Override

@@ -50,6 +50,7 @@ public class GroomingAppointmentImp implements GroomingAppointmentDAO {
             gapt.setAptDate(rs.getString("date"));
             gapt.setLocation(rs.getString("location"));
             gapt.setNotes(rs.getString("notes"));
+            gapt.setFavorited(rs.getBoolean("favorited"))
         }
         if (c) {
             return gapt;
@@ -90,21 +91,18 @@ public class GroomingAppointmentImp implements GroomingAppointmentDAO {
     }
 
     @Override
-    public void favorite(GroomingAppointment apt) throws SQLException {
-        String query = "update groomingappointment set favorited = ? where aptID = ?";
+    public void favorite(int id) throws SQLException {
+        String query = "update groomingappointment set favorited = true where aptID = ?";
         PreparedStatement ps = con.prepareStatement(query);
-        if (apt.isFavorited()) {
-            ps.setBoolean(1, false);
-            apt.setFavorited(false);
-        }
-        else if (!apt.isFavorited()) {
-            ps.setBoolean(1, true);
-            apt.setFavorited(true);
-        }
-        else {
-            throw new SQLException();
-        }
-        ps.setInt(2, apt.getAptId());
+        ps.setInt(1, id);
+        ps.executeUpdate();
+    }
+
+    @Override
+    public void unfavorite(int id) throws SQLException {
+        String query = "update groomingappointment set favorited = false where aptID = ?";
+        PreparedStatement ps = con.prepareStatement(query);
+        ps.setInt(1, id);
         ps.executeUpdate();
     }
 }

@@ -4,6 +4,7 @@ import com.jdbc.util.JDBCConnection;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 
 public class Groomer extends User {
@@ -14,6 +15,7 @@ public class Groomer extends User {
     public int createAccount() throws SQLException {
         String query = "INSERT into user(name, username, password, email, phoneNUM, isGroomer) VALUES (?, ?, ?, ?, ?, ?, ?)";
         PreparedStatement ps = con.prepareStatement(query);
+        ps.setInt(1, this.getID());
         ps.setString(2, this.getName());
         ps.setString(3, this.getUsername());
         ps.setString(4, this.getPassword());
@@ -25,33 +27,62 @@ public class Groomer extends User {
     }
 
     @Override
-    public boolean updateAccount(User newUserInfo) {
-        // TODO Auto-generated method stub
-        return false;
+    public Groomer readAccount() throws SQLException {
+        String query = "select * from user where userID =?";
+        PreparedStatement ps = con.prepareStatement(query);
+        ps.setInt(1, this.getID());
+        Groomer groom = new Groomer();
+        ResultSet rs = ps.executeQuery();
+        boolean c = false;
+        while (rs.next()) {
+            c = true;
+            groom.setName(rs.getString("name"));
+            groom.setUsername(rs.getString("username"));
+            groom.setPassword(rs.getString("password"));
+            groom.setEmail(rs.getString("email"));
+            groom.setPhoneNumber(rs.getInt("phoneNUM"));
+            groom.setIsGroomer(rs.getBoolean("isGroomer"));
+        }
+        if (c) {
+            return groom;
+        } 
+        else {
+            return null;
+        }
     }
 
     @Override
-    public boolean deleteAccount() {
-        // TODO Auto-generated method stub
-        return false;
+    public boolean updateAccount(User newUserInfo) throws SQLException {
+        String query = "update user set name = ?, username = ?, password = ?, email = ?, phoneNUM = ?, isGroomer = ? where userId = ? ";        
+        PreparedStatement ps = con.prepareStatement(query);
+        ps.setString(1, newUserInfo.getName());
+        ps.setString(2, newUserInfo.getUsername());
+        ps.setString(3, newUserInfo.getPassword());
+        ps.setString(4, newUserInfo.getEmail());
+        ps.setLong(5, newUserInfo.getPhoneNumber());
+        ps.setBoolean(6, newUserInfo.getIsGroomer());
+        ps.setInt(7, this.getID());
+        ps.executeUpdate();
+        return true;
+    }
+
+    @Override
+    public boolean deleteAccount() throws SQLException {
+        String query = "delete from user where userID =?";
+        PreparedStatement ps = con.prepareStatement(query);
+        ps.setInt(1, this.getID());
+        ps.executeUpdate();
+        return true;
     }
 
     @Override
     public void sendPasswordReset(String email) {
         // TODO Auto-generated method stub
-
     }
 
     @Override
     public void resetPassword() {
         // TODO Auto-generated method stub
-
-    }
-
-    @Override
-    public String toString() {
-        // TODO Auto-generated method stub
-        return null;
     }
 
     @Override
@@ -60,7 +91,7 @@ public class Groomer extends User {
     }
 
     @Override
-    public int getOwnerID() {
+    public int getID() {
         return this.id;
     }
 
@@ -90,7 +121,7 @@ public class Groomer extends User {
     }
 
     @Override
-    public void setOwnerID(int id) {
+    public void setID(int id) {
         this.id = id;
     }
 
