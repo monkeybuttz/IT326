@@ -6,8 +6,7 @@ public class PetImpTests {
 
     @Test
     public void insertPetTest() throws SQLException {
-        Owner owner1 = new Owner(65, "Greg Yonan", "gyonan", "gyonan@ilstu.edu", "Password1234!", 84790, "enter this",
-                false);
+        Owner owner1 = new Owner();
         owner1.createAccount();
     }
 }
