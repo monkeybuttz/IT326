@@ -9,18 +9,19 @@ public class GroomingAppointment {
     String date;
     int groomerId;
     int petId;
-    Blob pic;
+    boolean favorited;
 
     public GroomingAppointment() {}
 
 
-    public GroomingAppointment(int aptId, String notes, String location, String date, int petId, int groomerId) {
+    public GroomingAppointment(int aptId, String notes, String location, String date, Pet pet, Groomer groomer) {
         this.aptId = aptId;
         this.notes = notes;
         this.location = location;
         this.date = date;
-        this.petId = petId;
-        this.groomerId = groomerId;
+        this.petId = pet.getPetId();
+        this.groomerId = groomer.getGroomerId();
+        favorited = false;
     }
 
     public int getAptId() {
@@ -71,12 +72,12 @@ public class GroomingAppointment {
         this.petId = petId;
     }
 
-    public Blob getPic() {
-        return this.pic;
+    public boolean isFavorited() {
+        return favorited;
     }
 
-    public void setPic(Blob pic) {
-        this.pic = pic;
+    public void setFavorited(boolean favorited) {
+        this.favorited = favorited;
     }
 
     @Override
