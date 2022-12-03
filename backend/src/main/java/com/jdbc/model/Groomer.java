@@ -11,14 +11,6 @@ public class Groomer extends User {
 
     static Connection con = JDBCConnection.getConnection();
 
-    public Groomer() {
-    }
-
-    public Groomer(int id, String name, String username, String password, String email, long phoneNumber,
-            boolean isGroomerr) {
-        super(id, name, username, password, email, phoneNumber, isGroomerr);
-    }
-
     @Override
     public int createAccount() {
         // TODO Auto-generated method stub

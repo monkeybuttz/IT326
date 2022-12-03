@@ -10,17 +10,9 @@ public class Owner extends User {
 
     static Connection con = JDBCConnection.getConnection();
 
-    public Owner() {
-    }
-
-    public Owner(int id, String name, String username, String password, String email, int phuneNumber,
-            String string, boolean isGroomer) {
-        super(id, name, username, password, email, phuneNumber, isGroomer);
-    }
-
     @Override
     public int createAccount() throws SQLException {
-        String query = "INSERT into owner(ownerID, name, username, password, email, phoneNUM, isGroomer) VALUES (?, ?, ?, ?, ?, ?, ?)";
+        String query = "INSERT into user(userID, name, username, password, email, phoneNUM, isGroomer) VALUES (?, ?, ?, ?, ?, ?, ?)";
         PreparedStatement ps = con.prepareStatement(query);
         ps.setInt(1, this.getOwnerID());
         ps.setString(2, this.getName());
