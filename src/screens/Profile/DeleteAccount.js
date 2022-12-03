@@ -5,6 +5,9 @@ import Header from '../../components/Header'
 import Button from '../../components/Button'
 import Paragraph from '../../components/Paragraph'
 import { theme } from '../../core/theme'
+import endpoint from '../../helpers/endpoint'
+
+
 
 export default function DeleteAccount({ navigation }) {
 

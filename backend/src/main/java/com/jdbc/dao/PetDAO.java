@@ -12,8 +12,7 @@ public interface PetDAO {
     public int add(Pet pet) throws SQLException;
 
     public void delete(int id) throws SQLException;
-
-    public List<Pet> getPets() throws SQLException;
+    public List<Pet> getPets(int ownerID) throws SQLException;
     
     public void update(Pet pet) throws SQLException;
 

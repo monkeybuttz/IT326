@@ -4,6 +4,7 @@ import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.jdbc.model.GroomingAppointment;
 import com.jdbc.model.Pet;
 import com.jdbc.util.JDBCConnection;
 
@@ -53,6 +54,23 @@ public class PetImp implements PetDAO {
             pet.setNotes(rs.getString("notes"));
             pet.setImage(rs.getBlob("image"));
         }
+
+        query = "select * from groomingappointment where petID = ?";
+        PreparedStatement ps2 = con.prepareStatement(query);
+        ps2.setInt(1, id);
+        ResultSet rs2 = ps.executeQuery();
+        List<GroomingAppointment> ls = new ArrayList<GroomingAppointment>();
+        while (rs.next()) {
+            GroomingAppointment gapt = new GroomingAppointment();
+            gapt.setAptId(rs.getInt("aptID"));
+            gapt.setGroomerId(rs.getInt("groomerID"));
+            gapt.setPetId(rs.getInt("petID"));
+            gapt.setAptDate(rs.getString("date"));
+            gapt.setLocation(rs.getString("location"));
+            gapt.setNotes(rs.getString("notes"));
+            ls.add(gapt);
+        }
+        pet.setGroomingAppointments(ls);
         if (c) {
             return pet;
         } else {
@@ -61,9 +79,10 @@ public class PetImp implements PetDAO {
     }
 
     @Override
-    public List<Pet> getPets() throws SQLException {
-        String query = "select * from pet";
+    public List<Pet> getPets(int ownerID) throws SQLException {
+        String query = "select * from pet where ownerID = ?";
         PreparedStatement ps = con.prepareStatement(query);
+        ps.setInt(1, ownerID);
         ResultSet rs = ps.executeQuery();
         List<Pet> ls = new ArrayList<Pet>();
 
