@@ -26,12 +26,22 @@ public class Owner extends User {
 
     @Override
     public boolean updateAccount(User newUserInfo) throws SQLException {
-        return false;
+        String query = "update user set name = ?, username = ?, password = ?, email = ?, phoneNUM = ?, isGroomer = ? where userId = ? ";        
+        PreparedStatement ps = con.prepareStatement(query);
+        ps.setString(1, newUserInfo.getName());
+        ps.setString(2, newUserInfo.getUsername());
+        ps.setString(3, newUserInfo.getPassword());
+        ps.setString(4, newUserInfo.getEmail());
+        ps.setLong(5, newUserInfo.getPhoneNumber());
+        ps.setBoolean(6, newUserInfo.getIsGroomer());
+        ps.setInt(7, this.getOwnerID());
+        ps.executeUpdate();
+        return true;
     }
 
     @Override
     public boolean deleteAccount() throws SQLException {
-        return false;
+        return true;
     }
 
     @Override

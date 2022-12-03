@@ -41,4 +41,29 @@ public class UserTesting {
         assertNotNull(groom);
     }
 
+    // updateAccount() owner (make sure ownerID matches in sql before each test, refresh table afterwards)
+    @Test
+    public void testingUpdateOwnerAccount() throws SQLException {
+        Owner owner1 = new Owner();
+        owner1.setEmail("gyonan@ilstu.edu");
+        owner1.setOwnerID(5);
+        owner1.setName("Greg Yonan");
+        owner1.setUsername("gyonan");
+        owner1.setPassword("Password123!");
+        owner1.setPhoneNumber(8424747);
+        owner1.setIsGroomer(false);
+        Owner owner2 = new Owner();
+        owner2.setEmail("jackferg@ilstu.edu");
+        owner2.setOwnerID(5);
+        owner2.setName("Jack Ferg");
+        owner2.setUsername("jFerg");
+        owner2.setPassword("Password1234!");
+        owner2.setPhoneNumber(84254747);
+        owner2.setIsGroomer(false);
+        owner1.updateAccount(owner2);
+        assertNotNull(owner1);
+    }
+
+    
+
 }
