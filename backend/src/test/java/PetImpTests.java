@@ -5,6 +5,7 @@ import java.util.Arrays;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertNull;
 
@@ -23,7 +24,7 @@ public class PetImpTests {
 
         PetImp petDAO = new PetImp();
 
-        assertNotNull(petDAO.add(pet));
+        assertNotEquals(-1, petDAO.add(pet));
 
     }
 
@@ -33,8 +34,8 @@ public class PetImpTests {
         Pet pet = new Pet( 1, "Name", "Breed", "Notes", blob);
 
         PetImp petDAO = new PetImp();
-        petDAO.add(pet);
-        assertEquals(pet, petDAO.getPet(1));
+        pet.setPetId(petDAO.add(pet));
+        assertEquals(pet, petDAO.getPet(pet.getPetId()));
 
     }
 
@@ -44,22 +45,22 @@ public class PetImpTests {
         Pet pet = new Pet( 1, "Name", "Breed", "Notes", blob);
 
         PetImp petDAO = new PetImp();
-        petDAO.add(pet);
+        pet.setPetId(petDAO.add(pet));
 
         pet.setBreed("newBreed");
 
         petDAO.update(pet);
 
-        assertEquals(pet, petDAO.getPet(1));
+        assertEquals(pet, petDAO.getPet(pet.getPetId()));
     }
     
     @Test
     public void deletePetTest() throws SQLException {
         Blob blob = new SerialBlob(new byte[1024]);
-        Pet pet = new Pet(1, 1, "Name", "Breed", "Notes", blob);
+        Pet pet = new Pet( 1, "Name", "Breed", "Notes", blob);
 
         PetImp petDAO = new PetImp();
-        petDAO.add(pet);
+        pet.setPetId(petDAO.add(pet));
 
         petDAO.delete(pet.getPetId());
 
@@ -69,14 +70,14 @@ public class PetImpTests {
     @Test
     public void getPetsTest() throws SQLException {
         Blob blob = new SerialBlob(new byte[1024]);
-        Pet pet = new Pet(1, 1, "Name", "Breed", "Notes", blob);
-        Pet pet2 = new Pet(2, 1, "Name", "Breed", "Notes", blob);
-        Pet pet3 = new Pet(3, 1, "Name", "Breed", "Notes", blob);
+        Pet pet = new Pet( 1, "Name", "Breed", "Notes", blob);
+        Pet pet2 = new Pet( 1, "Name", "Breed", "Notes", blob);
+        Pet pet3 = new Pet(1, "Name", "Breed", "Notes", blob);
 
         PetImp petDAO = new PetImp();
-        petDAO.add(pet);
-        petDAO.add(pet2);
-        petDAO.add(pet3);
+        pet.setPetId(petDAO.add(pet));
+        pet2.setPetId(petDAO.add(pet2));
+        pet3.setPetId(petDAO.add(pet3));
 
         List<Pet> pets = Arrays.asList(pet, pet2, pet3);
 
