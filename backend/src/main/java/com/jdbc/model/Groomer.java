@@ -79,6 +79,28 @@ public class Groomer extends User {
         ps.executeUpdate();
         return true;
     }
+    
+    public List<Pet> searchForPet(String name) throws SQLException
+    {
+        List<Pet> ls = new ArrayList<Pet>();
+        name = "%" + name + "%";
+        String query = "select * from Pet where name LIKE ?";
+        PreparedStatement ps = con.prepareStatement(query);
+        ps.setString(1, name);
+        ResultSet rs = ps.executeQuery();
+        while (rs.next())
+        {
+            Pet dog = new Pet();
+            dog.setPetId(rs.getInt("petID"));
+            dog.setOwnerId(rs.getInt("ownerID"));
+            dog.setName(rs.getString("name"));
+            dog.setBreed(rs.getString("breed"));
+            dog.setNotes(rs.getString("notes"));
+            dog.setImage(rs.getBlob("image"));
+            ls.add(dog);
+        }
+        return ls;
+    }
 
     @Override
     public void sendPasswordReset(String email) {
