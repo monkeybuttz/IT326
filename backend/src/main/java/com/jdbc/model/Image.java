@@ -1,11 +1,17 @@
 package com.jdbc.model;
 
 import java.sql.Blob;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.SQLException;
+
+import com.jdbc.util.JDBCConnection;
 
 public class Image {
     private int id;
     private Blob photo;
     private int aptId;
+    static Connection con = JDBCConnection.getConnection();
 
     public Image() {}
 
@@ -42,5 +48,20 @@ public class Image {
 
     public int getAptId() {
         return aptId;
+    }
+
+    public void addImage(Blob photo, int aid) throws SQLException {
+        String query = "insert into image (image, aid) values (?, ?)";
+        PreparedStatement ps = con.prepareStatement(query);
+        ps.setBlob(1, photo);
+        ps.setInt(2, aid);
+        ps.executeUpdate();
+    }
+
+    public void deleteImage(int id) throws SQLException {
+        String query = "delete from image where id = ?";
+        PreparedStatement ps = con.prepareStatement(query);
+        ps.setInt(1, id);
+        ps.executeUpdate();
     }
 }

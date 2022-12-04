@@ -27,7 +27,7 @@ public class GroomingAptTests {
         owner.setEmail("bhughe2@ilstu.edu");
         owner.setUsername("bhughe2");
         owner.setPassword("1234");
-        owner.setIsGroomer(false);
+        owner.setIsGroomer(0);
         owner.setPhoneNumber(1234567890);
         int oid = owner.createAccount();
 
@@ -36,7 +36,7 @@ public class GroomingAptTests {
         groomer.setEmail("thughe32@ilstu.edu");
         groomer.setUsername("thughe3");
         groomer.setPassword("2345");
-        groomer.setIsGroomer(true);
+        groomer.setIsGroomer(1);
         groomer.setPhoneNumber(1234567890);
         int gid = groomer.createAccount();
 
@@ -66,7 +66,7 @@ public class GroomingAptTests {
         owner.setEmail("bhughe2@ilstu.edu");
         owner.setUsername("bhughe2");
         owner.setPassword("1234");
-        owner.setIsGroomer(false);
+        owner.setIsGroomer(0);
         owner.setPhoneNumber(1234567890);
         int oid = owner.createAccount();
 
@@ -75,7 +75,7 @@ public class GroomingAptTests {
         groomer.setEmail("thughe32@ilstu.edu");
         groomer.setUsername("thughe3");
         groomer.setPassword("2345");
-        groomer.setIsGroomer(true);
+        groomer.setIsGroomer(1);
         groomer.setPhoneNumber(1234567890);
         int gid = groomer.createAccount();
 
@@ -103,7 +103,7 @@ public class GroomingAptTests {
         owner.setEmail("bhughe2@ilstu.edu");
         owner.setUsername("bhughe2");
         owner.setPassword("1234");
-        owner.setIsGroomer(false);
+        owner.setIsGroomer(0);
         owner.setPhoneNumber(1234567890);
         int oid = owner.createAccount();
 
@@ -112,7 +112,7 @@ public class GroomingAptTests {
         groomer.setEmail("thughe32@ilstu.edu");
         groomer.setUsername("thughe3");
         groomer.setPassword("2345");
-        groomer.setIsGroomer(true);
+        groomer.setIsGroomer(1);
         groomer.setPhoneNumber(1234567890);
         int gid = groomer.createAccount();
 
@@ -128,9 +128,13 @@ public class GroomingAptTests {
         grooming.setAptDate("12/23/2022");
         grooming.setGroomerId(gid);
         grooming.setPetId(pid);
+        Blob blob1 = new SerialBlob(new byte[1024]);
+        Blob blob2 = new SerialBlob(new byte[1024]);
+        List<Blob> blobs = Arrays.asList(blob1, blob2);
+        grooming.setImages(blobs);
         grooming.setAptId(imp.add(grooming));
         
-        assertEquals(grooming, imp.getGroomingAppointment(grooming.getAptId()).getAptId());
+        assertEquals(grooming.getAptId(), (imp.getGroomingAppointment(grooming.getAptId())).getAptId());
     }
 
     @Test
@@ -140,7 +144,7 @@ public class GroomingAptTests {
         owner.setEmail("bhughe2@ilstu.edu");
         owner.setUsername("bhughe2");
         owner.setPassword("1234");
-        owner.setIsGroomer(false);
+        owner.setIsGroomer(0);
         owner.setPhoneNumber(1234567890);
         int oid = owner.createAccount();
 
@@ -149,7 +153,7 @@ public class GroomingAptTests {
         groomer.setEmail("thughe32@ilstu.edu");
         groomer.setUsername("thughe3");
         groomer.setPassword("2345");
-        groomer.setIsGroomer(true);
+        groomer.setIsGroomer(1);
         groomer.setPhoneNumber(1234567890);
         int gid = groomer.createAccount();
 
@@ -177,7 +181,7 @@ public class GroomingAptTests {
         owner.setEmail("bhughe2@ilstu.edu");
         owner.setUsername("bhughe2");
         owner.setPassword("1234");
-        owner.setIsGroomer(false);
+        owner.setIsGroomer(0);
         owner.setPhoneNumber(1234567890);
         int oid = owner.createAccount();
 
@@ -186,7 +190,7 @@ public class GroomingAptTests {
         groomer.setEmail("thughe32@ilstu.edu");
         groomer.setUsername("thughe3");
         groomer.setPassword("2345");
-        groomer.setIsGroomer(true);
+        groomer.setIsGroomer(1);
         groomer.setPhoneNumber(1234567890);
         int gid = groomer.createAccount();
 

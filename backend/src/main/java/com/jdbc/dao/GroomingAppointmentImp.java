@@ -31,12 +31,14 @@ public class GroomingAppointmentImp {
         }
         List<Blob> blobs = apt.getImages();
         query = "insert into image (image, aid) values (?, ?)";
-        for(int i = 0; i < blobs.size(); i++) {
-            ps = con.prepareStatement(query);
-            ps.setBlob(1, blobs.get(i));
-            ps.setInt(2, id);
-            ps.executeUpdate();
-        }
+        if(blobs != null) {
+            for(int i = 0; i < blobs.size(); i++) {
+                ps = con.prepareStatement(query);
+                ps.setBlob(1, blobs.get(i));
+                ps.setInt(2, id);
+                ps.executeUpdate();
+            }
+        }   
         return id;
     }
 
@@ -45,7 +47,7 @@ public class GroomingAppointmentImp {
         PreparedStatement ps = con.prepareStatement(query);
         ps.setInt(1, id);
         ps.executeUpdate();
-        query = "delete from image where aptID = ?";
+        query = "delete from image where aid = ?";
         ps = con.prepareStatement(query);
         ps.setInt(1, id);
         ps.executeUpdate();
@@ -77,7 +79,7 @@ public class GroomingAppointmentImp {
     }
 
     public List<Blob> getAptImages(int id) throws SQLException {
-        String query = "select * from image where aptID = ?";
+        String query = "select * from image where aid = ?";
         PreparedStatement ps = con.prepareStatement(query);
         ps.setInt(1, id);
         ResultSet rs = ps.executeQuery();
