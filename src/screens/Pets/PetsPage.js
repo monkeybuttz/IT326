@@ -16,7 +16,7 @@ export default function PetsPage({ navigation }) {
 
   useEffect(() => {
       fetch(`${endpoint}/pets/${userId}`, { method: 'GET' }
-      ).then((res) => { return res.json() }).then(data => setPets(data)).catch()
+      ).then((res) => { return res.json() }).then(data => setPets([...data,  ...[{ name: "New Pet", src: "../../../assets/pets.png", link: "NewPet" }]])).catch()
     }, []);
 
     const style = StyleSheet.create({
@@ -80,7 +80,7 @@ export default function PetsPage({ navigation }) {
             data={pets}
             renderItem={({ item }) => (
               (!search || item?.name?.startsWith(search) || item?.name == 'New Pet') && <TouchableOpacity style={style.button}
-                onPress={() => { navigation.navigate(`${item.link ? item.link : 'Pet'}`) }}>
+                onPress={() => { navigation.navigate(`${item.link ? item.link : 'Pet'}`, {id: item.petId}) }}>
                 <View style={{ flex: 1, flexDirection: 'column', margin: 1, }}>
                   <Image style={style.imageThumbnail} source={item.src} />
                   <Text>{item.name}</Text>

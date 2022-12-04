@@ -6,6 +6,7 @@ import java.sql.SQLException;
 
 import com.jdbc.model.Groomer;
 import com.jdbc.model.Owner;
+
 import org.junit.jupiter.api.Test;
 
 public class UserTesting {
@@ -31,11 +32,11 @@ public class UserTesting {
     @Test
     public void testingCreateGroomerAccount() throws SQLException {
         Groomer groom = new Groomer();
-        groom.setEmail("gyonan@ilstu.edu");
-        groom.setName("Greg Yonan");
-        groom.setUsername("gyonan");
-        groom.setPassword("Password123!");
-        groom.setPhoneNumber(8424747);
+        groom.setEmail("gyan@ilstu.edu");
+        groom.setName("Greg Ynan");
+        groom.setUsername("jhvhg");
+        groom.setPassword("23!");
+        groom.setPhoneNumber(8424);
         groom.setIsGroomer(true);
         int test = groom.createAccount();
         assertNotEquals(0, test);
@@ -64,7 +65,7 @@ public class UserTesting {
     @Test
     public void testingUpdateOwnerAccount() throws SQLException {
         Owner owner1 = new Owner();
-        owner1.setEmail("gyonan@ilstu.edu");
+        owner1.setEmail("gy@ilstu.edu");
         owner1.setID(5);
         owner1.setName("Greg Yonan");
         owner1.setUsername("gyonan");

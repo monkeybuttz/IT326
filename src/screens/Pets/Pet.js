@@ -11,14 +11,14 @@ import SettingsButton from '../../components/SettingsButton'
 import endpoint from '../../helpers/endpoint'
 
 
-export default function Pet({ navigation }) {
+export default function Pet({ route, navigation }) {
 
-  const [pet, setPet] = useState({ src: '../../../assets/pets.png', name: "Allie", breed: "Pitbull", notes: "Submissive and breedable.", appointments: [{date: (new Date()).toDateString(), id: -1}] });
-  const id = 22
+  const { id }  = route.params;
+  const [pet, setPet] = useState({ src: '../../../assets/pets.png', name: "Allie", breed: "Pitbull", notes: "Submissive and breedable.", appointments: [{date: (new Date()).toDateString(), id: 1}] });
 
   useEffect(() => { 
       fetch(`${endpoint}/pet/${id}`, { method: 'GET' }
-      ).then((res) => { return res.json() }).then(data => setPet(data)).catch()
+      ).then((res) => { return res.json() }).then(data => setPet({...data, appointments: [{date: (new Date("12/23/2022")).toLocaleDateString("en-US"), id: 1}] })).catch()
   }, []);
   
   const favoriteGroom = (item) => {
@@ -92,7 +92,7 @@ const style = StyleSheet.create({
       </Button>
       <Button
         mode="contained"
-        onPress={() => { navigation.navigate("NewAppointment")}}
+        onPress={() => { navigation.navigate("NewAppointment", {id: 0})}}
         style={{ marginTop: 24, color: theme.colors.secondary }}
       >
         New Appointment
@@ -111,7 +111,9 @@ const style = StyleSheet.create({
                 </TouchableOpacity>
               </View>
               <View style={{ flex: 1, flexDirection: 'row', margin: 1, justifyContent: 'space-between' }}>
-                    <TouchableOpacity>
+                    <TouchableOpacity onPress={() => {
+                      navigation.navigate('NewAppointment', {id: item.id})
+                    }}>
                       <Text>View and Edit</Text>
                     </TouchableOpacity>
                     <TouchableOpacity onPress={() => {

@@ -4,8 +4,8 @@ import java.sql.*;
 
 import com.jdbc.util.JDBCConnection;
 import com.jdbc.model.Groomer;
-import com.jdbc.model.User;
 import com.jdbc.model.Pet;
+import com.jdbc.model.User;
 
 public class Finder 
 {

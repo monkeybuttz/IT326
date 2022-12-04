@@ -3,7 +3,6 @@ package com.springboot.pathControllers;
 import java.sql.SQLException;
 import java.util.List;
 
-import org.apache.tomcat.jni.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -20,7 +19,7 @@ import com.google.gson.Gson;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
-import com.jdbc.model.GroomingAppointment;
+
 import com.jdbc.util.JDBCConnection;
 
 @RestController
@@ -32,7 +31,7 @@ public class UserController {
         con = JDBCConnection.getConnection();
     }
 
-    @GetMapping("user/{id}")
+    @GetMapping("/user/{id}")
     private String getUser(@PathVariable int id) throws SQLException {
         String query = "select * from user where userID =?";
         PreparedStatement ps = con.prepareStatement(query);
@@ -56,7 +55,7 @@ public class UserController {
         }
     }
 
-    @PostMapping("user/{id}")
+    @PostMapping("/user/{id}")
     private String updateUser(@PathVariable int id) throws SQLException {
         String query = "select * from user where userID =?";
         PreparedStatement ps = con.prepareStatement(query);
@@ -79,5 +78,30 @@ public class UserController {
             return null;
         }
     }
+
+    @GetMapping("/searchForGroomer/{name}")
+    public String searchForGroomer(@PathVariable String name) throws SQLException {
+        name = "%" + name + "%";
+        List<Groomer> ls = new ArrayList<Groomer>();
+        String query = "select * from User where (name LIKE ? OR username LIKE ?) AND isGroomer = ?";
+        PreparedStatement ps = con.prepareStatement(query);
+        ps.setString(1, name);
+        ps.setString(2, name);
+        ps.setBoolean(3, true);
+        ResultSet rs = ps.executeQuery();
+        while (rs.next()) {
+            Groomer groomer = new Groomer();
+            groomer.setID(rs.getInt("userID"));
+            groomer.setName(rs.getString("name"));
+            groomer.setUsername(rs.getString("username"));
+            groomer.setPassword(rs.getString("password"));
+            groomer.setEmail(rs.getString("email"));
+            groomer.setPhoneNumber(rs.getInt("phoneNUM"));
+            groomer.setIsGroomer(true);
+            ls.add(groomer);
+        }
+        return new Gson().toJson(ls);
+    }
+ 
 	
 }

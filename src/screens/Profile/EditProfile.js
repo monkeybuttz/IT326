@@ -16,7 +16,7 @@ import endpoint from '../../helpers/endpoint'
 
 export default function EditProfile({ navigation }) {
 
-  const id = 7;
+  const id = 1;
 
   const [name, setName] = useState({ value: '', error: '' })
   const [phone, setPhone] = useState({ value: '', error: '' })

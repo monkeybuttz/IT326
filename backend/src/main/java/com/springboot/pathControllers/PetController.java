@@ -19,7 +19,7 @@ import com.jdbc.model.*;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
-import com.jdbc.model.GroomingAppointment;
+
 import com.jdbc.util.JDBCConnection;
 
 @RestController
@@ -34,7 +34,7 @@ public class PetController {
 
     @GetMapping("/pet/{id}")
     public String getPet(@PathVariable int id) throws SQLException {
-        String query = "select * from pet where petID =?";
+        String query = "select * from pet where petID = ?";
         PreparedStatement ps = con.prepareStatement(query);
         ps.setInt(1, id);
         Pet pet = new Pet();
@@ -50,22 +50,24 @@ public class PetController {
             pet.setImage(rs.getBlob("image"));
         }
 
-        query = "select * from groomingappointment where petID = ?";
-        PreparedStatement ps2 = con.prepareStatement(query);
-        ps2.setInt(1, id);
-        ResultSet rs2 = ps2.executeQuery();
-        List<GroomingAppointment> ls = new ArrayList<GroomingAppointment>();
-        while (rs2.next()) {
-            GroomingAppointment gapt = new GroomingAppointment();
-            gapt.setAptId(rs.getInt("aptID"));
-            gapt.setGroomerId(rs.getInt("groomerID"));
-            gapt.setPetId(rs.getInt("petID"));
-            gapt.setAptDate(rs.getString("date"));
-            gapt.setLocation(rs.getString("location"));
-            gapt.setNotes(rs.getString("notes"));
-            ls.add(gapt);
-        }
-        pet.setGroomingAppointments(ls);
+        // query = "select * from groomingAppointment where petID = ?";
+        // PreparedStatement ps2 = con.prepareStatement(query);
+        // ps2.setInt(1, id);
+        // rs = ps2.executeQuery();
+        // List<GroomingAppointment> ls = new ArrayList<GroomingAppointment>();
+        // while (rs.next()) {
+        //     GroomingAppointment gapt = new GroomingAppointment();
+        //     c = true;
+        //     gapt.setAptId(rs.getInt("aptID"));
+        //     gapt.setGroomerId(rs.getInt("groomerID"));
+        //     gapt.setPetId(rs.getInt("petID"));
+        //     gapt.setAptDate(rs.getString("date"));
+        //     gapt.setLocation(rs.getString("location"));
+        //     gapt.setNotes(rs.getString("notes"));
+        //     gapt.setFavorited(rs.getBoolean("favorited"));
+        //     ls.add(gapt);
+        // }
+        pet.setGroomingAppointments(new ArrayList<GroomingAppointment>());
         if (c) {
             return new Gson().toJson(pet);
         } else {
@@ -73,11 +75,18 @@ public class PetController {
         }
     }
 
-    @GetMapping("/pets/{ownerID}")
-    public String getPets(@PathVariable int ownerID) throws SQLException {
-        String query = "select * from pet where ownerID = ?";
+    @GetMapping("/pets/{userID}")
+    public String getPets(@PathVariable int userID) throws SQLException {
+        User u = new Groomer();
+        u.setID(userID);
+        String query = "";
+        if(u.readAccount().isGroomer){
+            query = "select p.* from pet p, groomingAppointment ga Where p.petID = ga.petID and ga.groomerID = ?";
+        } else {
+            query = "select * from pet where ownerID = ?";
+        }
         PreparedStatement ps = con.prepareStatement(query);
-        ps.setInt(1, ownerID);
+        ps.setInt(1, userID);
         ResultSet rs = ps.executeQuery();
         List<Pet> ls = new ArrayList<Pet>();
 

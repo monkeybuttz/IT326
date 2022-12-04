@@ -1,9 +1,16 @@
 package com.jdbc.model;
 
+import com.google.gson.Gson;
 import com.jdbc.util.JDBCConnection;
 
-import java.sql.Connection;
-import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
+
+import java.sql.*;
+
+import com.jdbc.model.Groomer;
+
+
 
 public abstract class User {
 
@@ -12,16 +19,17 @@ public abstract class User {
     public String username;
     public String email;
     public String password;
-    public long phoneNumber;
-    public boolean isGroomer;
+public long phoneNumber;
+public boolean isGroomer;
 
-    static Connection con = JDBCConnection.getConnection();
+
+static Connection con = JDBCConnection.getConnection();
 
     public abstract int createAccount() throws SQLException;
 
-    public abstract User readAccount() throws SQLException;
+    public abstract  User readAccount() throws SQLException;
 
-    public abstract boolean updateAccount(User newInfoUser) throws SQLException;
+    public abstract boolean updateAccount( User newInfoUser) throws SQLException;
 
     public abstract boolean deleteAccount() throws SQLException;
 
@@ -56,5 +64,5 @@ public abstract class User {
     public abstract void setPhoneNumber(long pn);
 
     public abstract void setIsGroomer(boolean option);
-
+  
 }
