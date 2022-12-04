@@ -78,6 +78,31 @@ public class Owner extends User {
         ps.executeUpdate();
         return true;
     }
+    
+    public List<Groomer> searchForGroomer(String name) throws SQLException
+    {
+        name = "%" + name + "%";
+        List<Groomer> ls = new ArrayList<Groomer>();
+        String query = "select * from User where (name LIKE ? OR username LIKE ?) AND isGroomer = ?";
+        PreparedStatement ps = con.prepareStatement(query);
+        ps.setString(1, name);
+        ps.setString(2, name);
+        ps.setBoolean(3, true);
+        ResultSet rs = ps.executeQuery();
+        while (rs.next())
+        {
+            Groomer groomer = new Groomer();
+            groomer.setID(rs.getInt("userID"));
+            groomer.setName(rs.getString("name"));
+            groomer.setUsername(rs.getString("username"));
+            groomer.setPassword(rs.getString("password"));
+            groomer.setEmail(rs.getString("email"));
+            groomer.setPhoneNumber(rs.getInt("phoneNUM"));
+            groomer.setIsGroomer(true);
+            ls.add(groomer);
+        }
+        return ls;
+    }
 
     @Override
     public void sendPasswordReset(String email) {
