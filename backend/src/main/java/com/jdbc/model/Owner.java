@@ -107,12 +107,11 @@ public class Owner extends User {
         }
         return ls;
     }
-    @Override
+
     public void sendPasswordReset(String email) {
         // TODO Auto-generated method stub
     }
 
-    @Override
     public void resetPassword() {
         // TODO Auto-generated method stub
     }

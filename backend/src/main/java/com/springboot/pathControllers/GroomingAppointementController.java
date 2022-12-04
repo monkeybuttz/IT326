@@ -34,7 +34,7 @@ public class GroomingAppointementController {
 
     @GetMapping("/groomApt/{id}")
     public String getGroomingAppointment(int id) throws SQLException {
-        String query = "select * from groomingappointment, image inner join image on aptID = aid";
+        String query = "select * from groomingappointment, image inner join image on aptID = ?";
         PreparedStatement ps = con.prepareStatement(query);
         ps.setInt(1, id);
         GroomingAppointment gapt = new GroomingAppointment();

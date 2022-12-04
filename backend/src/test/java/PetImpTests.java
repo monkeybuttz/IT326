@@ -42,7 +42,6 @@ public class PetImpTests {
 
         Blob blob = new SerialBlob(new byte[1024]);
         Pet pet = new Pet(oid, "Name", "Breed", "Notes", blob);
-
         PetImp petDAO = new PetImp();
         pet.setPetId(petDAO.add(pet));
         assertEquals(pet, petDAO.getPet(pet.getPetId()));
