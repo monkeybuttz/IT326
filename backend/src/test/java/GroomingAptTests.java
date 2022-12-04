@@ -4,6 +4,8 @@ import static org.junit.jupiter.api.Assertions.assertNull;
 
 import java.sql.Blob;
 import java.sql.SQLException;
+import java.util.Arrays;
+import java.util.List;
 
 import javax.sql.rowset.serial.SerialBlob;
 
@@ -49,6 +51,10 @@ public class GroomingAptTests {
         grooming.setAptDate("12/23/2022");
         grooming.setGroomerId(gid);
         grooming.setPetId(pid);
+        Blob blob1 = new SerialBlob(new byte[1024]);
+        Blob blob2 = new SerialBlob(new byte[1024]);
+        List<Blob> blobs = Arrays.asList(blob1, blob2);
+        grooming.setImages(blobs);
         GroomingAppointmentImp imp = new GroomingAppointmentImp();
         assertNotEquals(-1, imp.add(grooming));
     }

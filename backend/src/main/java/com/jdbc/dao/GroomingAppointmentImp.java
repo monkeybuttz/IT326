@@ -1,5 +1,6 @@
 package com.jdbc.dao;
 
+import java.sql.Blob;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -28,6 +29,14 @@ public class GroomingAppointmentImp {
         if (rs.next()) {
             id = rs.getInt(1);
         }
+        List<Blob> blobs = apt.getImages();
+        query = "insert into image (image, aid) values (?, ?)";
+        for(int i = 0; i < blobs.size(); i++) {
+            ps = con.prepareStatement(query);
+            ps.setBlob(1, blobs.get(i));
+            ps.setInt(2, id);
+            ps.executeUpdate();
+        }
         return id;
     }
 
@@ -36,10 +45,14 @@ public class GroomingAppointmentImp {
         PreparedStatement ps = con.prepareStatement(query);
         ps.setInt(1, id);
         ps.executeUpdate();
+        query = "delete from image where aptID = ?";
+        ps = con.prepareStatement(query);
+        ps.setInt(1, id);
+        ps.executeUpdate();
     }
 
     public GroomingAppointment getGroomingAppointment(int id) throws SQLException {
-        String query = "select * from groomingappointment, image inner join image on aptID = aid";
+        String query = "select * from groomingappointment where aptID = ?";
         PreparedStatement ps = con.prepareStatement(query);
         ps.setInt(1, id);
         GroomingAppointment gapt = new GroomingAppointment();
@@ -55,6 +68,7 @@ public class GroomingAppointmentImp {
             gapt.setNotes(rs.getString("notes"));
             gapt.setFavorited(rs.getBoolean("favorited"));
         }
+        gapt.setImages(getAptImages(gapt.getAptId()));
         if (c) {
             return gapt;
         } else {
@@ -62,23 +76,23 @@ public class GroomingAppointmentImp {
         }
     }
 
-    public List<GroomingAppointment> getAppointments() throws SQLException {
-        String query = "select * from groomingappointment";
+    public List<Blob> getAptImages(int id) throws SQLException {
+        String query = "select * from image where aptID = ?";
         PreparedStatement ps = con.prepareStatement(query);
+        ps.setInt(1, id);
         ResultSet rs = ps.executeQuery();
-        List<GroomingAppointment> ls = new ArrayList<GroomingAppointment>();
-
-        while (rs.next()) {
-            GroomingAppointment gapt = new GroomingAppointment();
-            gapt.setAptId(rs.getInt("aptID"));
-            gapt.setGroomerId(rs.getInt("groomerID"));
-            gapt.setPetId(rs.getInt("petID"));
-            gapt.setAptDate(rs.getString("date"));
-            gapt.setLocation(rs.getString("location"));
-            gapt.setNotes(rs.getString("notes"));
-            ls.add(gapt);
+        boolean c = false;
+        List<Blob> pics = new ArrayList<Blob>();
+        while(rs.next()) {
+            c = true;
+            pics.add(rs.getBlob("image"));
         }
-        return ls;
+        if (c) {
+            return pics;
+        }
+        else {
+            return null;
+        }
     }
 
     public void update(GroomingAppointment apt) throws SQLException {
