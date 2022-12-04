@@ -39,7 +39,7 @@ public class GroomingAppointmentImp {
     }
 
     public GroomingAppointment getGroomingAppointment(int id) throws SQLException {
-        String query = "select * from groomingappointment where aptID =?";
+        String query = "select * from groomingappointment, image inner join image on aptID = aid";
         PreparedStatement ps = con.prepareStatement(query);
         ps.setInt(1, id);
         GroomingAppointment gapt = new GroomingAppointment();

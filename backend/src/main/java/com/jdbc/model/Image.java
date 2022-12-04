@@ -1,18 +1,19 @@
 package com.jdbc.model;
 
 import java.sql.Blob;
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.SQLException;
-import java.util.List;
-
-import com.jdbc.util.JDBCConnection;
 
 public class Image {
     private int id;
     private Blob photo;
-    static Connection con = JDBCConnection.getConnection();
+    private int aptId;
+
     public Image() {}
+
+    public Image(int id, Blob photo, int aptId) {
+        this.id = id;
+        this.photo = photo;
+        this.aptId = aptId;
+    }
 
     public Image(int id, Blob photo) {
         this.id = id;
@@ -33,5 +34,13 @@ public class Image {
 
     public void setPhoto(Blob photo) {
         this.photo = photo;
+    }
+
+    public void setAptId(int aptId) {
+        this.aptId = aptId;
+    }
+
+    public int getAptId() {
+        return aptId;
     }
 }
