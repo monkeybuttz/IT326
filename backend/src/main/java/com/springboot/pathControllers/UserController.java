@@ -80,4 +80,38 @@ public class UserController {
         }
     }
 	
+    public User login(String login, String password) throws SQLException
+    {
+        String query = "select * from User where (username = ? OR email = ?) and password = ?";
+        PreparedStatement ps = con.prepareStatement(query);
+        ps.setString(1, login);
+        ps.setString(2, login);
+        ps.setString(3, password);
+        ResultSet rs = ps.executeQuery();
+        User user = new Owner();
+        while (rs.next())
+        {
+            if (rs.getBoolean("isGroomer"))
+            {
+                user = new Groomer();
+            }
+            else
+            {
+                user = new Owner();
+            }
+
+            user.setID(rs.getInt("userID"));
+            user.setName(rs.getString("name"));
+            user.setUsername(rs.getString("username"));
+            user.setPassword(rs.getString("password"));
+            user.setEmail(rs.getString("email"));
+            user.setPhoneNumber(rs.getInt("phoneNUM"));
+        }
+
+        if (user != null)
+            return user;
+        else 
+            return null;
+    }
+	
 }
