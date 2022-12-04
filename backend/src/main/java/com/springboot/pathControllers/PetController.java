@@ -1,44 +1,39 @@
-package com.jdbc.dao;
+package com.springboot.pathControllers;
+
+import java.sql.SQLException;
+import java.util.List;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RestController;
+import org.springframework.http.ResponseEntity;
+
+import com.google.gson.Gson;
+import com.jdbc.dao.PetImp;
+import com.jdbc.model.*;
 
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
-
 import com.jdbc.model.GroomingAppointment;
-import com.jdbc.model.Pet;
 import com.jdbc.util.JDBCConnection;
 
-public class PetImp {
-    static Connection con = JDBCConnection.getConnection();
+@RestController
+public class PetController {
+    static Connection con;
 
-     
-    public int add(Pet pet) throws SQLException {
-        String query = "INSERT into pet(ownerID, name, breed, notes, image) VALUES (?, ?, ?, ?, ? )";
-        PreparedStatement ps = con.prepareStatement(query, Statement.RETURN_GENERATED_KEYS);
-        ps.setInt(1, pet.getOwnerId());
-        ps.setString(2, pet.getName());
-        ps.setString(3, pet.getBreed());
-        ps.setString(4, pet.getNotes());
-        ps.setBlob(5, pet.getImage());
-        ps.executeUpdate();
-        int id = -1;
-        ResultSet rs = ps.getGeneratedKeys();
-        if (rs.next()) {
-            id = rs.getInt(1);
-        }
-        return id;
+    @Autowired
+    public PetController() {
+        con = JDBCConnection.getConnection();
     }
 
-     
-    public void delete(int id) throws SQLException {
-        String query = "delete from pet where petID =?";
-        PreparedStatement ps = con.prepareStatement(query);
-        ps.setInt(1, id);
-        ps.executeUpdate();
-    }
 
-     
-    public Pet getPet(int id) throws SQLException {
+    @GetMapping("/pet/{id}")
+    public String getPet(@PathVariable int id) throws SQLException {
         String query = "select * from pet where petID =?";
         PreparedStatement ps = con.prepareStatement(query);
         ps.setInt(1, id);
@@ -58,9 +53,9 @@ public class PetImp {
         query = "select * from groomingappointment where petID = ?";
         PreparedStatement ps2 = con.prepareStatement(query);
         ps2.setInt(1, id);
-        ResultSet rs2 = ps.executeQuery();
+        ResultSet rs2 = ps2.executeQuery();
         List<GroomingAppointment> ls = new ArrayList<GroomingAppointment>();
-        while (rs.next()) {
+        while (rs2.next()) {
             GroomingAppointment gapt = new GroomingAppointment();
             gapt.setAptId(rs.getInt("aptID"));
             gapt.setGroomerId(rs.getInt("groomerID"));
@@ -72,14 +67,14 @@ public class PetImp {
         }
         pet.setGroomingAppointments(ls);
         if (c) {
-            return pet;
+            return new Gson().toJson(pet);
         } else {
             return null;
         }
     }
 
-     
-    public List<Pet> getPets(int ownerID) throws SQLException {
+    @GetMapping("/pets/{ownerID}")
+    public String getPets(@PathVariable int ownerID) throws SQLException {
         String query = "select * from pet where ownerID = ?";
         PreparedStatement ps = con.prepareStatement(query);
         ps.setInt(1, ownerID);
@@ -96,18 +91,10 @@ public class PetImp {
             pet.setImage(rs.getBlob("image"));
             ls.add(pet);
         }
-        return ls;
+        return new Gson().toJson(ls);
     }
 
-     
-    public void update(Pet pet) throws SQLException {
-        String query = "update pet set name = ?, breed = ?, notes = ?, image = ? where petID = ?";
-        PreparedStatement ps = con.prepareStatement(query);
-        ps.setString(1, pet.getName());
-        ps.setString(2, pet.getBreed());
-        ps.setString(3, pet.getNotes());
-        ps.setBlob(4, pet.getImage());
-        ps.setInt(5, pet.getPetId());
-        ps.executeUpdate();
-    }
+    
+    
+
 }

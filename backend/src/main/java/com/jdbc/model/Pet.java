@@ -1,6 +1,9 @@
 package com.jdbc.model;
 
 import java.sql.Blob;
+import java.util.List;
+
+import  com.jdbc.model.GroomingAppointment;
 
 public class Pet {
     int petId;
@@ -9,6 +12,7 @@ public class Pet {
     String breed;
     String notes;
     Blob image;
+    List<GroomingAppointment> groomApts;
 
     public Pet() {
     }
@@ -22,7 +26,7 @@ public class Pet {
         this.image = image;
     }
 
-    public Pet( int ownerID, String name, String breed, String notes, Blob image) {
+    public Pet(int ownerID, String name, String breed, String notes, Blob image) {
         this.ownerId = ownerID;
         this.name = name;
         this.breed = breed;
@@ -77,6 +81,14 @@ public class Pet {
 
     public void setImage(Blob image) {
         this.image = image;
+    }
+
+    public List<GroomingAppointment> getGroomingAppointments() {
+        return this.groomApts;
+    }
+
+    public void setGroomingAppointments(List<GroomingAppointment> groomApts) {
+        this.groomApts = groomApts;
     }
 
 

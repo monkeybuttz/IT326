@@ -11,20 +11,27 @@ import { emailValidator } from '../../helpers/emailValidator'
 import { phoneValidator } from '../../helpers/phoneValidator'
 import { passwordValidator } from '../../helpers/passwordValidator'
 import { nameValidator } from '../../helpers/nameValidator'
-import { endpoint } from '../../../App'
+import endpoint from '../../helpers/endpoint'
 
 
 export default function EditProfile({ navigation }) {
 
-  const id = 2;
+  const id = 7;
 
   const [name, setName] = useState({ value: '', error: '' })
   const [phone, setPhone] = useState({ value: '', error: '' })
   const [email, setEmail] = useState({ value: '', error: '' })
   const [password, setPassword] = useState({ value: '', error: '' })
+  const [user, setUser] = useState({});
 
-  useEffect(() => { fetch(`${endpoint}/user/${id}`, { method: 'POST', body: {name: name.value, email: email.value, password: password.value, phone: phone.value}
-      }).then(() => { navigation.navigate('Home')}).catch()
+  useEffect(() => {
+    fetch(`https://1715-138-87-133-12.ngrok.io/user/${id}`, { method: 'GET' })
+      .then(res => res.json())
+      .then((data) => {
+        setName({value: data.name, error : ''});
+        setPhone({value: data.phoneNumber, error : ''});
+        setEmail({value: data.email, error : ''})
+      }).catch()
   }, [])
 
   const onSignUpPressed = async () => {
@@ -37,10 +44,10 @@ export default function EditProfile({ navigation }) {
       setEmail({ ...email, error: emailError })
       setPassword({ ...password, error: passwordError })
       setPhone({ ...phone, error: phoneError })
-      fetch(`${endpoint}/user/${id}`, { method: 'POST', body: {name: name.value, email: email.value, password: password.value, phone: phone.value}
+      return;
+    }
+    fetch(`${endpoint}/user/${id}`, { method: 'POST', body: {name: name.value, email: email.value, password: password.value, phone: phone.value}
       }).then(() => { navigation.navigate('Home')}).catch()
-      }
-      return
     }
     
 

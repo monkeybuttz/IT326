@@ -13,15 +13,14 @@ public class Groomer extends User {
 
     @Override
     public int createAccount() throws SQLException {
-        String query = "INSERT into user(userID, name, username, password, email, phoneNUM, isGroomer) VALUES (?, ?, ?, ?, ?, ?, ?)";
+        String query = "INSERT into user(name, username, password, email, phoneNUM, isGroomer) VALUES (?, ?, ?, ?, ?, ?)";
         PreparedStatement ps = con.prepareStatement(query, Statement.RETURN_GENERATED_KEYS);
-        ps.setInt(1, this.getID());
-        ps.setString(2, this.getName());
-        ps.setString(3, this.getUsername());
-        ps.setString(4, this.getPassword());
-        ps.setString(5, this.getEmail());
-        ps.setLong(6, this.getPhoneNumber());
-        ps.setBoolean(7, this.getIsGroomer());
+        ps.setString(1, this.getName());
+        ps.setString(2, this.getUsername());
+        ps.setString(3, this.getPassword());
+        ps.setString(4, this.getEmail());
+        ps.setLong(5, this.getPhoneNumber());
+        ps.setBoolean(6, this.getIsGroomer());
         ps.executeUpdate();
         int id = -1;
         ResultSet rs = ps.getGeneratedKeys();
@@ -78,6 +77,28 @@ public class Groomer extends User {
         ps.setInt(1, this.getID());
         ps.executeUpdate();
         return true;
+    }
+    
+    public List<Pet> searchForPet(String name) throws SQLException
+    {
+        List<Pet> ls = new ArrayList<Pet>();
+        name = "%" + name + "%";
+        String query = "select * from Pet where name LIKE ?";
+        PreparedStatement ps = con.prepareStatement(query);
+        ps.setString(1, name);
+        ResultSet rs = ps.executeQuery();
+        while (rs.next())
+        {
+            Pet dog = new Pet();
+            dog.setPetId(rs.getInt("petID"));
+            dog.setOwnerId(rs.getInt("ownerID"));
+            dog.setName(rs.getString("name"));
+            dog.setBreed(rs.getString("breed"));
+            dog.setNotes(rs.getString("notes"));
+            dog.setImage(rs.getBlob("image"));
+            ls.add(dog);
+        }
+        return ls;
     }
 
     @Override

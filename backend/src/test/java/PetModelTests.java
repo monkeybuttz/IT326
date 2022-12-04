@@ -8,7 +8,6 @@ import java.sql.SQLException;
 import javax.sql.rowset.serial.SerialBlob;
 
 import com.jdbc.model.*;
-import com.jdbc.dao.PetDAO;
 
 /*
  * Tsts the PetTest.java Program

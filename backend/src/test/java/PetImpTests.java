@@ -15,6 +15,7 @@ import org.junit.jupiter.api.Test;
 
 import com.jdbc.model.*;
 import com.jdbc.dao.PetImp;
+import com.springboot.pathControllers.*;
 public class PetImpTests {
 
     @Test
@@ -30,14 +31,35 @@ public class PetImpTests {
 
     @Test
     public void getPetTest() throws SQLException {
+        Owner owner = new Owner();
+        owner.setName("Braydon Hughes");
+        owner.setEmail("bhughe2@ilstu.edu");
+        owner.setUsername("bhughe2");
+        owner.setPassword("1234");
+        owner.setIsGroomer(false);
+        owner.setPhoneNumber(1234567890);
+        int oid = owner.createAccount();
+
         Blob blob = new SerialBlob(new byte[1024]);
-        Pet pet = new Pet( 1, "Name", "Breed", "Notes", blob);
+        Pet pet = new Pet(oid, "Name", "Breed", "Notes", blob);
 
         PetImp petDAO = new PetImp();
         pet.setPetId(petDAO.add(pet));
         assertEquals(pet, petDAO.getPet(pet.getPetId()));
 
     }
+
+    @Test
+    public void getPetContTest() throws SQLException {
+        Blob blob = new SerialBlob(new byte[1024]);
+        Pet pet = new Pet(1, "Name", "Breed", "Notes", blob);
+        PetController petDAO = new PetController();
+        petDAO.getPet(1);
+        assertNotNull(petDAO.getPet(1));
+
+    }
+    
+
 
     @Test
     public void updatePetTest() throws SQLException {
@@ -81,7 +103,7 @@ public class PetImpTests {
 
         List<Pet> pets = Arrays.asList(pet, pet2, pet3);
 
-        assertEquals(pets, petDAO.getPets());
+        assertEquals(pets, petDAO.getPets(1));
     }
 
 }

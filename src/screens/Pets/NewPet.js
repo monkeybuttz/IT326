@@ -8,7 +8,8 @@ import { theme } from '../../core/theme'
 import { nameValidator } from '../../helpers/nameValidator'
 import ImagePicker from '../../components/ExpoImage'
 import { View } from 'react-native'
-import {endpoint} from '../../../App'
+import endpoint from '../../helpers/endpoint'
+
 
  export default function NewPet({ navigation }) {
 
