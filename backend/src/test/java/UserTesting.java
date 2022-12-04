@@ -23,7 +23,7 @@ public class UserTesting {
         owner1.setUsername("jfergu2");
         owner1.setPassword("Password123!");
         owner1.setPhoneNumber(2706280);
-        owner1.setIsGroomer(false);
+        owner1.setIsGroomer(0);
         int test = owner1.createAccount();
         assertNotEquals(0, test);
     }
@@ -37,7 +37,7 @@ public class UserTesting {
         groom.setUsername("gyonan");
         groom.setPassword("Password123!");
         groom.setPhoneNumber(8424747);
-        groom.setIsGroomer(true);
+        groom.setIsGroomer(1);
         int test = groom.createAccount();
         assertNotEquals(0, test);
     }
@@ -71,7 +71,7 @@ public class UserTesting {
         owner1.setUsername("gyonan");
         owner1.setPassword("Password123!");
         owner1.setPhoneNumber(8424747);
-        owner1.setIsGroomer(false);
+        owner1.setIsGroomer(0);
         Owner owner2 = new Owner();
         owner2.setEmail("jackferg@ilstu.edu");
         owner2.setID(5);
@@ -79,7 +79,7 @@ public class UserTesting {
         owner2.setUsername("jFerg");
         owner2.setPassword("Password1234!");
         owner2.setPhoneNumber(84254747);
-        owner2.setIsGroomer(false);
+        owner2.setIsGroomer(0);
         boolean flag = owner1.updateAccount(owner2);
         assertEquals(true, flag);
     }
@@ -95,7 +95,7 @@ public class UserTesting {
         groom1.setUsername("gyonan");
         groom1.setPassword("Password123!");
         groom1.setPhoneNumber(8424747);
-        groom1.setIsGroomer(false);
+        groom1.setIsGroomer(1);
         Groomer groom2 = new Groomer();
         groom2.setEmail("jackferg@ilstu.edu");
         groom2.setID(5);
@@ -103,7 +103,7 @@ public class UserTesting {
         groom2.setUsername("jFerg");
         groom2.setPassword("Password1234!");
         groom2.setPhoneNumber(84254747);
-        groom2.setIsGroomer(true);
+        groom2.setIsGroomer(1);
         boolean flag = groom1.updateAccount(groom2);
         assertEquals(true, flag);
     }

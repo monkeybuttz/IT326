@@ -3,6 +3,8 @@ package com.jdbc.model;
 import com.jdbc.util.JDBCConnection;
 
 import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 
 public abstract class User {
@@ -13,7 +15,7 @@ public abstract class User {
     public String email;
     public String password;
     public long phoneNumber;
-    public boolean isGroomer;
+    public int isGroomer;
 
     static Connection con = JDBCConnection.getConnection();
 
@@ -24,10 +26,6 @@ public abstract class User {
     public abstract boolean updateAccount(User newInfoUser) throws SQLException;
 
     public abstract boolean deleteAccount() throws SQLException;
-
-    //public abstract void sendPasswordReset(String email) throws SQLException;
-
-    //public abstract void resetPassword() throws SQLException;
     
     public void resetPassword(String password) throws SQLException
     {
@@ -64,7 +62,7 @@ public abstract class User {
 
     public abstract long getPhoneNumber();
 
-    public abstract boolean getIsGroomer();
+    public abstract int getIsGroomer();
 
     public abstract void setID(int id);
 
@@ -78,6 +76,6 @@ public abstract class User {
 
     public abstract void setPhoneNumber(long pn);
 
-    public abstract void setIsGroomer(boolean option);
+    public abstract void setIsGroomer(int option);
 
 }

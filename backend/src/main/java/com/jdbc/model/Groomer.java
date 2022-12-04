@@ -2,6 +2,8 @@ package com.jdbc.model;
 
 import com.jdbc.util.JDBCConnection;
 import java.sql.Statement;
+import java.util.ArrayList;
+import java.util.List;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -20,7 +22,7 @@ public class Groomer extends User {
         ps.setString(3, this.getPassword());
         ps.setString(4, this.getEmail());
         ps.setLong(5, this.getPhoneNumber());
-        ps.setBoolean(6, this.getIsGroomer());
+        ps.setInt(6, this.getIsGroomer());
         ps.executeUpdate();
         int id = -1;
         ResultSet rs = ps.getGeneratedKeys();
@@ -45,7 +47,7 @@ public class Groomer extends User {
             groom.setPassword(rs.getString("password"));
             groom.setEmail(rs.getString("email"));
             groom.setPhoneNumber(rs.getInt("phoneNUM"));
-            groom.setIsGroomer(rs.getBoolean("isGroomer"));
+            groom.setIsGroomer(rs.getInt("isGroomer"));
         }
         if (c) {
             return groom;
@@ -64,7 +66,7 @@ public class Groomer extends User {
         ps.setString(3, newUserInfo.getPassword());
         ps.setString(4, newUserInfo.getEmail());
         ps.setLong(5, newUserInfo.getPhoneNumber());
-        ps.setBoolean(6, newUserInfo.getIsGroomer());
+        ps.setInt(6, newUserInfo.getIsGroomer());
         ps.setInt(7, this.getID());
         ps.executeUpdate();
         return true;
@@ -102,16 +104,6 @@ public class Groomer extends User {
     }
 
     @Override
-    public void sendPasswordReset(String email) {
-        // TODO Auto-generated method stub
-    }
-
-    @Override
-    public void resetPassword() {
-        // TODO Auto-generated method stub
-    }
-
-    @Override
     public String getUsername() {
         return this.username;
     }
@@ -142,8 +134,8 @@ public class Groomer extends User {
     }
 
     @Override
-    public boolean getIsGroomer() {
-        return false;
+    public int getIsGroomer() {
+        return this.isGroomer;
     }
 
     @Override
@@ -177,7 +169,7 @@ public class Groomer extends User {
     }
 
     @Override
-    public void setIsGroomer(boolean option) {
+    public void setIsGroomer(int option) {
         this.isGroomer = option;
     }
 

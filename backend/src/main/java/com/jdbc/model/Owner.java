@@ -6,6 +6,8 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.ArrayList;
+import java.util.List;
 
 public class Owner extends User {
 
@@ -20,7 +22,7 @@ public class Owner extends User {
         ps.setString(3, this.getPassword());
         ps.setString(4, this.getEmail());
         ps.setLong(5, this.getPhoneNumber());
-        ps.setBoolean(6, this.getIsGroomer());
+        ps.setInt(6, this.getIsGroomer());
         ps.executeUpdate();
         int id = -1;
         ResultSet rs = ps.getGeneratedKeys();
@@ -45,7 +47,7 @@ public class Owner extends User {
             own.setPassword(rs.getString("password"));
             own.setEmail(rs.getString("email"));
             own.setPhoneNumber(rs.getInt("phoneNUM"));
-            own.setIsGroomer(rs.getBoolean("isGroomer"));
+            own.setIsGroomer(rs.getInt("isGroomer"));
         }
         if (c) {
             return own;
@@ -64,7 +66,7 @@ public class Owner extends User {
         ps.setString(3, newUserInfo.getPassword());
         ps.setString(4, newUserInfo.getEmail());
         ps.setLong(5, newUserInfo.getPhoneNumber());
-        ps.setBoolean(6, newUserInfo.getIsGroomer());
+        ps.setInt(6, newUserInfo.getIsGroomer());
         ps.setInt(7, this.getID());
         ps.executeUpdate();
         return true;
@@ -98,20 +100,10 @@ public class Owner extends User {
             groomer.setPassword(rs.getString("password"));
             groomer.setEmail(rs.getString("email"));
             groomer.setPhoneNumber(rs.getInt("phoneNUM"));
-            groomer.setIsGroomer(true);
+            groomer.setIsGroomer(1);
             ls.add(groomer);
         }
         return ls;
-    }
-
-    @Override
-    public void sendPasswordReset(String email) {
-        // TODO Auto-generated method stub
-    }
-
-    @Override
-    public void resetPassword() {
-        // TODO Auto-generated method stub
     }
 
     @Override
@@ -145,8 +137,8 @@ public class Owner extends User {
     }
 
     @Override
-    public boolean getIsGroomer() {
-        return false;
+    public int getIsGroomer() {
+        return this.isGroomer;
     }
 
     @Override
@@ -180,7 +172,7 @@ public class Owner extends User {
     }
 
     @Override
-    public void setIsGroomer(boolean option) {
+    public void setIsGroomer(int option) {
         this.isGroomer = option;
     }
 
