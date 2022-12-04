@@ -25,9 +25,32 @@ public abstract class User {
 
     public abstract boolean deleteAccount() throws SQLException;
 
-    public abstract void sendPasswordReset(String email) throws SQLException;
+    //public abstract void sendPasswordReset(String email) throws SQLException;
 
-    public abstract void resetPassword() throws SQLException;
+    //public abstract void resetPassword() throws SQLException;
+    
+    public void resetPassword(String password) throws SQLException
+    {
+        String query = "update user set password = ? where userID = ?";
+        //would also need to change the user objects password in as well
+        PreparedStatement ps = con.prepareStatement(query);
+        ps.setString(1, password);
+        //"1" is for test only would userId in cases
+        ps.setInt(2, id); 
+        ps.executeUpdate();
+    }
+
+    public boolean verifyEmail(String mailer) throws SQLException
+    {
+        String query = "select email from User where userID = ?";
+        PreparedStatement ps = con.prepareStatement(query);
+        ps.setInt(1, id);
+        ResultSet rs = ps.executeQuery();
+        String dbEmail = "empty";
+        while (rs.next())
+            dbEmail = rs.getString("email");
+        return mailer.compareTo(dbEmail) == 0;
+    }
 
     public abstract int getID();
 
