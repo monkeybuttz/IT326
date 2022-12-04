@@ -1,7 +1,5 @@
 package com.jdbc.model;
 
-import java.sql.Blob;
-
 public class GroomingAppointment {
     int aptId;
     String notes;
@@ -12,7 +10,6 @@ public class GroomingAppointment {
     boolean favorited;
 
     public GroomingAppointment() {}
-
 
     public GroomingAppointment(int aptId, String notes, String location, String date, Pet pet, Groomer groomer) {
         this.aptId = aptId;

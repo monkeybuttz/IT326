@@ -31,8 +31,17 @@ public class PetImpTests {
 
     @Test
     public void getPetTest() throws SQLException {
+        Owner owner = new Owner();
+        owner.setName("Braydon Hughes");
+        owner.setEmail("bhughe2@ilstu.edu");
+        owner.setUsername("bhughe2");
+        owner.setPassword("1234");
+        owner.setIsGroomer(false);
+        owner.setPhoneNumber(1234567890);
+        int oid = owner.createAccount();
+
         Blob blob = new SerialBlob(new byte[1024]);
-        Pet pet = new Pet(1, "Name", "Breed", "Notes", blob);
+        Pet pet = new Pet(oid, "Name", "Breed", "Notes", blob);
 
         PetImp petDAO = new PetImp();
         pet.setPetId(petDAO.add(pet));

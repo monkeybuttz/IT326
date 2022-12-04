@@ -13,15 +13,14 @@ public class Owner extends User {
 
     @Override
     public int createAccount() throws SQLException {
-        String query = "INSERT into user(userID, name, username, password, email, phoneNUM, isGroomer) VALUES (?, ?, ?, ?, ?, ?, ?)";
+        String query = "INSERT into user(name, username, password, email, phoneNUM, isGroomer) VALUES (?, ?, ?, ?, ?, ?)";
         PreparedStatement ps = con.prepareStatement(query, Statement.RETURN_GENERATED_KEYS);
-        ps.setInt(1, this.getID());
-        ps.setString(2, this.getName());
-        ps.setString(3, this.getUsername());
-        ps.setString(4, this.getPassword());
-        ps.setString(5, this.getEmail());
-        ps.setLong(6, this.getPhoneNumber());
-        ps.setBoolean(7, this.getIsGroomer());
+        ps.setString(1, this.getName());
+        ps.setString(2, this.getUsername());
+        ps.setString(3, this.getPassword());
+        ps.setString(4, this.getEmail());
+        ps.setLong(5, this.getPhoneNumber());
+        ps.setBoolean(6, this.getIsGroomer());
         ps.executeUpdate();
         int id = -1;
         ResultSet rs = ps.getGeneratedKeys();
@@ -78,6 +77,31 @@ public class Owner extends User {
         ps.setInt(1, this.getID());
         ps.executeUpdate();
         return true;
+    }
+    
+    public List<Groomer> searchForGroomer(String name) throws SQLException
+    {
+        name = "%" + name + "%";
+        List<Groomer> ls = new ArrayList<Groomer>();
+        String query = "select * from User where (name LIKE ? OR username LIKE ?) AND isGroomer = ?";
+        PreparedStatement ps = con.prepareStatement(query);
+        ps.setString(1, name);
+        ps.setString(2, name);
+        ps.setBoolean(3, true);
+        ResultSet rs = ps.executeQuery();
+        while (rs.next())
+        {
+            Groomer groomer = new Groomer();
+            groomer.setID(rs.getInt("userID"));
+            groomer.setName(rs.getString("name"));
+            groomer.setUsername(rs.getString("username"));
+            groomer.setPassword(rs.getString("password"));
+            groomer.setEmail(rs.getString("email"));
+            groomer.setPhoneNumber(rs.getInt("phoneNUM"));
+            groomer.setIsGroomer(true);
+            ls.add(groomer);
+        }
+        return ls;
     }
 
     @Override
