@@ -8,10 +8,10 @@ import com.jdbc.model.GroomingAppointment;
 import com.jdbc.model.Pet;
 import com.jdbc.util.JDBCConnection;
 
-public class PetImp implements PetDAO {
+public class PetImp {
     static Connection con = JDBCConnection.getConnection();
 
-    @Override
+     
     public int add(Pet pet) throws SQLException {
         String query = "INSERT into pet(ownerID, name, breed, notes, image) VALUES (?, ?, ?, ?, ? )";
         PreparedStatement ps = con.prepareStatement(query, Statement.RETURN_GENERATED_KEYS);
@@ -29,7 +29,7 @@ public class PetImp implements PetDAO {
         return id;
     }
 
-    @Override
+     
     public void delete(int id) throws SQLException {
         String query = "delete from pet where petID =?";
         PreparedStatement ps = con.prepareStatement(query);
@@ -37,7 +37,7 @@ public class PetImp implements PetDAO {
         ps.executeUpdate();
     }
 
-    @Override
+     
     public Pet getPet(int id) throws SQLException {
         String query = "select * from pet where petID =?";
         PreparedStatement ps = con.prepareStatement(query);
@@ -78,7 +78,7 @@ public class PetImp implements PetDAO {
         }
     }
 
-    @Override
+     
     public List<Pet> getPets(int ownerID) throws SQLException {
         String query = "select * from pet where ownerID = ?";
         PreparedStatement ps = con.prepareStatement(query);
@@ -99,7 +99,7 @@ public class PetImp implements PetDAO {
         return ls;
     }
 
-    @Override
+     
     public void update(Pet pet) throws SQLException {
         String query = "update pet set name = ?, breed = ?, notes = ?, image = ? where petID = ?";
         PreparedStatement ps = con.prepareStatement(query);

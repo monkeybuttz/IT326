@@ -45,7 +45,7 @@ public class UserTesting {
     @Test
     public void testingReadOwnerAccount() throws SQLException {
         Owner owner1 = new Owner();
-        owner1.setID(5);
+        owner1.setID(7);
         Owner owner2 = owner1.readAccount();
         assertNotNull(owner2);
     }

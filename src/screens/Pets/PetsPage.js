@@ -14,10 +14,10 @@ export default function PetsPage({ navigation }) {
 
   const userId = 1;
 
-  // useEffect(() => {
-  //     fetch(`${endpoint}/user/pets/${userId}`, { method: 'GET' }
-  //     ).then((res) => { return res.json() }).then(data => setPets(data)).catch()
-  //   }, []);
+  useEffect(() => {
+      fetch(`${endpoint}/pets/${userId}`, { method: 'GET' }
+      ).then((res) => { return res.json() }).then(data => setPets(data)).catch()
+    }, []);
 
     const style = StyleSheet.create({
       container: {
@@ -79,16 +79,16 @@ export default function PetsPage({ navigation }) {
           <FlatList
             data={pets}
             renderItem={({ item }) => (
-              (!search || item?.name?.startsWith(search) || item?.name == 'New Pet') && <TouchableOpacity style={pets.length > 6 ? style.smallButton : style.button}
+              (!search || item?.name?.startsWith(search) || item?.name == 'New Pet') && <TouchableOpacity style={style.button}
                 onPress={() => { navigation.navigate(`${item.link ? item.link : 'Pet'}`) }}>
                 <View style={{ flex: 1, flexDirection: 'column', margin: 1, }}>
-                  <Image style={pets.length > 6 ? style.smallImageThumbnail : style.imageThumbnail} source={item.src} />
+                  <Image style={style.imageThumbnail} source={item.src} />
                   <Text>{item.name}</Text>
                 </View>
               </TouchableOpacity>
             )}
             //Setting the number of column
-            numColumns={pets.length > 6 ? 2 : 1}
+            numColumns={1}
             keyExtractor={(item, index) => index}
           />
         </SafeAreaView>

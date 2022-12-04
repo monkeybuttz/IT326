@@ -10,6 +10,7 @@ import SearchableDropdown from 'react-native-searchable-dropdown';
 import ImagePicker from '../../../components/ExpoImage'
 import { theme } from '../../../core/theme'
 import { getStatusBarHeight } from 'react-native-status-bar-height'
+import { NEWDATE } from 'mysql/lib/protocol/constants/types'
 
 export default function NewAppointment({ navigation, route, options  }) {
 
@@ -18,9 +19,12 @@ export default function NewAppointment({ navigation, route, options  }) {
     const [groomer, setGroomer] = useState({name: "", id:-1 });
     const [groomers, serGroomers] = useState([{ name: "barbra", id: 3 }, { name: "natilie", id: 3 }]);
     const [photos, setPhotos] = useState([]);
-    const [photo, setPhoto] = useState();
+  const [photo, setPhoto] = useState();
+  const [datePicker, setDatePicker] = useState(new Date());
 
-    useEffect(()=>{}, [groomer])
+  useEffect(() => {
+      
+    }, [groomer])
 
     const save = () => {
         
@@ -31,7 +35,7 @@ export default function NewAppointment({ navigation, route, options  }) {
           <BackButton goBack={navigation.goBack} />
           <View style={{height: getStatusBarHeight()+30}}/>
           <View style={{height: 30}}>
-              <TimePicker />
+              <TimePicker dateState={[datePicker, setDatePicker]}/>
           </View>
           <SearchableDropdown
             onItemSelect={(groomer) => {

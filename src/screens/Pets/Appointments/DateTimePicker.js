@@ -3,23 +3,11 @@ import Background from '../../../components/Background'
 import { Button, SafeAreaView, StyleSheet, Text, View } from 'react-native';
 import DateTimePicker from '@react-native-community/datetimepicker';
 
-export default function TimePicker({ navigation }) {
+export default function TimePicker({ dateState }) {
 
   const [datePicker, setDatePicker] = useState(false);
  
-  const [date, setDate] = useState(new Date());
-
-  const [timePicker, setTimePicker] = useState(false);
- 
-const [time, setTime] = useState(new Date(Date.now()));
-    
- function showDatePicker() {
-    setDatePicker(true);
-  };
- 
-  function showTimePicker() {
-    setTimePicker(true);
-  };
+  const [date, setDate] = dateState;
 
   function onDateSelected(event, value) {
     setDate(value);
@@ -59,13 +47,6 @@ const styleSheet = StyleSheet.create({
             mode={'date'}
             is24Hour={true}
             onChange={onDateSelected}
-            style={styleSheet.datePicker}
-          />
-          <DateTimePicker
-            value={time}
-            mode={'time'}
-            is24Hour={false}
-            onChange={onTimeSelected}
             style={styleSheet.datePicker}
           />
     </View>

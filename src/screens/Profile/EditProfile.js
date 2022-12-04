@@ -16,7 +16,7 @@ import endpoint from '../../helpers/endpoint'
 
 export default function EditProfile({ navigation }) {
 
-  const id = 1;
+  const id = 7;
 
   const [name, setName] = useState({ value: '', error: '' })
   const [phone, setPhone] = useState({ value: '', error: '' })
@@ -25,9 +25,13 @@ export default function EditProfile({ navigation }) {
   const [user, setUser] = useState({});
 
   useEffect(() => {
-    fetch(`https://1715-138-87-133-12.ngrok.io/pet/${id}`, { method: 'GET' })
-      .then(res => res.blob())
-    .then((data) => { setUser(data) }).catch()
+    fetch(`https://1715-138-87-133-12.ngrok.io/user/${id}`, { method: 'GET' })
+      .then(res => res.json())
+      .then((data) => {
+        setName({value: data.name, error : ''});
+        setPhone({value: data.phoneNumber, error : ''});
+        setEmail({value: data.email, error : ''})
+      }).catch()
   }, [])
 
   const onSignUpPressed = async () => {
@@ -49,7 +53,6 @@ export default function EditProfile({ navigation }) {
 
   return (
     <Background>
-      <Text>{JSON.stringify(user)}</Text>
           <BackButton goBack={navigation.goBack} />
       <Header>My Information</Header>
       <TextInput

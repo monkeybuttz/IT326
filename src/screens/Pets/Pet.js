@@ -16,10 +16,10 @@ export default function Pet({ navigation }) {
   const [pet, setPet] = useState({ src: '../../../assets/pets.png', name: "Allie", breed: "Pitbull", notes: "Submissive and breedable.", appointments: [{date: (new Date()).toDateString(), id: -1}] });
   const id = 22
 
-  // useEffect(() => { 
-  //     fetch(`${endpoint}/pet/${id}`, { method: 'GET' }
-  //     ).then((res) => { return res.json() }).then(data => setPet(data)).catch()
-  // }, []);
+  useEffect(() => { 
+      fetch(`${endpoint}/pet/${id}`, { method: 'GET' }
+      ).then((res) => { return res.json() }).then(data => setPet(data)).catch()
+  }, []);
   
   const favoriteGroom = (item) => {
     fetch(`${endpoint}/groomingapt/${item.id}`, { method: 'POST' }
