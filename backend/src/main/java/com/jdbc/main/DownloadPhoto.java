@@ -14,7 +14,7 @@ public class DownloadPhoto {
 
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
-		downloadPhoto(4);
+		
 	}
 	
 	public static int downloadPhoto(int imageId)
