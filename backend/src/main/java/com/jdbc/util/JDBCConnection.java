@@ -16,7 +16,7 @@ public class JDBCConnection {
 
             con = DriverManager.getConnection(url, username, password);
             if (con != null) {
-                System.out.println("Connection successful!");
+                System.out.println("DB Connection successful!");
             }
         } catch (ClassNotFoundException | SQLException e) {
             System.out.println(e);

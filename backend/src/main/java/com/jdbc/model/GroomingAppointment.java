@@ -1,5 +1,7 @@
 package com.jdbc.model;
 
+import java.util.List;
+
 public class GroomingAppointment {
     int aptId;
     String notes;
@@ -8,6 +10,7 @@ public class GroomingAppointment {
     int groomerId;
     int petId;
     boolean favorited;
+    List<Image> images;
 
     public GroomingAppointment() {}
 
@@ -75,6 +78,14 @@ public class GroomingAppointment {
 
     public void setFavorited(boolean favorited) {
         this.favorited = favorited;
+    }
+
+    public List<Image> getImages() {
+        return images;
+    }
+
+    public void setImages(List<Image> images) {
+        this.images = images;
     }
 
     @Override

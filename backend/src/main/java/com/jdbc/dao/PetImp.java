@@ -58,16 +58,16 @@ public class PetImp {
         query = "select * from groomingappointment where petID = ?";
         PreparedStatement ps2 = con.prepareStatement(query);
         ps2.setInt(1, id);
-        ResultSet rs2 = ps.executeQuery();
+        ResultSet rs2 = ps2.executeQuery();
         List<GroomingAppointment> ls = new ArrayList<GroomingAppointment>();
-        while (rs.next()) {
+        while (rs2.next()) {
             GroomingAppointment gapt = new GroomingAppointment();
-            gapt.setAptId(rs.getInt("aptID"));
-            gapt.setGroomerId(rs.getInt("groomerID"));
-            gapt.setPetId(rs.getInt("petID"));
-            gapt.setAptDate(rs.getString("date"));
-            gapt.setLocation(rs.getString("location"));
-            gapt.setNotes(rs.getString("notes"));
+            gapt.setAptId(rs2.getInt("aptID"));
+            gapt.setGroomerId(rs2.getInt("groomerID"));
+            gapt.setPetId(rs2.getInt("petID"));
+            gapt.setAptDate(rs2.getString("date"));
+            gapt.setLocation(rs2.getString("location"));
+            gapt.setNotes(rs2.getString("notes"));
             ls.add(gapt);
         }
         pet.setGroomingAppointments(ls);

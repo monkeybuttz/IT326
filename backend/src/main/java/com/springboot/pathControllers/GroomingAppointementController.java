@@ -34,7 +34,7 @@ public class GroomingAppointementController {
 
     @GetMapping("/groomApt/{id}")
     public String getGroomingAppointment(int id) throws SQLException {
-        String query = "select * from groomingappointment, image inner join image on aptID = ?";
+        String query = "select * from groomingappointment where aptID = ?";
         PreparedStatement ps = con.prepareStatement(query);
         ps.setInt(1, id);
         GroomingAppointment gapt = new GroomingAppointment();
@@ -50,6 +50,7 @@ public class GroomingAppointementController {
             gapt.setNotes(rs.getString("notes"));
             gapt.setFavorited(rs.getBoolean("favorited"));
         }
+        gapt.setImages(getAptImages(gapt.getAptId()));
         if (c) {
             return new Gson().toJson(gapt);
         } else {
@@ -57,7 +58,22 @@ public class GroomingAppointementController {
         }
     }
 
-    
-    
+    public List<Image> getAptImages(int id) throws SQLException {
+        String query = "select * from image where aid = ?";
+        PreparedStatement ps = con.prepareStatement(query);
+        ps.setInt(1, id);
+        ResultSet rs = ps.executeQuery();
+        boolean c = false;
+        List<Image> pics = new ArrayList<Image>();
+        while (rs.next()) {
+            c = true;
+            pics.add(new Image(rs.getInt("id"), rs.getBlob("image")));
+        }
+        if (c) {
+            return pics;
+        } else {
+            return null;
+        }
+    }
 
 }

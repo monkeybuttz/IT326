@@ -4,6 +4,8 @@ import static org.junit.jupiter.api.Assertions.assertNull;
 
 import java.sql.Blob;
 import java.sql.SQLException;
+import java.util.Arrays;
+import java.util.List;
 
 import javax.sql.rowset.serial.SerialBlob;
 
@@ -13,6 +15,7 @@ import com.jdbc.dao.GroomingAppointmentImp;
 import com.jdbc.dao.PetImp;
 import com.jdbc.model.Groomer;
 import com.jdbc.model.GroomingAppointment;
+import com.jdbc.model.Image;
 import com.jdbc.model.Owner;
 import com.jdbc.model.Pet;
 
@@ -25,7 +28,7 @@ public class GroomingAptTests {
         owner.setEmail("bhughe2@ilstu.edu");
         owner.setUsername("bhughe2");
         owner.setPassword("1234");
-        owner.setIsGroomer(false);
+        owner.setIsGroomer(0);
         owner.setPhoneNumber(1234567890);
         int oid = owner.createAccount();
 
@@ -34,7 +37,7 @@ public class GroomingAptTests {
         groomer.setEmail("thughe32@ilstu.edu");
         groomer.setUsername("thughe3");
         groomer.setPassword("2345");
-        groomer.setIsGroomer(true);
+        groomer.setIsGroomer(1);
         groomer.setPhoneNumber(1234567890);
         int gid = groomer.createAccount();
 
@@ -49,6 +52,10 @@ public class GroomingAptTests {
         grooming.setAptDate("12/23/2022");
         grooming.setGroomerId(gid);
         grooming.setPetId(pid);
+        Blob blob1 = new SerialBlob(new byte[1024]);
+        Blob blob2 = new SerialBlob(new byte[1024]);
+        List<Image> blobs = Arrays.asList(new Image(1, blob1), new Image(2, blob2));
+        grooming.setImages(blobs);
         GroomingAppointmentImp imp = new GroomingAppointmentImp();
         assertNotEquals(-1, imp.add(grooming));
     }
@@ -97,7 +104,7 @@ public class GroomingAptTests {
         owner.setEmail("bhughe2@ilstu.edu");
         owner.setUsername("bhughe2");
         owner.setPassword("1234");
-        owner.setIsGroomer(false);
+        owner.setIsGroomer(0);
         owner.setPhoneNumber(1234567890);
         int oid = owner.createAccount();
 
@@ -106,7 +113,7 @@ public class GroomingAptTests {
         groomer.setEmail("thughe32@ilstu.edu");
         groomer.setUsername("thughe3");
         groomer.setPassword("2345");
-        groomer.setIsGroomer(true);
+        groomer.setIsGroomer(1);
         groomer.setPhoneNumber(1234567890);
         int gid = groomer.createAccount();
 
@@ -124,7 +131,7 @@ public class GroomingAptTests {
         grooming.setPetId(pid);
         grooming.setAptId(imp.add(grooming));
         
-        assertEquals(grooming, imp.getGroomingAppointment(grooming.getAptId()).getAptId());
+        assertEquals(grooming, imp.getGroomingAppointment(grooming.getAptId()));
     }
 
     @Test

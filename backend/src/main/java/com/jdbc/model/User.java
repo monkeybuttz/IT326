@@ -19,8 +19,8 @@ public abstract class User {
     public String username;
     public String email;
     public String password;
-public long phoneNumber;
-public boolean isGroomer;
+    public long phoneNumber;
+    public int isGroomer;
 
 
 static Connection con = JDBCConnection.getConnection();
@@ -32,10 +32,6 @@ static Connection con = JDBCConnection.getConnection();
     public abstract boolean updateAccount( User newInfoUser) throws SQLException;
 
     public abstract boolean deleteAccount() throws SQLException;
-
-    //public abstract void sendPasswordReset(String email) throws SQLException;
-
-    //public abstract void resetPassword() throws SQLException;
     
     public void resetPassword(String password) throws SQLException
     {
@@ -72,7 +68,7 @@ static Connection con = JDBCConnection.getConnection();
 
     public abstract long getPhoneNumber();
 
-    public abstract boolean getIsGroomer();
+    public abstract int getIsGroomer();
 
     public abstract void setID(int id);
 
@@ -86,6 +82,6 @@ static Connection con = JDBCConnection.getConnection();
 
     public abstract void setPhoneNumber(long pn);
 
-    public abstract void setIsGroomer(boolean option);
-  
+    public abstract void setIsGroomer(int option);
+
 }
