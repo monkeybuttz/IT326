@@ -113,7 +113,7 @@ public class UserTesting {
     @Test
     public void testingDeleteOwnerAccounnt() throws SQLException {
         Owner owner1 = new Owner();
-        owner1.setID(5);
+        owner1.setID(16);
         boolean flag = owner1.deleteAccount();
         assertEquals(true, flag);
     }
@@ -123,7 +123,7 @@ public class UserTesting {
     @Test
     public void testingDeleteGroomerAccounnt() throws SQLException {
         Groomer groom1 = new Groomer();
-        groom1.setID(5);
+        groom1.setID(15);
         boolean flag = groom1.deleteAccount();
         assertEquals(true, flag);
     }
