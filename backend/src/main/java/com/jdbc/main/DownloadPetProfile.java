@@ -12,7 +12,7 @@ public class DownloadPetProfile {
  
     public static void main(String[] args) {
         
-    	downloadPetProfile(1);
+
     }
     
     public static String downloadPetProfile(int petId)
