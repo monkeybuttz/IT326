@@ -11,56 +11,68 @@ import { emailValidator } from '../../helpers/emailValidator'
 import { phoneValidator } from '../../helpers/phoneValidator'
 import { passwordValidator } from '../../helpers/passwordValidator'
 import { nameValidator } from '../../helpers/nameValidator'
-import DropDownPicker from 'react-native-dropdown-picker';
+import endpoint from '../../helpers/endpoint'
 
 
 export default function RegisterScreen({ navigation }) {
   const [name, setName] = useState({ value: '', error: '' })
+  const [userName, setUserName] = useState({ value: '', error: '' })
   const [phone, setPhone] = useState({ value: '', error: '' })
   const [email, setEmail] = useState({ value: '', error: '' })
   const [password, setPassword] = useState({ value: '', error: '' })
-  const [type, setType] = useState({ value: '', label: '' })
+  const [isGroomer, setIsGroomer] = useState(0);
+
+  const [resp, setResp] = useState('');
 
 
   const onSignUpPressed = () => {
     const nameError = nameValidator(name.value)
+     const userNameError = nameValidator(userName.value)
     const emailError = emailValidator(email.value)
     const passwordError = passwordValidator(password.value)
     const phoneError = phoneValidator(phone.value)
-    if (emailError || passwordError || nameError || phoneError) {
+    if (emailError || passwordError || nameError || phoneError || userNameError) {
       setName({ ...name, error: nameError })
+      setUserName({...userName, error: userNameError ? "username can't be empty" : ''})
       setEmail({ ...email, error: emailError })
       setPassword({ ...password, error: passwordError })
-      setPhone({...phone, error: phoneError})
+      setPhone({ ...phone, error: phoneError })
       return
     }
-    fetch('/user',{ method: 'POST', body: {name: name.value, email: email.value, password: password.value, phone: phone.value, type: type.value}
+    fetch(`${endpoint}/user`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({
+        id: -1,
+        name: name.value,
+        username: userName.value,
+        email: email.value,
+        password: password.value,
+        phoneNumber: parseInt(phone.value),
+        isGroomer: isGroomer
       })
-    navigation.reset({
-      index: 0,
-      routes: [{ name: 'Home' }],
+    }).then(res => res.json()).then(res => {
+      if(res?.id){
+        navigation.navigate('Home', {...res})
+      }
     })
   }
 
   return (
     <Background>
+      <Text>{ JSON.stringify(resp)}</Text>
       <BackButton goBack={navigation.goBack} />
       <Header>Create Account</Header>
-      <DropDownPicker
-        items={[
-            {label: 'Groomer', value: 1},
-            {label: 'Pet Parent', value: 2},
-        ]}
-        value={type}
-        defaultIndex={2}
-        style={{paddingVertical: 18}}
-        containerStyle={{
-          height: 70,
-          marginTop: 2,
-        }}
-        placeholder="Are you a Pet Parent or Groomer?"
-        onChangeItem={item => setType(item)}
-      />
+      <View  style={{
+        flexDirection: "row",
+        alignItems: "",
+        width: '100%'
+      }}>
+        <Button onPress={() => setIsGroomer(0)} style={{width: '50%'}} mode={`${!isGroomer && "contained"}`}>Pet Parent</Button>
+        <Button onPress={() => setIsGroomer(1)} style={{width: '50%'}} mode={`${isGroomer && "contained"}`}>Groomer</Button>
+      </View>
       <TextInput
         label="Name"
         returnKeyType="next"
@@ -70,10 +82,18 @@ export default function RegisterScreen({ navigation }) {
         errorText={name.error}
       />
       <TextInput
+        label="Username"
+        returnKeyType="next"
+        value={userName.value}
+        onChangeText={(text) => setUserName({ value: text, error: '' })}
+        error={!!userName.error}
+        errorText={userName.error}
+      />
+      <TextInput
         label="Phone Number"
         returnKeyType="next"
         value={phone.value}
-        onChangeText={(text) => setPhone({ value: text, error: '' })}
+        onChangeText={(text) => setPhone({ value: text.replace(/[^0-9]/g, ''), error: '' })}
         error={!!phone.error}
         errorText={phone.error}
 

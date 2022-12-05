@@ -11,6 +11,7 @@ import javax.sql.rowset.serial.SerialBlob;
 
 import org.junit.jupiter.api.Test;
 
+import com.google.gson.Gson;
 import com.jdbc.dao.GroomingAppointmentImp;
 import com.jdbc.dao.PetImp;
 import com.jdbc.model.Groomer;
@@ -18,6 +19,7 @@ import com.jdbc.model.GroomingAppointment;
 import com.jdbc.model.Image;
 import com.jdbc.model.Owner;
 import com.jdbc.model.Pet;
+import com.springboot.pathControllers.GroomingAppointmentController;
 
 public class GroomingAptTests {
     

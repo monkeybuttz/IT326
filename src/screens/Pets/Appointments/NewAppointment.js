@@ -55,9 +55,8 @@ export default function NewAppointment({ route, navigation }) {
 
   const save = () => {
         fetch(`${endpoint}/groomApt${id ? "/" + id : ""}`,  {
-        method: (id) ? 'PUT' : 'POST',
+        method: 'POST',
         headers: {
-            'Accept': 'application/json',
             'Content-Type': 'application/json'
         },
           body: JSON.stringify({notes: notes, address: address, groomerID: groomer.id, photos: photos, date: datePicker.toLocaleDateString("en-US") }),

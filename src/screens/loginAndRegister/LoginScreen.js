@@ -18,27 +18,25 @@ export default function LoginScreen({ navigation }) {
   const [invalid, setInvalid] = useState(false);
 
   const onLoginPressed = () => {
-    const emailError = emailValidator(email.value)
     const passwordError = passwordValidator(password.value)
-    if (emailError || passwordError) {
-      setEmail({ ...email, error: emailError })
+    if ( passwordError) {
       setPassword({ ...password, error: passwordError })
       return
     }
-    useEffect(() => {useEffect(() => { fetch(`${endpoint}/user/login`, { method: 'GET', body: {email: email.value, password: password.value}
-    }).then(res => res.text() )
-      .then((res) => {
-        if (res){
-          navigation.navigate('Home')
+        fetch(`${endpoint}/user/login`, {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json'
+        },
+          body: JSON.stringify({ login: email.value, password: password.value })
+        }).then(res => { setInvalid(true); return res.json() }).catch((e) => setInvalid(true))
+          .then((res) => {
+        if (res.id){
+          navigation.navigate('Home', {id: res.id, name: res.name})
         } else {
           setInvalid(true);
       }
       }).catch()
-  }, []) } ,[])
-    navigation.reset({
-      index: 0,
-      routes: [{ name: 'Home' }],
-    })
   }
 
   return (
@@ -50,7 +48,7 @@ export default function LoginScreen({ navigation }) {
         label="Email"
         returnKeyType="next"
         value={email.value}
-        onChangeText={(text) => setEmail({ value: text, error: '' })}
+        onChangeText={(text) => { setInvalid(false); setEmail({ value: text, error: '' })}}
         error={!!email.error}
         errorText={email.error}
         autoCapitalize="none"
@@ -62,7 +60,7 @@ export default function LoginScreen({ navigation }) {
         label="Password"
         returnKeyType="done"
         value={password.value}
-        onChangeText={(text) => setPassword({ value: text, error: '' })}
+        onChangeText={(text) => {setInvalid(false); setPassword({ value: text, error: '' })}}
         error={!!password.error}
         errorText={password.error}
         secureTextEntry
@@ -74,10 +72,10 @@ export default function LoginScreen({ navigation }) {
           <Text style={styles.forgot}>Forgot your password?</Text>
         </TouchableOpacity>
       </View>
-      {invalid && <Text> Your email and password do not match</Text>}
       <Button mode="contained" onPress={onLoginPressed}>
         Login
       </Button>
+      {invalid && <Text style={{fontWeight: 'bold', color: theme.colors.primary}}> Your email and password do not match</Text>}
       <View style={styles.row}>
         <Text>Don’t have an account? </Text>
         <TouchableOpacity onPress={() => navigation.replace('RegisterScreen')}>

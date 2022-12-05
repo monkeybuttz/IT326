@@ -25,10 +25,12 @@ import com.jdbc.util.JDBCConnection;
 @RestController
 public class GroomingAppointementController {
     static Connection con;
+    static Gson gson;
 
     @Autowired
     public GroomingAppointementController() {
         con = JDBCConnection.getConnection();
+        gson = new Gson();
     }
 
 
@@ -57,6 +59,48 @@ public class GroomingAppointementController {
             return null;
         }
     }
+
+    @PostMapping("/groomingapt/{id}")
+    public String updateGroomingApt(@PathVariable int id, @RequestBody GroomingAppointment apt) throws SQLException {
+        String query = "update groomingappointment set date = ?, location = ?, notes = ? where aptID = ?";
+        PreparedStatement ps = con.prepareStatement(query);
+        ps.setString(1, apt.getDate());
+        ps.setString(2, apt.getLocation());
+        ps.setString(3, apt.getNotes());
+        ps.setInt(4, id);
+        ps.executeUpdate();
+        return "success";
+    }
+    
+    @PostMapping("/groomingapt")
+    public String addGroomingApt(@RequestBody GroomingAppointment apt) throws SQLException {
+        String query = "insert into groomingappointment(groomerID, petID, date, location, notes) VALUES (?, ?, ?, ?, ?)";
+        PreparedStatement ps = con.prepareStatement(query, Statement.RETURN_GENERATED_KEYS);
+        ps.setInt(1, apt.getGroomerId());
+        ps.setInt(2, apt.getPetId());
+        ps.setString(3, apt.getDate());
+        ps.setString(4, apt.getLocation());
+        ps.setString(5, apt.getNotes());
+        ps.executeUpdate();
+        int id = -1;
+        ResultSet rs = ps.getGeneratedKeys();
+        if (rs.next()) {
+            id = rs.getInt(1);
+        }
+        List<Blob> blobs = apt.getImages();
+        query = "insert into image (image, aid) values (?, ?)";
+        if (blobs != null) {
+            for (int i = 0; i < blobs.size(); i++) {
+                ps = con.prepareStatement(query);
+                ps.setBlob(1, blobs.get(i));
+                ps.setInt(2, id);
+                ps.executeUpdate();
+            }
+        }
+        
+        return new Gson().toJson(id);
+    }
+
 
     public List<Blob> getAptImages(int id) throws SQLException {
         String query = "select * from image where aid = ?";

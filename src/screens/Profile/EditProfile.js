@@ -14,9 +14,9 @@ import { nameValidator } from '../../helpers/nameValidator'
 import endpoint from '../../helpers/endpoint'
 
 
-export default function EditProfile({ navigation }) {
+export default function EditProfile({ navigation, route }) {
 
-  const id = 1;
+  const { id } = route.params;
 
   const [name, setName] = useState({ value: '', error: '' })
   const [phone, setPhone] = useState({ value: '', error: '' })
@@ -34,7 +34,7 @@ export default function EditProfile({ navigation }) {
       }).catch()
   }, [])
 
-  const onSignUpPressed = async () => {
+  const onUpdatePressed = async () => {
     const nameError = nameValidator(name.value)
     const emailError = emailValidator(email.value)
     const passwordError = passwordValidator(password.value)
@@ -45,11 +45,17 @@ export default function EditProfile({ navigation }) {
       setPassword({ ...password, error: passwordError })
       setPhone({ ...phone, error: phoneError })
       return;
+    } else {
+      fetch(`${endpoint}/user/${id}`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({ name: name.value, email: email.value, password: Integer.parseInt(password.value), phone: phone.value })
+      })
+      .then(() => { navigation.navigate('Home') }).catch()
     }
-    fetch(`${endpoint}/user/${id}`, { method: 'POST', body: {name: name.value, email: email.value, password: Integer.parseInt(password.value), phone: phone.value}
-      }).then(() => { navigation.navigate('Home')}).catch()
-    }
-    
+  }
 
   return (
     <Background>
@@ -88,7 +94,7 @@ export default function EditProfile({ navigation }) {
           />
       <Button
         mode="contained"
-        onPress={onSignUpPressed}
+        onPress={() => onUpdatePressed()}
         style={{ marginTop: 24, color: theme.colors.secondary }}
       >
         Update Account

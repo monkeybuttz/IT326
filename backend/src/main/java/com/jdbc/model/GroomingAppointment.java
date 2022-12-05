@@ -15,13 +15,12 @@ public class GroomingAppointment {
 
     public GroomingAppointment() {}
 
-    public GroomingAppointment(int aptId, String notes, String location, String date, Pet pet, Groomer groomer) {
-        this.aptId = aptId;
+    public GroomingAppointment(String notes, String location, String date, int petId, int groomerId) {
         this.notes = notes;
         this.location = location;
         this.date = date;
-        this.petId = pet.getPetId();
-        this.groomerId = groomer.getID();
+        this.petId = petId;
+        this.groomerId = groomerId;
         favorited = false;
     }
 

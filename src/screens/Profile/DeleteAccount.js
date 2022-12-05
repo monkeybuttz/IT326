@@ -15,7 +15,10 @@ export default function DeleteAccount({ navigation }) {
 
   const deleteAccount = () => {
       fetch(`${endpoint}/user/delete/${id}`)
-      .then(() => { navigation.navigate('LoginScreen') }).catch();
+      .then(() => { navigation.reset({
+      index: 0,
+      routes: [{ name: 'Home' }],
+    }) }).catch();
     }
 
   return (
