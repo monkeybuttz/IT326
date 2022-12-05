@@ -1,22 +1,3 @@
-package com.springboot.pathControllers;
-
-import java.sql.SQLException;
-import java.util.List;
-
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
-import org.springframework.http.ResponseEntity;
-
-import com.google.gson.Gson;
-import com.jdbc.dao.PetImp;
-import com.jdbc.model.*;
-import com.jdbc.util.JDBCConnection;
-
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
@@ -24,16 +5,9 @@ import java.io.*;
 
 public class MessageController
 {
-    static Connection con;
-    static Gson gson;
+    static Connection con = JDBCConnection.getConnection();
 
-    @Autowired
-    MessageController() {
-        con = JDBCConnection.getConnection();
-    }
-    
-    @PostMapping("/message/send")
-    public String send(@RequestBody Message message) throws SQLException
+    public void sendMessage(Message message) throws SQLException
     {
         String text = message.getText();
         int senderID = message.getSenderId();
@@ -48,11 +22,11 @@ public class MessageController
         ps.executeUpdate();
         int id = -1;
         ResultSet rs = ps.getGeneratedKeys();
-        if (rs.next()) {
+        if(rs.next())
+        {
             id = rs.getInt(1);
         }
         message.setMessageId(id);
-        return gson.toJson("success");
     }
 
     @DeleteMapping
