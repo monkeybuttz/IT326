@@ -33,7 +33,7 @@ public class GroomingAppointementController {
 
 
     @GetMapping("/groomApt/{id}")
-    public String getGroomingAppointment(int id) throws SQLException {
+    public String getGroomingAppointment(@PathVariable int id) throws SQLException {
         String query = "select * from groomingappointment where aptID = ?";
         PreparedStatement ps = con.prepareStatement(query);
         ps.setInt(1, id);
@@ -58,16 +58,16 @@ public class GroomingAppointementController {
         }
     }
 
-    public List<Image> getAptImages(int id) throws SQLException {
+    public List<Blob> getAptImages(int id) throws SQLException {
         String query = "select * from image where aid = ?";
         PreparedStatement ps = con.prepareStatement(query);
         ps.setInt(1, id);
         ResultSet rs = ps.executeQuery();
         boolean c = false;
-        List<Image> pics = new ArrayList<Image>();
+        List<Blob> pics = new ArrayList<Blob>();
         while (rs.next()) {
             c = true;
-            pics.add(new Image(rs.getInt("id"), rs.getBlob("image")));
+            pics.add(rs.getBlob("image"));
         }
         if (c) {
             return pics;

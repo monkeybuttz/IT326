@@ -36,7 +36,7 @@ public class PetImpTests {
         owner.setEmail("bhughe2@ilstu.edu");
         owner.setUsername("bhughe2");
         owner.setPassword("1234");
-        owner.setIsGroomer(false);
+        owner.setIsGroomer( 0);
         owner.setPhoneNumber(1234567890);
         int oid = owner.createAccount();
 

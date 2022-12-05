@@ -25,11 +25,11 @@ export default function EditProfile({ navigation }) {
   const [user, setUser] = useState({});
 
   useEffect(() => {
-    fetch(`https://1715-138-87-133-12.ngrok.io/user/${id}`, { method: 'GET' })
+    fetch(`${endpoint}/user/${id}`, { method: 'GET' })
       .then(res => res.json())
       .then((data) => {
         setName({value: data.name, error : ''});
-        setPhone({value: data.phoneNumber, error : ''});
+        setPhone({ value: data.phoneNumber.toString(), error: '' });
         setEmail({value: data.email, error : ''})
       }).catch()
   }, [])
@@ -46,7 +46,7 @@ export default function EditProfile({ navigation }) {
       setPhone({ ...phone, error: phoneError })
       return;
     }
-    fetch(`${endpoint}/user/${id}`, { method: 'POST', body: {name: name.value, email: email.value, password: password.value, phone: phone.value}
+    fetch(`${endpoint}/user/${id}`, { method: 'POST', body: {name: name.value, email: email.value, password: Integer.parseInt(password.value), phone: phone.value}
       }).then(() => { navigation.navigate('Home')}).catch()
     }
     
@@ -67,13 +67,12 @@ export default function EditProfile({ navigation }) {
         label="Phone Number"
         returnKeyType="next"
         value={phone.value}
-        onChangeText={(text) => setPhone({ value: text, error: '' })}
+        onChangeText={(text) => setPhone({ value: text.replace(/[^0-9]/g, ''), error: '' })}
         error={!!phone.error}
         errorText={phone.error}
-
         autoCompleteType="phone"
-        textContentType="phoneNumber"
-        keyboardType="phone-number"
+        textContentType="number"
+        keyboardType= 'numeric'
       />
       <TextInput
         label="Email"

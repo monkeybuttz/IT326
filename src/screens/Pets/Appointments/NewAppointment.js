@@ -32,11 +32,15 @@ export default function NewAppointment({ route, navigation }) {
         .then(res => res.json())
         .then(data =>{
           setNotes(data.notes)
-          setAddress(data.address)
-          setGroomer(data.groomer)
-          setPhotos(data.photos)
+          setAddress(data.location)
+          //setPhotos(data.images)
           setDatePicker(new Date(data.date))
-        } )
+          fetch(`${endpoint}/user/${data.groomerId}`)
+            .then(res2 => res2.json())
+            .then(data2 =>{
+              setGroomer(data2)
+          })
+        })
     }
   }, [])
   
@@ -61,7 +65,7 @@ export default function NewAppointment({ route, navigation }) {
     }
 
   return (
-      <Background>
+    <Background>
           <BackButton goBack={navigation.goBack} />
           <View style={{height: getStatusBarHeight()+30}}/>
           <View style={{height: 30}}>
@@ -74,7 +78,7 @@ export default function NewAppointment({ route, navigation }) {
                 value={groomer.name}
           onChangeText={(text) => setGroomer({name:text, id: -1})} 
         />
-        {(groomer.id == -1 && groomer.name.length > 0) && <View>
+        {(groomer.id == -1 && groomer.name?.length > 0) && <View>
           {groomers.map(g => {
             return <TouchableOpacity style={{ width: '100%', fontSize: 13, borderColor: theme.colors.secondary,
               borderWidth: 1, padding: 12, borderRadius: 4

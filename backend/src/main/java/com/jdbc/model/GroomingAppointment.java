@@ -1,5 +1,6 @@
 package com.jdbc.model;
 
+import java.sql.Blob;
 import java.util.List;
 
 public class GroomingAppointment {
@@ -10,7 +11,7 @@ public class GroomingAppointment {
     int groomerId;
     int petId;
     boolean favorited;
-    List<Image> images;
+    List<Blob> images;
 
     public GroomingAppointment() {}
 
@@ -80,11 +81,11 @@ public class GroomingAppointment {
         this.favorited = favorited;
     }
 
-    public List<Image> getImages() {
+    public List<Blob> getImages() {
         return images;
     }
 
-    public void setImages(List<Image> images) {
+    public void setImages(List<Blob> images) {
         this.images = images;
     }
 

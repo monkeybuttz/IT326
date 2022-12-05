@@ -30,15 +30,16 @@ public class GroomingAppointmentImp {
         if (rs.next()) {
             id = rs.getInt(1);
         }
-        List<Image> blobs = apt.getImages();
+        List<Blob> blobs = apt.getImages();
         query = "insert into image (image, aid) values (?, ?)";
-        if(blobs != null ){
-        for(int i = 0; i < blobs.size(); i++) {
-            ps = con.prepareStatement(query);
-            ps.setBlob(1, blobs.get(i).getPhoto());
-            ps.setInt(2, id);
-            ps.executeUpdate();
-        }}
+        if(blobs != null) {
+            for(int i = 0; i < blobs.size(); i++) {
+                ps = con.prepareStatement(query);
+                ps.setBlob(1, blobs.get(i));
+                ps.setInt(2, id);
+                ps.executeUpdate();
+            }
+        }   
         return id;
     }
 
@@ -47,7 +48,7 @@ public class GroomingAppointmentImp {
         PreparedStatement ps = con.prepareStatement(query);
         ps.setInt(1, id);
         ps.executeUpdate();
-        query = "delete from image where aptID = ?";
+        query = "delete from image where aid = ?";
         ps = con.prepareStatement(query);
         ps.setInt(1, id);
         ps.executeUpdate();
@@ -78,21 +79,20 @@ public class GroomingAppointmentImp {
         }
     }
 
-    public List<Image> getAptImages(int id) throws SQLException {
+    public List<Blob> getAptImages(int id) throws SQLException {
         String query = "select * from image where aid = ?";
         PreparedStatement ps = con.prepareStatement(query);
         ps.setInt(1, id);
         ResultSet rs = ps.executeQuery();
         boolean c = false;
-        List<Image> pics = new ArrayList<Image>();
-        while(rs.next()) {
+        List<Blob> pics = new ArrayList<Blob>();
+        while (rs.next()) {
             c = true;
-            pics.add(new Image(rs.getInt("id"), rs.getBlob("image")));
+            pics.add(rs.getBlob("image"));
         }
         if (c) {
             return pics;
-        }
-        else {
+        } else {
             return null;
         }
     }

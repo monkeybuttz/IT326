@@ -50,24 +50,24 @@ public class PetController {
             pet.setImage(rs.getBlob("image"));
         }
 
-        // query = "select * from groomingAppointment where petID = ?";
-        // PreparedStatement ps2 = con.prepareStatement(query);
-        // ps2.setInt(1, id);
-        // rs = ps2.executeQuery();
-        // List<GroomingAppointment> ls = new ArrayList<GroomingAppointment>();
-        // while (rs.next()) {
-        //     GroomingAppointment gapt = new GroomingAppointment();
-        //     c = true;
-        //     gapt.setAptId(rs.getInt("aptID"));
-        //     gapt.setGroomerId(rs.getInt("groomerID"));
-        //     gapt.setPetId(rs.getInt("petID"));
-        //     gapt.setAptDate(rs.getString("date"));
-        //     gapt.setLocation(rs.getString("location"));
-        //     gapt.setNotes(rs.getString("notes"));
-        //     gapt.setFavorited(rs.getBoolean("favorited"));
-        //     ls.add(gapt);
-        // }
-        pet.setGroomingAppointments(new ArrayList<GroomingAppointment>());
+        query = "select * from groomingappointment where petID = ?";
+        ps = con.prepareStatement(query);
+        ps.setInt(1, id);
+        rs = ps.executeQuery();
+        List<GroomingAppointment> ls = new ArrayList<GroomingAppointment>();
+        while (rs.next()) {
+            GroomingAppointment gapt = new GroomingAppointment();
+            c = true;
+            gapt.setAptId(rs.getInt("aptID"));
+            gapt.setGroomerId(rs.getInt("groomerID"));
+            gapt.setPetId(rs.getInt("petID"));
+            gapt.setAptDate(rs.getString("date"));
+            gapt.setLocation(rs.getString("location"));
+            gapt.setNotes(rs.getString("notes"));
+            gapt.setFavorited(rs.getBoolean("favorited"));
+            ls.add(gapt);
+        }
+        pet.setGroomingAppointments(ls);
         if (c) {
             return new Gson().toJson(pet);
         } else {
@@ -80,7 +80,7 @@ public class PetController {
         User u = new Groomer();
         u.setID(userID);
         String query = "";
-        if(u.readAccount().isGroomer){
+        if(u.readAccount().isGroomer == 1){
             query = "select p.* from pet p, groomingAppointment ga Where p.petID = ga.petID and ga.groomerID = ?";
         } else {
             query = "select * from pet where ownerID = ?";

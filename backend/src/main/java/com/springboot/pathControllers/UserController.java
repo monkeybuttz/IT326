@@ -38,6 +38,7 @@ public class UserController {
         ps.setInt(1, id);
         Groomer groom = new Groomer();
         ResultSet rs = ps.executeQuery();
+        groom.setID(id);
         boolean c = false;
         while (rs.next()) {
             c = true;
@@ -46,13 +47,30 @@ public class UserController {
             groom.setPassword(rs.getString("password"));
             groom.setEmail(rs.getString("email"));
             groom.setPhoneNumber(rs.getInt("phoneNUM"));
-            groom.setIsGroomer(rs.getBoolean("isGroomer"));
+            groom.setIsGroomer(rs.getInt("isGroomer"));
         }
         if (c) {
             return new Gson().toJson(groom);
         } else {
             return null;
         }
+    }
+
+    @GetMapping("/user/delete/{id}")
+    private boolean deleteUser(@PathVariable int id) throws SQLException {
+        String query = """
+            delete u, p, g, m, i
+                from user u
+                LEFT JOIN Pet p on u.userID = p.ownerID
+                LEFT JOIN Groomingappointment g on p.petID = g.petID
+                LEFT JOIN message m on  m.receiverID = u.userID or m.senderID = u.userID
+                LEFT JOIN image i on  i.aid = g.aptID
+                where u.userID = 1;
+                 """;
+        PreparedStatement ps = con.prepareStatement(query);
+        ps.setInt(1, id);
+        ps.executeUpdate();
+        return true;
     }
 
     @PostMapping("/user/{id}")
@@ -70,7 +88,7 @@ public class UserController {
             groom.setPassword(rs.getString("password"));
             groom.setEmail(rs.getString("email"));
             groom.setPhoneNumber(rs.getInt("phoneNUM"));
-            groom.setIsGroomer(rs.getBoolean("isGroomer"));
+            groom.setIsGroomer(rs.getInt("isGroomer"));
         }
         if (c) {
             return new Gson().toJson(groom);
@@ -97,11 +115,42 @@ public class UserController {
             groomer.setPassword(rs.getString("password"));
             groomer.setEmail(rs.getString("email"));
             groomer.setPhoneNumber(rs.getInt("phoneNUM"));
-            groomer.setIsGroomer(true);
+            groomer.setIsGroomer(rs.getInt("isGroomer"));
             ls.add(groomer);
         }
         return new Gson().toJson(ls);
     }
  
+	
+    public String login(String login, String password) throws SQLException
+    {
+        String query = "select * from User where (username = ? OR email = ?) and password = ?";
+        PreparedStatement ps = con.prepareStatement(query);
+        ps.setString(1, login);
+        ps.setString(2, login);
+        ps.setString(3, password);
+        ResultSet rs = ps.executeQuery();
+        User user = null;
+        while (rs.next())
+        {
+            if (rs.getBoolean("isGroomer"))
+            {
+                user = new Groomer();
+            }
+            else
+            {
+                user = new Owner();
+            }
+
+            user.setID(rs.getInt("userID"));
+            user.setName(rs.getString("name"));
+            user.setUsername(rs.getString("username"));
+            user.setPassword(rs.getString("password"));
+            user.setEmail(rs.getString("email"));
+            user.setPhoneNumber(rs.getInt("phoneNUM"));
+        }
+
+        return new Gson().toJson(user);
+    }
 	
 }
