@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { FlatList, SafeAreaView, View, StyleSheet, Text, TouchableOpacity } from 'react-native';
 import Background from '../../components/Background'
 import Header from '../../components/Header'
@@ -8,7 +8,10 @@ export default function Inbox({ navigation }) {
 
     const [mail, setMail] = useState([{ subject: "hi", id: 2, from: {name: "Omar", id: 1}, content: "a very long message that will not fit inside the small view screen"}, {}, {}, {} ]);
 
-
+  useEffect(() => { 
+    fetch(`/messages/inbox/${id}`)
+   }, [])
+  
   const style = StyleSheet.create({
     container: {
       flex: 1,
