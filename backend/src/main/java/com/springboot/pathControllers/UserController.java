@@ -3,7 +3,6 @@ package com.springboot.pathControllers;
 import java.sql.SQLException;
 import java.util.List;
 
-import org.apache.tomcat.jni.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -47,7 +46,7 @@ public class UserController {
             groom.setPassword(rs.getString("password"));
             groom.setEmail(rs.getString("email"));
             groom.setPhoneNumber(rs.getInt("phoneNUM"));
-            groom.setIsGroomer(rs.getBoolean("isGroomer"));
+            groom.setIsGroomer(rs.getInt("isGroomer"));
         }
         if (c) {
             return new Gson().toJson(groom);
@@ -71,7 +70,7 @@ public class UserController {
             groom.setPassword(rs.getString("password"));
             groom.setEmail(rs.getString("email"));
             groom.setPhoneNumber(rs.getInt("phoneNUM"));
-            groom.setIsGroomer(rs.getBoolean("isGroomer"));
+            groom.setIsGroomer(rs.getInt("isGroomer"));
         }
         if (c) {
             return new Gson().toJson(groom);
