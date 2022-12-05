@@ -10,7 +10,7 @@ public class JDBCConnection {
     static {
         String url = "jdbc:mysql://localhost:3306/petcare";
         String username = "root";
-        String password = "PetCare.IT326";
+        String password ="BanSit00";
         try {
             Class.forName("com.mysql.cj.jdbc.Driver");
 

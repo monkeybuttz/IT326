@@ -10,6 +10,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.jdbc.model.GroomingAppointment;
+import com.jdbc.model.Image;
 import com.jdbc.util.JDBCConnection;
 
 public class GroomingAppointmentImp {
@@ -85,14 +86,13 @@ public class GroomingAppointmentImp {
         ResultSet rs = ps.executeQuery();
         boolean c = false;
         List<Blob> pics = new ArrayList<Blob>();
-        while(rs.next()) {
+        while (rs.next()) {
             c = true;
             pics.add(rs.getBlob("image"));
         }
         if (c) {
             return pics;
-        }
-        else {
+        } else {
             return null;
         }
     }

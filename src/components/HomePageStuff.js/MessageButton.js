@@ -4,9 +4,9 @@ import { theme } from '../../core/theme'
 
 
 
-export default function MessageButton({navigation}) {
+export default function MessageButton({id, navigation}) {
     return (
-        <TouchableOpacity style={styles.button} onPress={() => { navigation.navigate("Inbox") } }>
+        <TouchableOpacity style={styles.button} onPress={() => { navigation.navigate("Inbox", {id: id}) } }>
             <>
                 <Image source={require('../../assets/mail.png')} style={styles.image} />
                 <Text style={styles.text} > Open Inbox</Text>
