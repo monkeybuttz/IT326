@@ -88,7 +88,7 @@ public class UserController {
         ps.setString(2, login);
         ps.setString(3, password);
         ResultSet rs = ps.executeQuery();
-        User user = new Owner();
+        User user = null;
         while (rs.next())
         {
             if (rs.getBoolean("isGroomer"))
@@ -108,10 +108,7 @@ public class UserController {
             user.setPhoneNumber(rs.getInt("phoneNUM"));
         }
 
-        if (user != null)
-            return user;
-        else 
-            return null;
+        return user;
     }
 	
 }
