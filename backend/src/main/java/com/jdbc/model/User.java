@@ -1,16 +1,7 @@
 package com.jdbc.model;
 
-import com.google.gson.Gson;
 import com.jdbc.util.JDBCConnection;
-
-import java.util.ArrayList;
-import java.util.List;
-
 import java.sql.*;
-
-import com.jdbc.model.Groomer;
-
-
 
 public abstract class User {
 
@@ -22,30 +13,26 @@ public abstract class User {
     public long phoneNumber;
     public int isGroomer;
 
-
-static Connection con = JDBCConnection.getConnection();
+    static Connection con = JDBCConnection.getConnection();
 
     public abstract int createAccount() throws SQLException;
 
-    public abstract  User readAccount() throws SQLException;
+    public abstract User readAccount() throws SQLException;
 
-    public abstract boolean updateAccount( User newInfoUser) throws SQLException;
+    public abstract boolean updateAccount(User newInfoUser) throws SQLException;
 
     public abstract boolean deleteAccount() throws SQLException;
-    
-    public void resetPassword(String password) throws SQLException
-    {
+
+    public void resetPassword(String password) throws SQLException {
         String query = "update user set password = ? where userID = ?";
-        //would also need to change the user objects password in as well
         PreparedStatement ps = con.prepareStatement(query);
         ps.setString(1, password);
-        //"1" is for test only would userId in cases
-        ps.setInt(2, id); 
+        this.setPassword(password);
+        ps.setInt(2, this.id);
         ps.executeUpdate();
     }
 
-    public boolean verifyCreditials(String mailer, String username, int phoneNum) throws SQLException
-    {
+    public boolean verifyCreditials(String mailer, String username, int phoneNum) throws SQLException {
         String query = "select * from User where userID = ?";
         PreparedStatement ps = con.prepareStatement(query);
         ps.setInt(1, id);
@@ -53,13 +40,26 @@ static Connection con = JDBCConnection.getConnection();
         String dbEmail = "empty";
         String dbUser = "empty";
         int dbNum = 0;
-        while (rs.next())
-        {
+        while (rs.next()) {
             dbEmail = rs.getString("email");
             dbUser = rs.getString("username");
             dbNum = rs.getInt("phoneNum");
         }
         return ((mailer.compareTo(dbEmail) == 0) && (dbUser.compareTo(username) == 0) && (dbNum == phoneNum));
+    }
+
+    public int getIdFromDB() throws SQLException {
+        String query = "Select userID from user where username = ? and email = ?";
+        PreparedStatement ps = con.prepareStatement(query);
+        ps.setString(1, this.username);
+        ps.setString(2, this.email);
+        ResultSet rs = ps.executeQuery();
+        if (rs.next()) {
+            int id = rs.getInt("userID");
+            this.setID(id);
+            return id;
+        } else
+            return 0;
     }
 
     public abstract int getID();

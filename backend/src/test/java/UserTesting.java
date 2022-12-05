@@ -129,4 +129,19 @@ public class UserTesting {
         assertEquals(true, flag);
     }
 
+    @Test
+    public void testResetPassword() throws SQLException {
+        Owner owner1 = new Owner();
+        owner1.setEmail("jfergu2@ilstu.edu");
+        owner1.setName("Jack Ferguson");
+        owner1.setUsername("jfergu2");
+        owner1.setPassword("Password123!");
+        owner1.setPhoneNumber(2706280);
+        owner1.setIsGroomer(0);
+        owner1.createAccount();
+        owner1.getIdFromDB();
+        owner1.resetPassword("Bingo1234!");
+
+    }
+
 }
