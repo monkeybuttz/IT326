@@ -1,5 +1,6 @@
 package com.jdbc.main;
 
+import com.jdbc.util.JDBCConnection;
 import java.sql.*;
 import java.io.*;
 /*	program to get all messages related to user and 
@@ -7,7 +8,7 @@ import java.io.*;
 	*/
 public class CheckInbox {
 	
-public static void main(String[] args) {
+	public static void main(String[] args) {
 	
 		int send = 1;
 		int recieve = 1;
@@ -15,24 +16,25 @@ public static void main(String[] args) {
          
 	}
 
-	public static void checkInbox(int senderId, int recieverId)
+	public static String checkInbox(int senderId, int recieverId)
 	{
-		String url = "jdbc:mysql://localhost/petcare";
-		String password = "ParkSideRoad161997";
-		String username = "root";
 		
+		String linne = " ";
+		
+		Connection con = null;
 		PreparedStatement p = null;
         ResultSet rs = null;
-         
+        
         String csvFilePath = "inbox.csv";
          
-        try (Connection connection = DriverManager.getConnection(url, username, password)) {
-        	Connection con = DriverManager.getConnection(url, username, password);
-          
+        try {
+        	
+        	con = JDBCConnection.getConnection();
             BufferedWriter fileWriter = new BufferedWriter(new FileWriter(csvFilePath));
             
             // write header line containing column names       
             fileWriter.write("Message");
+            System.out.println("Message");
             
             String sql2 = "select * from message where senderID = ? OR receiverID = ?"; 
             p = con.prepareStatement(sql2);
@@ -41,14 +43,14 @@ public static void main(String[] args) {
             rs = p.executeQuery();
              
             while (rs.next()) {
-//                int messageId = rs.getInt("messageID");
                 String post = rs.getString("post");
-                String line = String.format("%s", post);
+                linne += post + System.lineSeparator();
+                System.out.println(post);
                  
                 fileWriter.newLine();
-                fileWriter.write(line);            
+                fileWriter.write(post);            
             }
-             
+            
             p.close();
             fileWriter.close();
              
@@ -59,6 +61,7 @@ public static void main(String[] args) {
             System.out.println("File IO error:");
             e.printStackTrace();
         }
+        return linne;
 	}
 
 }
