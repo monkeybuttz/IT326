@@ -44,16 +44,22 @@ static Connection con = JDBCConnection.getConnection();
         ps.executeUpdate();
     }
 
-    public boolean verifyEmail(String mailer) throws SQLException
+    public boolean verifyCreditials(String mailer, String username, int phoneNum) throws SQLException
     {
-        String query = "select email from User where userID = ?";
+        String query = "select * from User where userID = ?";
         PreparedStatement ps = con.prepareStatement(query);
         ps.setInt(1, id);
         ResultSet rs = ps.executeQuery();
         String dbEmail = "empty";
+        String dbUser = "empty";
+        int dbNum = 0;
         while (rs.next())
+        {
             dbEmail = rs.getString("email");
-        return mailer.compareTo(dbEmail) == 0;
+            dbUser = rs.getString("username");
+            dbNum = rs.getInt("phoneNum");
+        }
+        return ((mailer.compareTo(dbEmail) == 0) && (dbUser.compareTo(username) == 0) && (dbNum == phoneNum));
     }
 
     public abstract int getID();
