@@ -14,7 +14,7 @@ public class DownloadPhoto {
 
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
-		
+		downloadPhoto(4);
 	}
 	
 	public static int downloadPhoto(int imageId)
@@ -22,12 +22,12 @@ public class DownloadPhoto {
 		
 		Connection con = null;
 		PreparedStatement p = null;
-        ResultSet rs = null;
+        	ResultSet rs = null;
         
 		try
 		{
 			Class.forName("com.mysql.cj.jdbc.Driver");
-        	con = JDBCConnection.getConnection();
+        		con = JDBCConnection.getConnection();
 			p=con.prepareStatement("select * from image where id = " + imageId);
 			rs=p.executeQuery();
 			if(rs.next()){
@@ -39,15 +39,20 @@ public class DownloadPhoto {
 				b=blob.getBytes(1,(int)blob.length());
 				fos.write(b);
 				fos.close();
+
+				p.close();
+				con.close();
+				return 1;
 			}else {
 				System.out.println("Image not found.");
 				return 0;
 			}
-			p.close();
-			con.close();
+
+//			p.close();
+//			con.close();
 		}catch(Exception e){
 			e.printStackTrace();
 		}	
-		return 1;
+		return 0;
 	}
 }
