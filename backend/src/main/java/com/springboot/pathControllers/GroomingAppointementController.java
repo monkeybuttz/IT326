@@ -97,7 +97,7 @@ public class GroomingAppointementController {
                 ps.executeUpdate();
             }
         }
-        
+
         return new Gson().toJson(id);
     }
 

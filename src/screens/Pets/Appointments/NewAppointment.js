@@ -17,7 +17,7 @@ import { TouchableOpacity } from 'react-native-gesture-handler'
 
 export default function NewAppointment({ route, navigation }) {
 
-  const { id } = route.params;
+  const { petID } = route.params;
     const [notes, setNotes] = useState();
     const [address, setAddress] = useState();
     const [groomer, setGroomer] = useState({name: "", id:-1 });
@@ -54,12 +54,20 @@ export default function NewAppointment({ route, navigation }) {
   }, [groomer])
 
   const save = () => {
-        fetch(`${endpoint}/groomApt${id ? "/" + id : ""}`,  {
+        fetch(`${endpoint}/groomingapt${petID ? "/" + petID : ""}`,  {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json'
         },
-          body: JSON.stringify({notes: notes, address: address, groomerID: groomer.id, photos: photos, date: datePicker.toLocaleDateString("en-US") }),
+          body: JSON.stringify({
+            id: 0,
+            notes: notes,
+            location: address,
+            groomerID: groomer.id,
+            photos: photos,
+            date: datePicker.toLocaleDateString("en-US"),
+            petId: petID
+          }),
     })
     }
 
@@ -90,7 +98,7 @@ export default function NewAppointment({ route, navigation }) {
         </View>}
       </View>
             <TextInput
-                label="Address"
+                label="Location"
                 returnKeyType="next"
                 value={address}
                 onChangeText={(text) => setAddress(text)}

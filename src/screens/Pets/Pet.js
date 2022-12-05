@@ -13,11 +13,11 @@ import endpoint from '../../helpers/endpoint'
 
 export default function Pet({ route, navigation }) {
 
-  const { id }  = route.params;
+  const { petID, userId }  = route.params;
   const [pet, setPet] = useState({ src: '../../../assets/pets.png', name: "Allie", breed: "Pitbull", notes: "Submissive and breedable.",  groomApts: [{date: (new Date()).toDateString(), id: 1}] });
 
   useEffect(() => { 
-      fetch(`${endpoint}/pet/${id}`, { method: 'GET' }
+      fetch(`${endpoint}/pet/${petID}`, { method: 'GET' }
       ).then((res) => { return res.json() }).then(data => setPet(data)).catch()
   }, []);
   
@@ -67,7 +67,9 @@ const style = StyleSheet.create({
   return (
     <Background>
       <BackButton goBack={navigation.goBack} />
-      <SettingsButton />
+      <TouchableOpacity onPress={() => { navigation.navigate('NewPet', { id: petID, userId: userId })}} style={styles.container}>
+        <Text style={{color: theme.colors.primary, fontSize: 18}}>Edit</Text>
+    </TouchableOpacity>
       <View style={{marginTop: getStatusBarHeight()}}>
         <Header> {pet.name} </Header>
       </View>
@@ -76,27 +78,40 @@ const style = StyleSheet.create({
         <Text>Breed: {pet.breed} </Text>
         <Text>Notes: {pet.notes} </Text> 
       </View>
+      <View style={{
+        flexDirection: "row",
+        alignItems: "flex-end",
+        width: '100%'
+      }}>
+        <Button
+                mode="contained"
+                onPress={() => { navigation.navigate("NewAppointment", {id: 0, petId: petID})}}
+          style={{ marginLeft: 6, width: "100%", marginRight: 10, marginTop: 24, color: theme.colors.secondary }}
+              >
+                New Appointment
+        </Button>
+      </View>
+      <View style={{
+        flexDirection: "row",
+        alignItems: "flex-end",
+        width: '100%'
+      }}>
+        <Button
+          mode="contained"
+          onPress={() => {}}
+          style={{width: "50%", marginTop: 24, marginRight: 10, color: theme.colors.secondary }}
+        >
+         💾 Profile
+        </Button>
         <Button
         mode="contained"
         onPress={() => {navigation.navigate('Documents')}}
-        style={{ marginTop: 24, color: theme.colors.secondary }}
+        style={{width: "50%", marginTop: 24, color: theme.colors.secondary }}
       >
         View Docs
       </Button>
-      <Button
-        mode="contained"
-        onPress={() => {}}
-        style={{ marginTop: 24, color: theme.colors.secondary }}
-      >
-        Download Profile
-      </Button>
-      <Button
-        mode="contained"
-        onPress={() => { navigation.navigate("NewAppointment", {id: 0})}}
-        style={{ marginTop: 24, color: theme.colors.secondary }}
-      >
-        New Appointment
-      </Button>
+      </View>
+      
       <FlatList
         data={pet. groomApts}
           renderItem={({ item }) => (
@@ -112,7 +127,7 @@ const style = StyleSheet.create({
               </View>
               <View style={{ flex: 1, flexDirection: 'row', margin: 1, justifyContent: 'space-between' }}>
                     <TouchableOpacity onPress={() => {
-                      navigation.navigate('NewAppointment', {id: item.aptId})
+                      navigation.navigate('NewAppointment', {id: item.aptId, petId: id})
                     }}>
                       <Text>View and Edit</Text>
                     </TouchableOpacity>
@@ -134,12 +149,9 @@ const style = StyleSheet.create({
 }
 
 const styles = StyleSheet.create({
-  row: {
-    flexDirection: 'row',
-    marginTop: 4,
-  },
-  link: {
-    fontWeight: 'bold',
-    color: theme.colors.primary,
-  },
+  container: {
+    position: 'absolute',
+    top: 10 + getStatusBarHeight(),
+    right: 4,
+  }
 })

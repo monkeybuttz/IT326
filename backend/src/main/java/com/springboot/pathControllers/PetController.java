@@ -75,6 +75,38 @@ public class PetController {
         }
     }
 
+    @PostMapping("/pet/{id}")
+    public String updatePet(@RequestBody Pet pet) throws SQLException {
+        String query = "update pet set name = ?, breed = ?, notes = ?, image = ? where petID = ?";
+        PreparedStatement ps = con.prepareStatement(query);
+        ps.setString(1, pet.getName());
+        ps.setString(2, pet.getBreed());
+        ps.setString(3, pet.getNotes());
+        ps.setBlob(4, pet.getImage());
+        ps.setInt(5, pet.getPetId());
+        ps.executeUpdate();
+        return new Gson().toJson("success");
+    }
+    
+    @PostMapping("/pet")
+    public String addPet(@RequestBody Pet pet) throws SQLException {
+        String query = "INSERT into pet(ownerID, name, breed, notes, image) VALUES (?, ?, ?, ?, ? )";
+        PreparedStatement ps = con.prepareStatement(query, Statement.RETURN_GENERATED_KEYS);
+        ps.setInt(1, pet.getOwnerId());
+        ps.setString(2, pet.getName());
+        ps.setString(3, pet.getBreed());
+        ps.setString(4, pet.getNotes());
+        ps.setBlob(5, pet.getImage());
+        ps.executeUpdate();
+        int id = -1;
+        ResultSet rs = ps.getGeneratedKeys();
+        if (rs.next()) {
+            id = rs.getInt(1);
+        }
+        return new Gson().toJson(id);
+
+    }
+
     @GetMapping("/pets/{userID}")
     public String getPets(@PathVariable int userID) throws SQLException {
         User u = new Groomer();

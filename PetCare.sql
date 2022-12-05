@@ -11,7 +11,7 @@ CREATE TABLE User(
     username VARCHAR(45) NOT NULL,
     password VARCHAR(45) NOT NULL,
     email VARCHAR(45) NOT NULL,
-    phoneNUM INT DEFAULT NULL,
+    phoneNUM INT NOT NULL,
     isGroomer BOOL NOT NULL,
     PRIMARY KEY (userID),
     UNIQUE KEY (username),
