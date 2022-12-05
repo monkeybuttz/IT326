@@ -16,7 +16,7 @@ public class UploadPhoto {
 	
 	public static void main(String[] args)
 	{
-		photoAdd(3);
+		
 	}
 	
 	public static int photoAdd(int imageId)
