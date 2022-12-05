@@ -1,13 +1,39 @@
+package com.springboot.pathControllers;
+
+import java.sql.SQLException;
+import java.util.List;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RestController;
+import org.springframework.http.ResponseEntity;
+
+import com.google.gson.Gson;
+import com.jdbc.dao.PetImp;
+import com.jdbc.model.*;
+import com.jdbc.util.JDBCConnection;
+
 import java.sql.*;
 import java.util.ArrayList;
-import java.util.List;
+import java.util.List;]
 import java.io.*;
 
 public class MessageController
 {
-    static Connection con = JDBCConnection.getConnection();
+    static Connection con;
+    static Gson gson;
 
-    public void add(Message message) throws SQLException
+    @Autowired
+    MessageController() {
+        con = JDBCConnection.getConnection();
+    }
+    
+    @PostMapping("/message/send")
+    public String send(@RequestBody Message message) throws SQLException
     {
         String text = message.getText();
         int senderID = message.getSenderId();
@@ -15,30 +41,18 @@ public class MessageController
 
         String query = "INSERT into message(post, senderID, receiverID) VALUES (?, ?, ?)";
 
-        PreparedStatement ps = con.prepareStatement(query);
+        PreparedStatement ps = con.prepareStatement(query, Statement.RETURN_GENERATED_KEYS);
         ps.setString(1, text);
         ps.setInt(2, senderID);
         ps.setInt(3, receiverID);
         ps.executeUpdate();
-        int id = getId(senderID, receiverID, text);
-        message.setMessageId(id);
-    }
-
-    private int getId(int senderId, int recieverId, String text) throws SQLException
-    {
-        String query = "Select messageID from message where senderID = ? AND receiverID = ? AND post = ?";
-        PreparedStatement ps = con.prepareStatement(query);
-        ps.setInt(1, senderId);
-        ps.setInt(2, recieverId);
-        ps.setString(3, text);
-        ResultSet rs = ps.executeQuery();
-        if (rs.next())
-        {
-            int id = rs.getInt("messageID");
-            return id;
+        int id = -1;
+        ResultSet rs = ps.getGeneratedKeys();
+        if (rs.next()) {
+            id = rs.getInt(1);
         }
-        else
-            return 0;
+        message.setMessageId(id);
+        return gson.toJson("success");
     }
 
     public void delete(int id) throws SQLException
