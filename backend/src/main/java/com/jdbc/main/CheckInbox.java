@@ -10,9 +10,6 @@ public class CheckInbox {
 	
 	public static void main(String[] args) {
 	
-		int send = 1;
-		int recieve = 1;
-    	checkInbox(send, recieve);
          
 	}
 
