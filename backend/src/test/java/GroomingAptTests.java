@@ -16,6 +16,7 @@ import com.jdbc.dao.GroomingAppointmentImp;
 import com.jdbc.dao.PetImp;
 import com.jdbc.model.Groomer;
 import com.jdbc.model.GroomingAppointment;
+import com.jdbc.model.Image;
 import com.jdbc.model.Owner;
 import com.jdbc.model.Pet;
 import com.springboot.pathControllers.GroomingAppointmentController;
@@ -55,7 +56,7 @@ public class GroomingAptTests {
         grooming.setPetId(pid);
         Blob blob1 = new SerialBlob(new byte[1024]);
         Blob blob2 = new SerialBlob(new byte[1024]);
-        List<Blob> blobs = Arrays.asList(blob1, blob2);
+        List<Blob> blobs = Arrays.asList( blob1, blob2);
         grooming.setImages(blobs);
         GroomingAppointmentImp imp = new GroomingAppointmentImp();
         assertNotEquals(-1, imp.add(grooming));

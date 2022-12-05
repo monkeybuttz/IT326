@@ -8,7 +8,9 @@ import PetButton from '../components/HomePageStuff.js/PetButton'
 import ProfileButton from '../components/HomePageStuff.js/ProfileButton'
 import MessageButton from '../components/HomePageStuff.js/MessageButton'
 
-export default function Home({ navigation }) {
+export default function Home({ navigation, route }) {
+
+    const { id, name }  = route.params;
 
   const style = {
     header: {
@@ -25,20 +27,20 @@ export default function Home({ navigation }) {
   return (
     <Background>
       <SettingsButton />
-      <Text style={style.header}>Welcome Back</Text>
+      <Text style={style.header}>Welcome Back {name}</Text>
       <Logo />
       <View style={{
         flexDirection: "row",
         alignItems: "flex-end"
       }}>
-        <PetButton navigation={navigation}/>
-        <ProfileButton navigation={navigation} />
+        <PetButton id={id} navigation={navigation}/>
+        <ProfileButton id={ id} navigation={navigation} />
       </View>
       <View style={{
         flexDirection: "row",
         alignItems: "flex-end"
       }}>
-        <MessageButton navigation={navigation} />
+        <MessageButton id={ id} navigation={navigation} />
       </View>
     </Background>
   )

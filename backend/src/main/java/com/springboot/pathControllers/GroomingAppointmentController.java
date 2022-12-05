@@ -22,7 +22,6 @@ import com.google.gson.JsonObject;
 import com.jdbc.dao.GroomingAppointmentImp;
 import com.jdbc.model.GroomingAppointment;
 import com.jdbc.util.JDBCConnection;
-import org.json.simple.parser.*;
 
 @RestController
 public class GroomingAppointmentController {

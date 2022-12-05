@@ -11,11 +11,14 @@ import endpoint from '../../helpers/endpoint'
 
 export default function DeleteAccount({ navigation }) {
 
+  const id = 1;
+
   const deleteAccount = () => {
-    useEffect(() => {
-      fetch(`${endpoint}/user/${id}`, { method: 'DELETE' })
-      .then(() => { navigation.navigate('LoginScreen') }).catch()
-    }, []);
+      fetch(`${endpoint}/user/delete/${id}`)
+      .then(() => { navigation.reset({
+      index: 0,
+      routes: [{ name: 'Home' }],
+    }) }).catch();
     }
 
   return (
