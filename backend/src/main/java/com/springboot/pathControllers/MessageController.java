@@ -20,16 +20,17 @@ public class MessageController
         ps.setInt(2, senderID);
         ps.setInt(3, receiverID);
         ps.executeUpdate();
-        int id = getId(senderID, receiverID);
+        int id = getId(senderID, receiverID, text);
         message.setMessageId(id);
     }
 
-    private int getId(int senderId, int recieverId) throws SQLException
+    private int getId(int senderId, int recieverId, String text) throws SQLException
     {
-        String query = "Select messageID from message where senderID = ? AND receiverID = ?";
+        String query = "Select messageID from message where senderID = ? AND receiverID = ? AND post = ?";
         PreparedStatement ps = con.prepareStatement(query);
         ps.setInt(1, senderId);
         ps.setInt(2, recieverId);
+        ps.setString(3, text);
         ResultSet rs = ps.executeQuery();
         if (rs.next())
         {
