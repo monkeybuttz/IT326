@@ -63,8 +63,6 @@ CREATE TABLE Image(
     PRIMARY KEY (id)
 );
 
-
-//--------------------dummy data ---------------------------------------------------------------------------------
 INSERT INTO user
 VALUES(1, "bob", "bob1", "pass1", "bob@email.com","111",0);
 
@@ -92,5 +90,3 @@ VALUES(1,2,1,"10/10/10","il", "bringing my pet", 1);
 
 INSERT INTO image (id,aid)
 VALUES(2,1);
-
-//-----------------------------------------------------------------------------------
