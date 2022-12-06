@@ -10,25 +10,22 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
-import org.springframework.http.ResponseEntity;
 
 import com.google.gson.Gson;
-import com.jdbc.dao.PetImp;
 import com.jdbc.model.*;
 
 import java.sql.*;
 import java.util.ArrayList;
-import java.util.List;
 
 import com.jdbc.util.JDBCConnection;
 
 @RestController
-public class GroomingAppointementController {
+public class GroomingAppointmentController {
     static Connection con;
     static Gson gson;
 
     @Autowired
-    public GroomingAppointementController() {
+    public GroomingAppointmentController() {
         con = JDBCConnection.getConnection();
         gson = new Gson();
     }

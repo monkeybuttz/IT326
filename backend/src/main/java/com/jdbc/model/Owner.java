@@ -105,72 +105,58 @@ public class Owner extends User {
         return ls;
     }
 
-    @Override
     public String getUsername() {
         return this.username;
     }
 
-    @Override
     public int getID() {
         return this.id;
     }
 
-    @Override
     public String getEmail() {
         return this.email;
     }
 
-    @Override
     public String getPassword() {
         return this.password;
     }
 
-    @Override
     public long getPhoneNumber() {
         return this.phoneNumber;
     }
 
-    @Override
     public String getName() {
         return this.name;
     }
 
-    @Override
     public int getIsGroomer() {
         return this.isGroomer;
     }
 
-    @Override
     public void setID(int id) {
         this.id = id;
     }
 
-    @Override
     public void setName(String name) {
         this.name = name;
     }
 
-    @Override
     public void setUsername(String username) {
         this.username = username;
     }
 
-    @Override
     public void setEmail(String email) {
         this.email = email;
     }
 
-    @Override
     public void setPassword(String password) {
         this.password = password;
     }
 
-    @Override
     public void setPhoneNumber(long pn) {
         this.phoneNumber = pn;
     }
 
-    @Override
     public void setIsGroomer(int option) {
         this.isGroomer = option;
     }
