@@ -1,13 +1,47 @@
+package com.springboot.pathControllers;
+
+import java.sql.SQLException;
+import java.util.List;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.autoconfigure.ldap.embedded.EmbeddedLdapProperties.Credential;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.RestController;
+import org.springframework.http.ResponseEntity;
+
+import com.jdbc.dao.PetImp;
+import com.jdbc.model.*;
+import com.google.gson.Gson;
+
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
+
+import com.jdbc.util.JDBCConnection;
+
 import java.io.*;
 
+@RestController
 public class MessageController
 {
-    static Connection con = JDBCConnection.getConnection();
+    
+    static Connection con;
+    static Gson gson;
 
-    public void sendMessage(Message message) throws SQLException
+    @Autowired
+    public MessageController() {
+        con = JDBCConnection.getConnection();
+        gson = new Gson();
+    }
+
+
+    @PostMapping("/message/send")
+    public void sendMessage(@RequestBody Message message) throws SQLException
     {
         String text = message.getText();
         int senderID = message.getSenderId();
@@ -29,7 +63,7 @@ public class MessageController
         message.setMessageId(id);
     }
 
-    @DeleteMapping
+    @DeleteMapping("/message/{id}")
     public void delete(@PathVariable int id) throws SQLException
     {
         String query = "delete from message where messageID =?";
@@ -38,7 +72,7 @@ public class MessageController
         ps.executeUpdate();
     }
 
-    @GetMapping
+    @GetMapping("/message/{id}")
     public Message getMessage(@PathVariable int id) throws SQLException
     {
         String query = "select * from message where messageID =?";
@@ -80,7 +114,7 @@ public class MessageController
         return gson.toJson(ls);
     }
 
-    @GetMapping("/messages/inbox/{recieverID}")
+    @GetMapping("/message/inbox/{recieverID}")
     public String getRecievedMessages(@PathVariable int receiverID) throws SQLException
     {
         List<Message> ls = new ArrayList<Message>();
