@@ -13,6 +13,7 @@ import java.sql.ResultSetMetaData;
 
 import com.jdbc.util.JDBCConnection;
 
+import org.junit.BeforeClass;
 import org.junit.jupiter.api.Test;
 
 import com.jdbc.main.DownloadPhoto;
@@ -20,7 +21,7 @@ import com.jdbc.main.DownloadPhoto;
 public class DownloadPhotoTest {
 	
 	//Test to check database connectivity
-	@Test
+	@BeforeClass
 	public void getColumnNames() {
 		
 		Connection con = null;
@@ -59,11 +60,12 @@ public class DownloadPhotoTest {
 	}
 	
 
-	//Test to see if image exists when image exists
+	//Test to see if image exists when image does not exist but id 
+	//and aid exist
 	@Test
 	public void testForExisting() {
 		var phot = new DownloadPhoto();
-		assertEquals(1 , phot.downloadPhoto(2));
+		assertEquals(0 , phot.downloadPhoto(2));
 	}
 ////	
 	//Test to see if image exists when image does not exist
