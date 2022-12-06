@@ -9,28 +9,46 @@ import static org.junit.jupiter.api.Assertions.assertNotEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertNull;
 
-import java.sql.Blob;
-
 import org.junit.jupiter.api.Test;
 
 import com.jdbc.model.*;
+import com.mysql.cj.jdbc.Blob;
 import com.jdbc.dao.PetImp;
 import com.springboot.pathControllers.*;
 public class PetImpTests {
 
+    // @Test
+    // public void insertPetTest() throws SQLException {
+    //     Blob blob = new SerialBlob(new byte[1024]);
+    //     Pet pet = new Pet( 1, "Name", "Breed", "Notes", blob);
+
+    //     PetImp petdao = new PetImp();
+
+    //     assertNotEquals(-1, petdao.add(pet));
+
+    // }
+
+    // @Test
+    // public void getPetTest() throws SQLException {
+    //     Owner owner = new Owner();
+    //     owner.setName("Braydon Hughes");
+    //     owner.setEmail("bhughe2@ilstu.edu");
+    //     owner.setUsername("bhughe2");
+    //     owner.setPassword("1234");
+    //     owner.setIsGroomer(0);
+    //     owner.setPhoneNumber(1234567890);
+    //     int oid = owner.createAccount();
+
+    //     Blob blob = new SerialBlob(new byte[1024]);
+    //     Pet pet = new Pet(oid, "Name", "Breed", "Notes", blob);
+    //     PetImp petDAO = new PetImp();
+    //     pet.setPetId(petDAO.add(pet));
+    //     assertEquals(pet, petDAO.getPet(pet.getPetId()));
+
+    // }
+
     @Test
-    public void insertPetTest() throws SQLException {
-        Blob blob = new SerialBlob(new byte[1024]);
-        Pet pet = new Pet( 1, "Name", "Breed", "Notes", blob);
-
-        PetImp petDAO = new PetImp();
-
-        assertNotEquals(-1, petDAO.add(pet));
-
-    }
-
-    @Test
-    public void getPetTest() throws SQLException {
+    public void getPetContTest() throws SQLException {
         Owner owner = new Owner();
         owner.setName("Braydon Hughes");
         owner.setEmail("bhughe2@ilstu.edu");
@@ -39,22 +57,11 @@ public class PetImpTests {
         owner.setIsGroomer(0);
         owner.setPhoneNumber(1234567890);
         int oid = owner.createAccount();
-
-        Blob blob = new SerialBlob(new byte[1024]);
-        Pet pet = new Pet(oid, "Name", "Breed", "Notes", blob);
-        PetImp petDAO = new PetImp();
-        pet.setPetId(petDAO.add(pet));
-        assertEquals(pet, petDAO.getPet(pet.getPetId()));
-
-    }
-
-    @Test
-    public void getPetContTest() throws SQLException {
-        Blob blob = new SerialBlob(new byte[1024]);
-        Pet pet = new Pet(1, "Name", "Breed", "Notes", blob);
-        PetController petDAO = new PetController();
-        petDAO.getPet(1);
-        assertNotNull(petDAO.getPet(1));
+        Pet pet = new Pet(oid, "Name", "Breed", "Notes");
+        PetController petCon = new PetController();
+        PetImp pimp = new PetImp();
+        int petId = pimp.add(pet);
+        assertEquals(petCon.getPet(petId));
 
     }
     

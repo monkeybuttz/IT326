@@ -59,14 +59,14 @@ public class UploadPhotoTest {
 	public void AddImageWithNewId() {
 		
 		var img = new UploadPhoto();
-		assertEquals(1, img.photoAdd(5));
+		assertEquals(1, img.photoAdd(5, 1));
 	}
 	
 	@Test
 	public void AddImageWithExistingId() {
 		
 		var img = new UploadPhoto();
-		assertEquals(0, img.photoAdd(1));
+		assertEquals(0, img.photoAdd(2, 1));
 	}
 
 }

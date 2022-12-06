@@ -34,6 +34,13 @@ public class Pet {
         this.image = image;
     }
 
+    public Pet(int ownerID, String name, String breed, String notes) {
+        this.ownerId = ownerID;
+        this.name = name;
+        this.breed = breed;
+        this.notes = notes;
+    }
+
 
     public int getPetId() {
         return this.petId;
