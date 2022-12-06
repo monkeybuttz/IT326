@@ -3,11 +3,15 @@ import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 
+import java.sql.SQLException;
+
 import com.jdbc.model.*;
 import com.jdbc.util.JDBCConnection;
 import java.sql.*;
 
 
+import com.springboot.pathControllers.MessageController;
+import com.springboot.pathControllers.UserController;
 /*
  * Tsts the MessageTest.java Program
  * Name: Grant Lane
@@ -137,5 +141,33 @@ public class MessageTest
         message.setReceiverId(id);
 
         assertEquals(id, message.getReceiverId());
+    }
+
+    @Test
+    public void sendMessageTest() throws SQLException {
+        Owner groomer1 = new Owner();
+        groomer1.setName("Braydon Hughes");
+        groomer1.setEmail("bhughe2@ilstu.edu");
+        groomer1.setUsername("bhughe2");
+        groomer1.setPassword("1234");
+        groomer1.setIsGroomer(1);
+        groomer1.setPhoneNumber(1234567890);
+        UserController ucon1 = new UserController();
+        ucon1.createUser(groomer1);
+        
+        Owner groomer2 = new Owner();
+        groomer2.setName("Braydon Hughes");
+        groomer2.setEmail("bthuqq3@ilstu.edu");
+        groomer2.setUsername("bhughe3");
+        groomer2.setPassword("12345");
+        groomer2.setIsGroomer(1);
+        groomer2.setPhoneNumber(1234567890);
+        UserController ucon2 = new UserController();
+        ucon2.createUser(groomer2);
+        
+        Message msg = new Message("Test message", 1, 2);
+        MessageController msgContr = new MessageController();
+        msgContr.sendMessage(msg);
+
     }
 }

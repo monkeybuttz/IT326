@@ -20,8 +20,7 @@ import com.jdbc.model.GroomingAppointment;
 import com.jdbc.model.Image;
 import com.jdbc.model.Owner;
 import com.jdbc.model.Pet;
-import com.springboot.pathControllers.GroomingAppointmentController;
-import com.springboot.pathControllers.UserController;
+import com.springboot.pathControllers.*;
 
 public class GroomingAptTests {
     

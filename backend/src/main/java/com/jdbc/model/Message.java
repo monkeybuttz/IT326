@@ -8,15 +8,14 @@ public class Message {
 
     public Message() {}
 
-    public Message(int messageId, String str, int senderId, int receiverId)
+    public Message(String text, int senderId, int receiverId)
     {
-        this.messageId = messageId;
-        this.text = str;
+        this.text = text;
         this.senderId = senderId;
         this.receiverId = receiverId;
     }
 
-    public void  setMessageId(int id)
+    public void setMessageId(int id)
     {
         messageId = id;
     }
