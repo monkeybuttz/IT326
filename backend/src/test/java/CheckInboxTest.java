@@ -5,7 +5,9 @@ import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 import java.sql.*;
 
-import org.aspectj.lang.annotation.Before;
+//import org.aspectj.lang.annotation.Before;
+import org.junit.*;
+import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 
 import com.jdbc.main.CheckInbox;
@@ -16,8 +18,9 @@ import com.jdbc.util.JDBCConnection;
 
 public class CheckInboxTest {
 	
+
 	//Test to check database connectivity
-	@Test
+	@BeforeClass
 	public void getColumnNames() {
 		
 		Connection con = null;
@@ -71,15 +74,16 @@ public class CheckInboxTest {
 	@Test
 	public void userDoesHaveMessages(){
 		
-		String words = " Hi Bob are you free to groom my pet\r\n"
-				+ "Hi John, yes I am free to groom your pet\r\n"
-				+ "Sounds good when should we make an apt?\r\n"
-				+ "Whenever you feel works best.\r\n";
+		String words = " Hi there groomer\r\n"
+				+ "Hello there user\r\n"
+				+ "I want my pet groomed\r\n"
+				+ "Ok come see me\r\n";
 		
 		var inbox = new CheckInbox();
 		assertEquals(words, inbox.checkInbox(1, 1));
 	}
 	
 }
+
 
 
