@@ -63,3 +63,34 @@ CREATE TABLE Image(
     PRIMARY KEY (id)
 );
 
+
+//--------------------dummy data ---------------------------------------------------------------------------------
+INSERT INTO user
+VALUES(1, "bob", "bob1", "pass1", "bob@email.com","111",0);
+
+INSERT INTO user
+VALUES(2, "john", "john1", "pass2", "john@email.com","222",1);
+
+INSERT INTO message
+VALUES (1, "Hi there groomer", 1, 2);
+
+INSERT INTO message
+VALUES (2, "Hello there user", 2, 1);
+
+INSERT INTO message
+VALUES (3, "I want my pet groomed", 1, 2);
+
+INSERT INTO message
+VALUES (4, "Ok come see me", 2, 1);
+
+INSERT INTO pet(petID,ownerID, name, breed, notes)
+VALUES(1,1,"jojo","dutch shepherd","Friendly and active. Is trained.");
+
+INSERT INTO groomingappointment (aptID, groomerID, petID, date,
+location, notes, favorited)
+VALUES(1,2,1,"10/10/10","il", "bringing my pet", 1);
+
+INSERT INTO image (id,aid)
+VALUES(2,1);
+
+//-----------------------------------------------------------------------------------
