@@ -4,6 +4,7 @@ import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.google.gson.Gson;
 import com.jdbc.model.GroomingAppointment;
 import com.jdbc.model.Pet;
 import com.jdbc.util.JDBCConnection;
