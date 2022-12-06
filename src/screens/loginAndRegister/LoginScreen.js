@@ -45,7 +45,7 @@ export default function LoginScreen({ navigation }) {
       <Logo />
       <Header>Welcome back.</Header>
       <TextInput
-        label="Email"
+        label="Username or Email"
         returnKeyType="next"
         value={email.value}
         onChangeText={(text) => { setInvalid(false); setEmail({ value: text, error: '' })}}

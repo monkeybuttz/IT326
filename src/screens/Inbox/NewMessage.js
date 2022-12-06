@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { View, StyleSheet, TouchableOpacity } from 'react-native'
 import { Text } from 'react-native-paper'
 import Background from '../../components/Background'
@@ -11,27 +11,40 @@ import { emailValidator } from '../../helpers/emailValidator'
 import { phoneValidator } from '../../helpers/phoneValidator'
 import { passwordValidator } from '../../helpers/passwordValidator'
 import { nameValidator } from '../../helpers/nameValidator'
+import endpoint from '../../helpers/endpoint'
 
 
-export default function NewMessage({ navigation }) {
-  const [name, setName] = useState({ value: '', error: '' })
-    const [subject, setSubject] = useState({ value: '', error: '' })
-    const [content, setContent] = useState({ value: '', error: '' })
+export default function NewMessage({ navigation, route }) {
 
+  const { senderId, recieverId } = route.params;
 
+  const [content, setContent] = useState({ value: '', error: '' })
+  const [groomer, setGroomer] = useState({ name: "", id: -1 });
+  const [groomers, setGroomers] = useState([]);
+
+useEffect(()=>{},[])  
+
+useEffect(() => {
+    if (groomer.name.length > 0 && groomer.id == -1) {
+      fetch(`${endpoint}/searchForGroomer/${groomer.name}`)
+      .then(res => { const resp = res.json(); if (resp) { return resp } else { return []} })
+      .then(data => setGroomers([...data])
+      );
+    }
+  }, [groomer])
+  
   const onSendPressed = () => {
-    const nameError = nameValidator(name.value)
-    const subjectError = nameValidator(subject.value)
     const contentError = nameValidator(content.value)
-    if (contentError || subjectError || nameError) {
-      setName({ ...name, error: nameError })
-      setSubject({ ...subject, error: subjectError })
+    if (contentError) {
       setContent({ ...content, error: contentError })
       return
     }
-    navigation.reset({
-      index: 0,
-      routes: [{ name: 'VerifyEmail' }],
+    fetch(`${endpoint}/message/send`, {
+      method: 'POST',
+      headers: {
+            'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({messageId:0, senderId: senderId, recieverId: groomer.id, text: content.value})
     })
   }
     
@@ -40,43 +53,40 @@ export default function NewMessage({ navigation }) {
     <Background>
           <BackButton goBack={navigation.goBack} />
       <Header>My Information</Header>
-      <TextInput
-        label="To"
-        returnKeyType="next"
-        value={name.value}
-        onChangeText={(text) => setName({ value: text, error: '' })}
-        error={!!name.error}
-        errorText={name.error}
-      />
-      <TextInput
-        label="subject"
-        returnKeyType="next"
-        value={subject.value}
-        onChangeText={(text) => setSubject({ value: text, error: '' })}
-        error={!!subject.error}
-        errorText={subject.error}
-      />
+      <View style={{ width: '100%'}}>
+          <TextInput
+                label="To"
+                returnKeyType="next"
+                value={groomer.name}
+          onChangeText={(text) => setGroomer({name:text, id: -1})} 
+        />
+        {(groomer.id == -1 && groomer.name?.length > 0) && <View>
+          {groomers.map(g => {
+            return <TouchableOpacity style={{ width: '100%', fontSize: 13, borderColor: theme.colors.secondary,
+              borderWidth: 1, padding: 12, borderRadius: 4
+            }}
+              onPress={() => setGroomer(g)}
+            >
+          <Text  style={{ width: '100%', fontSize: 15, }}>{g.name}</Text>
+        </TouchableOpacity>
+        })}
+        </View>}
+      </View>
       <TextInput
         label="Message"
         returnKeyType="next"
         value={content.value}
-        onChangeText={(text) => setSubject({ value: text, error: '' })}
+        onChangeText={(text) => setContent({ value: text, error: '' })}
         error={!!content.error}
         errorText={content.error}
       />
       <Button
-        mode="send"
+        mode="contained"
         onPress={onSendPressed}
         style={{ marginTop: 24, color: theme.colors.secondary }}
       >
-        Update Account
+        Send
       </Button>
-      <View style={styles.row}>
-        <Text> Time for a change? </Text>
-        <TouchableOpacity onPress={() => navigation.replace('DeleteAccount')}>
-          <Text style={styles.link}>Delete Account</Text>
-        </TouchableOpacity>
-      </View>
     </Background>
   )
 }

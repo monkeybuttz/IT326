@@ -7,6 +7,7 @@ import {StartScreen, LoginScreen, RegisterScreen, ResetPasswordScreen,
   VerifyEmail, ResendEmail, DeleteAccount, Home, PetsPage,
   EditProfile, Inbox, Pet, NewPet, NewAppointment, Documents,
 } from './src/screens'
+import NewMessage from './src/screens/Inbox/NewMessage'
 
 const Stack = createStackNavigator()
 
@@ -46,6 +47,7 @@ export default function App() {
           <Stack.Screen name="NewAppointment" component={NewAppointment} />
 
           <Stack.Screen name="Inbox" component={Inbox} />
+          <Stack.Screen name="NewMessage" component={NewMessage} />
 
           <Stack.Screen name="ResetPasswordScreen" component={ResetPasswordScreen} />
           
