@@ -1,7 +1,7 @@
 import React, { useState, useRef, useEffect } from 'react'
 import BackButton from '../../../components/BackButton'
 import Background from '../../../components/Background'
-import { View, Text, FlatList } from 'react-native'
+import { View, Text, FlatList, Touchable } from 'react-native'
 import TimePicker from './DateTimePicker'
 import TextInput from '../../../components/TextInput'
 import Header from '../../../components/Header'
@@ -12,72 +12,93 @@ import { theme } from '../../../core/theme'
 import { getStatusBarHeight } from 'react-native-status-bar-height'
 import { NEWDATE } from 'mysql/lib/protocol/constants/types'
 
-export default function NewAppointment({ navigation, route, options  }) {
+import endpoint from '../../../helpers/endpoint'
+import { TouchableOpacity } from 'react-native-gesture-handler'
 
+export default function NewAppointment({ route, navigation }) {
+
+  const { petID } = route.params;
     const [notes, setNotes] = useState();
     const [address, setAddress] = useState();
     const [groomer, setGroomer] = useState({name: "", id:-1 });
-    const [groomers, serGroomers] = useState([{ name: "barbra", id: 3 }, { name: "natilie", id: 3 }]);
+    const [groomers, setGroomers] = useState([{ name: "barbra", id: 3 }, { name: "natilie", id: 3 }]);
     const [photos, setPhotos] = useState([]);
-  const [photo, setPhoto] = useState();
-  const [datePicker, setDatePicker] = useState(new Date());
+    const [photo, setPhoto] = useState();
+    const [datePicker, setDatePicker] = useState(new Date());
 
   useEffect(() => {
-      
-    }, [groomer])
+    if (id) {
+      fetch(`${endpoint}/groomApt/${id}`)
+        .then(res => res.json())
+        .then(data =>{
+          setNotes(data.notes)
+          setAddress(data.location)
+          //setPhotos(data.images)
+          setDatePicker(new Date(data.date))
+          fetch(`${endpoint}/user/${data.groomerId}`)
+            .then(res2 => res2.json())
+            .then(data2 =>{
+              setGroomer(data2)
+          })
+        })
+    }
+  }, [])
+  
+  useEffect(() => {
+    if (groomer.name.length > 0 && groomer.id == -1) {
+      fetch(`${endpoint}/searchForGroomer/${groomer.name}`)
+      .then(res => { const resp = res.json(); if (resp) { return resp } else { return []} })
+      .then(data => setGroomers([...data])
+      );
+    }
+  }, [groomer])
 
-    const save = () => {
-        
+  const save = () => {
+        fetch(`${endpoint}/groomingapt${petID ? "/" + petID : ""}`,  {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+          body: JSON.stringify({
+            id: 0,
+            notes: notes,
+            location: address,
+            groomerID: groomer.id,
+            photos: photos,
+            date: datePicker.toLocaleDateString("en-US"),
+            petId: petID
+          }),
+    })
     }
 
   return (
-      <Background>
+    <Background>
           <BackButton goBack={navigation.goBack} />
           <View style={{height: getStatusBarHeight()+30}}/>
           <View style={{height: 30}}>
               <TimePicker dateState={[datePicker, setDatePicker]}/>
-          </View>
-          <SearchableDropdown
-            onItemSelect={(groomer) => {
-              setGroomer( groomer );
-            }}
-            containerStyle={{width: '100%',
-              marginVertical: 12,  padding: 5,
-              borderWidth: 1, borderRadius: 4,}}
-            itemStyle={{
-              backgroundColor: theme.colors.surface,
-              padding: 10,
-              marginTop: 2,
-              borderColor: '',
-              borderWidth: 1,
-              borderRadius: 5,
-            }}
-            itemTextStyle={{ }}
-            itemsContainerStyle={{ maxHeight: 140 }}
-            items={groomers}
-            defaultIndex={2}
-            resetValue={false}
-            textInputProps={
-                {
-                    onChangeText: (text) => { setGroomer({name: text, id: -1})},
-                value: groomer.name,
-                placeholder: "Search for Groomer",
-                underlineColorAndroid: "transparent",
-                style: {
-                    padding: 12,
-                    fontSize: 16,
-
-                },
-              }
-            }
-            listProps={
-              {
-                nestedScrollEnabled: true,
-              }
-            }
+      </View>
+      <View style={{ width: '100%'}}>
+          <TextInput
+                label="Groomer"
+                returnKeyType="next"
+                value={groomer.name}
+          onChangeText={(text) => setGroomer({name:text, id: -1})} 
         />
+        {(groomer.id == -1 && groomer.name?.length > 0) && <View>
+          {groomers.map(g => {
+            return <TouchableOpacity style={{ width: '100%', fontSize: 13, borderColor: theme.colors.secondary,
+              borderWidth: 1, padding: 12, borderRadius: 4
+            }}
+              onPress={() => setGroomer(g)}
+            >
+          <Text  style={{ width: '100%', fontSize: 15, }}>{g.name}</Text>
+        </TouchableOpacity>
+        })}
+        </View>}
+      </View>
             <TextInput
-                label="Address"
+                label="Location"
                 returnKeyType="next"
                 value={address}
                 onChangeText={(text) => setAddress(text)}

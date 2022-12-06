@@ -1,13 +1,15 @@
 package com.jdbc.model;
 
 import com.jdbc.util.JDBCConnection;
+
+import java.util.List;
+
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
-import java.util.List;
 
 public class Owner extends User {
 
@@ -51,8 +53,7 @@ public class Owner extends User {
         }
         if (c) {
             return own;
-        } 
-        else {
+        } else {
             return null;
         }
     }
@@ -80,9 +81,8 @@ public class Owner extends User {
         ps.executeUpdate();
         return true;
     }
-    
-    public List<Groomer> searchForGroomer(String name) throws SQLException
-    {
+
+    public List<Groomer> searchForGroomer(String name) throws SQLException {
         name = "%" + name + "%";
         List<Groomer> ls = new ArrayList<Groomer>();
         String query = "select * from User where (name LIKE ? OR username LIKE ?) AND isGroomer = ?";
@@ -91,8 +91,7 @@ public class Owner extends User {
         ps.setString(2, name);
         ps.setBoolean(3, true);
         ResultSet rs = ps.executeQuery();
-        while (rs.next())
-        {
+        while (rs.next()) {
             Groomer groomer = new Groomer();
             groomer.setID(rs.getInt("userID"));
             groomer.setName(rs.getString("name"));

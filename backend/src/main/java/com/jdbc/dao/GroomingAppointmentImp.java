@@ -10,6 +10,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.jdbc.model.GroomingAppointment;
+import com.jdbc.model.Image;
 import com.jdbc.util.JDBCConnection;
 
 public class GroomingAppointmentImp {
@@ -78,21 +79,20 @@ public class GroomingAppointmentImp {
         }
     }
 
-    public List<Blob> getAptImages(int id) throws SQLException {
+    public static List<Blob> getAptImages(int id) throws SQLException {
         String query = "select * from image where aid = ?";
         PreparedStatement ps = con.prepareStatement(query);
         ps.setInt(1, id);
         ResultSet rs = ps.executeQuery();
         boolean c = false;
         List<Blob> pics = new ArrayList<Blob>();
-        while(rs.next()) {
+        while (rs.next()) {
             c = true;
             pics.add(rs.getBlob("image"));
         }
         if (c) {
             return pics;
-        }
-        else {
+        } else {
             return null;
         }
     }

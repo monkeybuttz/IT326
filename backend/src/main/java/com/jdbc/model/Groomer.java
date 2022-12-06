@@ -1,6 +1,7 @@
 package com.jdbc.model;
 
 import com.jdbc.util.JDBCConnection;
+
 import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
@@ -51,15 +52,14 @@ public class Groomer extends User {
         }
         if (c) {
             return groom;
-        } 
-        else {
+        } else {
             return null;
         }
     }
 
     @Override
     public boolean updateAccount(User newUserInfo) throws SQLException {
-        String query = "update user set name = ?, username = ?, password = ?, email = ?, phoneNUM = ?, isGroomer = ? where userId = ? ";        
+        String query = "update user set name = ?, username = ?, password = ?, email = ?, phoneNUM = ?, isGroomer = ? where userId = ? ";
         PreparedStatement ps = con.prepareStatement(query);
         ps.setString(1, newUserInfo.getName());
         ps.setString(2, newUserInfo.getUsername());
@@ -80,17 +80,15 @@ public class Groomer extends User {
         ps.executeUpdate();
         return true;
     }
-    
-    public List<Pet> searchForPet(String name) throws SQLException
-    {
+
+    public List<Pet> searchForPet(String name) throws SQLException {
         List<Pet> ls = new ArrayList<Pet>();
         name = "%" + name + "%";
         String query = "select * from Pet where name LIKE ?";
         PreparedStatement ps = con.prepareStatement(query);
         ps.setString(1, name);
         ResultSet rs = ps.executeQuery();
-        while (rs.next())
-        {
+        while (rs.next()) {
             Pet dog = new Pet();
             dog.setPetId(rs.getInt("petID"));
             dog.setOwnerId(rs.getInt("ownerID"));

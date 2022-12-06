@@ -14,9 +14,9 @@ import { nameValidator } from '../../helpers/nameValidator'
 import endpoint from '../../helpers/endpoint'
 
 
-export default function EditProfile({ navigation }) {
+export default function EditProfile({ navigation, route }) {
 
-  const id = 7;
+  const { id } = route.params;
 
   const [name, setName] = useState({ value: '', error: '' })
   const [phone, setPhone] = useState({ value: '', error: '' })
@@ -25,16 +25,16 @@ export default function EditProfile({ navigation }) {
   const [user, setUser] = useState({});
 
   useEffect(() => {
-    fetch(`https://1715-138-87-133-12.ngrok.io/user/${id}`, { method: 'GET' })
+    fetch(`${endpoint}/user/${id}`, { method: 'GET' })
       .then(res => res.json())
       .then((data) => {
         setName({value: data.name, error : ''});
-        setPhone({value: data.phoneNumber, error : ''});
+        setPhone({ value: data.phoneNumber.toString(), error: '' });
         setEmail({value: data.email, error : ''})
       }).catch()
   }, [])
 
-  const onSignUpPressed = async () => {
+  const onUpdatePressed = async () => {
     const nameError = nameValidator(name.value)
     const emailError = emailValidator(email.value)
     const passwordError = passwordValidator(password.value)
@@ -45,11 +45,17 @@ export default function EditProfile({ navigation }) {
       setPassword({ ...password, error: passwordError })
       setPhone({ ...phone, error: phoneError })
       return;
+    } else {
+      fetch(`${endpoint}/user/${id}`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({ name: name.value, email: email.value, password: Integer.parseInt(password.value), phone: phone.value })
+      })
+      .then(() => { navigation.navigate('Home') }).catch()
     }
-    fetch(`${endpoint}/user/${id}`, { method: 'POST', body: {name: name.value, email: email.value, password: password.value, phone: phone.value}
-      }).then(() => { navigation.navigate('Home')}).catch()
-    }
-    
+  }
 
   return (
     <Background>
@@ -67,13 +73,12 @@ export default function EditProfile({ navigation }) {
         label="Phone Number"
         returnKeyType="next"
         value={phone.value}
-        onChangeText={(text) => setPhone({ value: text, error: '' })}
+        onChangeText={(text) => setPhone({ value: text.replace(/[^0-9]/g, ''), error: '' })}
         error={!!phone.error}
         errorText={phone.error}
-
         autoCompleteType="phone"
-        textContentType="phoneNumber"
-        keyboardType="phone-number"
+        textContentType="number"
+        keyboardType= 'numeric'
       />
       <TextInput
         label="Email"
@@ -89,7 +94,7 @@ export default function EditProfile({ navigation }) {
           />
       <Button
         mode="contained"
-        onPress={onSignUpPressed}
+        onPress={() => onUpdatePressed()}
         style={{ marginTop: 24, color: theme.colors.secondary }}
       >
         Update Account

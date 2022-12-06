@@ -6,6 +6,7 @@ import java.sql.SQLException;
 
 import com.jdbc.model.Groomer;
 import com.jdbc.model.Owner;
+
 import org.junit.jupiter.api.Test;
 
 public class UserTesting {
@@ -32,11 +33,11 @@ public class UserTesting {
     @Test
     public void testingCreateGroomerAccount() throws SQLException {
         Groomer groom = new Groomer();
-        groom.setEmail("gyonan@ilstu.edu");
-        groom.setName("Greg Yonan");
-        groom.setUsername("gyonan");
-        groom.setPassword("Password123!");
-        groom.setPhoneNumber(8424747);
+        groom.setEmail("gyan@ilstu.edu");
+        groom.setName("Greg Ynan");
+        groom.setUsername("jhvhg");
+        groom.setPassword("23!");
+        groom.setPhoneNumber(8424);
         groom.setIsGroomer(1);
         int test = groom.createAccount();
         assertNotEquals(0, test);
@@ -65,7 +66,7 @@ public class UserTesting {
     @Test
     public void testingUpdateOwnerAccount() throws SQLException {
         Owner owner1 = new Owner();
-        owner1.setEmail("gyonan@ilstu.edu");
+        owner1.setEmail("gy@ilstu.edu");
         owner1.setID(5);
         owner1.setName("Greg Yonan");
         owner1.setUsername("gyonan");
@@ -113,7 +114,7 @@ public class UserTesting {
     @Test
     public void testingDeleteOwnerAccounnt() throws SQLException {
         Owner owner1 = new Owner();
-        owner1.setID(5);
+        owner1.setID(16);
         boolean flag = owner1.deleteAccount();
         assertEquals(true, flag);
     }
@@ -123,9 +124,24 @@ public class UserTesting {
     @Test
     public void testingDeleteGroomerAccounnt() throws SQLException {
         Groomer groom1 = new Groomer();
-        groom1.setID(5);
+        groom1.setID(15);
         boolean flag = groom1.deleteAccount();
         assertEquals(true, flag);
+    }
+
+    @Test
+    public void testResetPassword() throws SQLException {
+        Owner owner1 = new Owner();
+        owner1.setEmail("jfergu2@ilstu.edu");
+        owner1.setName("Jack Ferguson");
+        owner1.setUsername("jfergu2");
+        owner1.setPassword("Password123!");
+        owner1.setPhoneNumber(2706280);
+        owner1.setIsGroomer(0);
+        owner1.createAccount();
+        owner1.getIdFromDB();
+        owner1.resetPassword("Bingo1234!");
+
     }
 
 }

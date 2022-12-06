@@ -1,11 +1,7 @@
 package com.jdbc.model;
 
 import com.jdbc.util.JDBCConnection;
-
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import java.sql.*;
 
 public abstract class User {
 
@@ -26,28 +22,44 @@ public abstract class User {
     public abstract boolean updateAccount(User newInfoUser) throws SQLException;
 
     public abstract boolean deleteAccount() throws SQLException;
-    
-    public void resetPassword(String password) throws SQLException
-    {
+
+    public void resetPassword(String password) throws SQLException {
         String query = "update user set password = ? where userID = ?";
-        //would also need to change the user objects password in as well
         PreparedStatement ps = con.prepareStatement(query);
         ps.setString(1, password);
-        //"1" is for test only would userId in cases
-        ps.setInt(2, id); 
+        this.setPassword(password);
+        ps.setInt(2, this.id);
         ps.executeUpdate();
     }
 
-    public boolean verifyEmail(String mailer) throws SQLException
-    {
-        String query = "select email from User where userID = ?";
+    public boolean verifyCreditials(String mailer, String username, int phoneNum) throws SQLException {
+        String query = "select * from User where userID = ?";
         PreparedStatement ps = con.prepareStatement(query);
         ps.setInt(1, id);
         ResultSet rs = ps.executeQuery();
         String dbEmail = "empty";
-        while (rs.next())
+        String dbUser = "empty";
+        int dbNum = 0;
+        while (rs.next()) {
             dbEmail = rs.getString("email");
-        return mailer.compareTo(dbEmail) == 0;
+            dbUser = rs.getString("username");
+            dbNum = rs.getInt("phoneNum");
+        }
+        return ((mailer.compareTo(dbEmail) == 0) && (dbUser.compareTo(username) == 0) && (dbNum == phoneNum));
+    }
+
+    public int getIdFromDB() throws SQLException {
+        String query = "Select userID from user where username = ? and email = ?";
+        PreparedStatement ps = con.prepareStatement(query);
+        ps.setString(1, this.username);
+        ps.setString(2, this.email);
+        ResultSet rs = ps.executeQuery();
+        if (rs.next()) {
+            int id = rs.getInt("userID");
+            this.setID(id);
+            return id;
+        } else
+            return 0;
     }
 
     public abstract int getID();
