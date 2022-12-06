@@ -13,6 +13,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.ResultSetMetaData;
 
+import org.junit.BeforeClass;
 import org.junit.jupiter.api.Test;
 
 import com.jdbc.main.DownloadPetProfile;
@@ -22,7 +23,7 @@ import com.jdbc.main.DownloadPetProfile;
 public class DownloadPetProfileTest {
 
 	//Test to check database connectivity
-	@Test
+	@BeforeClass
 	public void getColumnNames() {
 		
 		Connection con = null;
@@ -70,7 +71,7 @@ public class DownloadPetProfileTest {
 		
 		var pet = new DownloadPetProfile();
 		String line = " 1,1, jojo, dutch shepherd, Friendly "
-						+ "and active. Is trained";
+						+ "and active. Is trained.";
 		assertEquals(line, pet.downloadPetProfile(1));
 	}
 	

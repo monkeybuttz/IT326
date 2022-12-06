@@ -19,7 +19,7 @@ public class UploadPhoto {
 		
 	}
 	
-	public static int photoAdd(int imageId)
+	public static int photoAdd(int imageId, int aid)
 	{
 		
 		Connection con = null;
@@ -31,7 +31,7 @@ public class UploadPhoto {
 			con = JDBCConnection.getConnection();
 			Class.forName("com.mysql.cj.jdbc.Driver");
 			
-			String query = "Insert into image values (?, ?)";
+			String query = "Insert into image values (?, ?, ?)";
 			String query2 = "Select * FROM image WHERE id = " + imageId;
 			p = con.prepareStatement(query2);
 			rs = p.executeQuery();
@@ -50,6 +50,7 @@ public class UploadPhoto {
 				FileInputStream fis = new FileInputStream(file);
 				stmt.setInt(1, imageId);
 				stmt.setBinaryStream(2, fis,fis.available());
+				stmt.setInt(3, aid);
 				
 				stmt.executeUpdate();
 				
