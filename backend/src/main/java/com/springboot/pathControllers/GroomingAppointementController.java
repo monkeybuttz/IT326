@@ -13,20 +13,22 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.http.ResponseEntity;
 
 import com.google.gson.Gson;
+import com.jdbc.dao.PetImp;
 import com.jdbc.model.*;
 
 import java.sql.*;
 import java.util.ArrayList;
+import java.util.List;
 
 import com.jdbc.util.JDBCConnection;
 
 @RestController
-public class GroomingAppointmentController {
+public class GroomingAppointementController {
     static Connection con;
     static Gson gson;
 
     @Autowired
-    public GroomingAppointmentController() {
+    public GroomingAppointementController() {
         con = JDBCConnection.getConnection();
         gson = new Gson();
     }
@@ -70,19 +72,6 @@ public class GroomingAppointmentController {
         return "success";
     }
     
-    @DeleteMapping("/groomingapt/{id}")
-    public String deleteGroomingApt(@PathVariable int id) throws SQLException {
-        String query = "delete from groomingappointment where aptID =?";
-        PreparedStatement ps = con.prepareStatement(query);
-        ps.setInt(1, id);
-        ps.executeUpdate();
-        query = "delete from image where aid = ?";
-        ps = con.prepareStatement(query);
-        ps.setInt(1, id);
-        ps.executeUpdate();
-        return "success";
-    }
-
     @PostMapping("/groomingapt")
     public String addGroomingApt(@RequestBody GroomingAppointment apt) throws SQLException {
         String query = "insert into groomingappointment(groomerID, petID, date, location, notes) VALUES (?, ?, ?, ?, ?)";
@@ -108,11 +97,39 @@ public class GroomingAppointmentController {
                 ps.executeUpdate();
             }
         }
-        
+
         return new Gson().toJson(id);
     }
-
     
+    @DeleteMapping("/groomingapt/{id}")
+    public String deleteGroomingApt(@PathVariable int id) throws SQLException {
+        String query = "delete from groomingappointment where aptID =?";
+        PreparedStatement ps = con.prepareStatement(query);
+        ps.setInt(1, id);
+        ps.executeUpdate();
+        query = "delete from image where aid = ?";
+        ps = con.prepareStatement(query);
+        ps.setInt(1, id);
+        ps.executeUpdate();
+        return "success";
+    }
+    
+    @PostMapping("/groomingapt/favorite/{id}")
+    public void favoriteGroom(@PathVariable int id) throws SQLException {
+        String query = "select petID from groomingappointment where aptID = ?";
+        PreparedStatement ps = con.prepareStatement(query);
+        ps.setInt(1, id);
+        ResultSet rs = ps.executeQuery();
+        int pid = rs.getInt(1);
+        query = "update groomingappointment set favorited = false where petID = ?";
+        ps = con.prepareStatement(query);
+        ps.setInt(1, pid);
+        ps.executeUpdate();
+        query = "update groomingappointment set favorited = true where aptID = ?";
+        ps = con.prepareStatement(query);
+        ps.setInt(1, id);
+        ps.executeUpdate();
+    }
 
     public List<Blob> getAptImages(int id) throws SQLException {
         String query = "select * from image where aid = ?";

@@ -19,7 +19,11 @@ import com.jdbc.model.GroomingAppointment;
 import com.jdbc.model.Image;
 import com.jdbc.model.Owner;
 import com.jdbc.model.Pet;
+<<<<<<< HEAD
 import com.springboot.pathControllers.*;
+=======
+import com.springboot.pathControllers.GroomingAppointementController;
+>>>>>>> 01d105feb836f7232ce3804d360a416537759635
 
 public class GroomingAptTests {
     

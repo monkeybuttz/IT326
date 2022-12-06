@@ -1,6 +1,5 @@
 package com.jdbc.model;
 
-import com.google.gson.Gson;
 import com.jdbc.util.JDBCConnection;
 
 import java.util.List;
@@ -54,8 +53,7 @@ public class Owner extends User {
         }
         if (c) {
             return own;
-        } 
-        else {
+        } else {
             return null;
         }
     }
@@ -83,7 +81,7 @@ public class Owner extends User {
         ps.executeUpdate();
         return true;
     }
-    
+
     public List<Groomer> searchForGroomer(String name) throws SQLException {
         name = "%" + name + "%";
         List<Groomer> ls = new ArrayList<Groomer>();

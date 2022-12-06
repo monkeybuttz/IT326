@@ -7,17 +7,22 @@ import TextInput from '../../components/TextInput'
 import endpoint from '../../helpers/endpoint'
 
 
-export default function PetsPage({ navigation }) {
+export default function PetsPage({ navigation, route }) {
 
-  const [pets, setPets] = useState([{ src: '../../../assets/pets.png', name: "Allie" }, {}, {}, { name: "New Pet", src: "../../../assets/pets.png", link: "NewPet" }]);
+  const [pets, setPets] = useState([]);
   const [search, setSearch] = useState('');
+  // const reload = () => {
+  //     fetch(`${endpoint}/pets/${userId}`, { method: 'GET' }
+  //     ).then((res) => { return res.json() }).then(data => setPets([...data,  ...[{ petId: 0, name: "New Pet", src: "../../../assets/pets.png", link: "NewPet" }]])).catch()
+  //   };
 
-  const userId = 1;
+  const { userId } = route.params;
+  // navigation.addListener('willFocus', reload());
 
   useEffect(() => {
       fetch(`${endpoint}/pets/${userId}`, { method: 'GET' }
-      ).then((res) => { return res.json() }).then(data => setPets([...data,  ...[{ name: "New Pet", src: "../../../assets/pets.png", link: "NewPet" }]])).catch()
-    }, []);
+      ).then((res) => { return res.json() }).then(data => setPets([...data,  ...[{ petId: 0, name: "New Pet", src: "../../../assets/pets.png", link: "NewPet" }]])).catch()
+    },[]);
 
     const style = StyleSheet.create({
       container: {
@@ -80,7 +85,7 @@ export default function PetsPage({ navigation }) {
             data={pets}
             renderItem={({ item }) => (
               (!search || item?.name?.startsWith(search) || item?.name == 'New Pet') && <TouchableOpacity style={style.button}
-                onPress={() => { navigation.navigate(`${item.link ? item.link : 'Pet'}`, {id: item.petId}) }}>
+                onPress={() => { navigation.navigate(`${item.link ? item.link : 'Pet'}`, {petID: item.petId, userId: userId}) }}>
                 <View style={{ flex: 1, flexDirection: 'column', margin: 1, }}>
                   <Image style={style.imageThumbnail} source={item.src} />
                   <Text>{item.name}</Text>

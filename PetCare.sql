@@ -11,7 +11,7 @@ CREATE TABLE User(
     username VARCHAR(45) NOT NULL,
     password VARCHAR(45) NOT NULL,
     email VARCHAR(45) NOT NULL,
-    phoneNUM INT DEFAULT NULL,
+    phoneNUM LONG DEFAULT NULL,
     isGroomer BOOL NOT NULL,
     PRIMARY KEY (userID),
     UNIQUE KEY (username),
@@ -25,22 +25,21 @@ CREATE TABLE Pet(
     name VARCHAR(45),
     breed VARCHAR(45),
     notes LONGTEXT,
-    image BLOB,
+    image LONGBLOB,
     PRIMARY KEY (petID),
     FOREIGN KEY (ownerID) REFERENCES User(userID)
 );
 
 CREATE TABLE GroomingAppointment(
-	appointmentID INT auto_increment,
+	aptID INT auto_increment,
 	groomerID INT,
     petID INT,
-    ownerID INT,
     date VARCHAR(10),
     location VARCHAR(50),
     notes LONGTEXT,
     image BLOB,
-    favGroom BOOL,
-    PRIMARY KEY (appointmentID),
+    favorited BOOL,
+    PRIMARY KEY (aptID),
     FOREIGN KEY (groomerID) REFERENCES User(userID),
     FOREIGN KEY (petID) REFERENCES Pet(petID)
 );
@@ -57,9 +56,9 @@ CREATE TABLE Message(
 );
 
 CREATE TABLE Image(
-	id INT,
-    aptID INT,
+	id INT auto_increment,
     image longblob,
-    PRIMARY KEY (id)
+    aid INT,
+    PRIMARY KEY (id),
+    FOREIGN KEY (aid) REFERENCES GroomingAppointment(aptID)
 );
-
