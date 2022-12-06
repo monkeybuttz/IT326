@@ -135,7 +135,15 @@ public class PetController {
         return new Gson().toJson(ls);
     }
 
-    
+    @GetMapping("/pet/delete/{id}")
+    public String deletePet(@PathVariable int id) throws SQLException {
+
+        String query = "delete from pet where petID =?";
+        PreparedStatement ps = con.prepareStatement(query);
+        ps.setInt(1, id);
+        ps.executeUpdate();
+        return new Gson().toJson("success");
+    }
     
 
 }

@@ -7,26 +7,27 @@ import Header from '../../components/Header'
 import BackButton from '../../components/BackButton'
 import { theme } from '../../core/theme'
 import { getStatusBarHeight } from 'react-native-status-bar-height'
-import SettingsButton from '../../components/SettingsButton'
 import endpoint from '../../helpers/endpoint'
 
 
 export default function Pet({ route, navigation }) {
 
+
   const { petID, userId }  = route.params;
   const [pet, setPet] = useState({ src: '../../../assets/pets.png', name: "Allie", breed: "Pitbull", notes: "Submissive and breedable.",  groomApts: [{date: (new Date()).toDateString(), id: 1}] });
 
   useEffect(() => { 
-      fetch(`${endpoint}/pet/${petID}`, { method: 'GET' }
+      fetch(`${endpoint}/pet/${parseInt(petID)}`, { method: 'GET' }
       ).then((res) => { return res.json() }).then(data => setPet(data)).catch()
   }, []);
+
   
   const favoriteGroom = (item) => {
     fetch(`${endpoint}/groomingapt/${item.aptId}`, { method: 'POST' }
     ).then(
         setPet({...pet,  groomApts: pet. groomApts.map(ap => {
           if (ap.id == item.aptId) {
-          return ({...item, favorite: !item.favorite})
+          return ({...item, favorite: !item.favorited})
           } else {
             return ap
           }
@@ -85,7 +86,7 @@ const style = StyleSheet.create({
       }}>
         <Button
                 mode="contained"
-                onPress={() => { navigation.navigate("NewAppointment", {id: 0, petId: petID})}}
+                onPress={() => { navigation.navigate("NewAppointment", {id: 0, petId: petID, userId: userId })}}
           style={{ marginLeft: 6, width: "100%", marginRight: 10, marginTop: 24, color: theme.colors.secondary }}
               >
                 New Appointment
@@ -98,14 +99,14 @@ const style = StyleSheet.create({
       }}>
         <Button
           mode="contained"
-          onPress={() => {}}
+          onPress={() => { }}
           style={{width: "50%", marginTop: 24, marginRight: 10, color: theme.colors.secondary }}
         >
          💾 Profile
         </Button>
         <Button
         mode="contained"
-        onPress={() => {navigation.navigate('Documents')}}
+          onPress={() => { navigation.navigate('Documents', {petID: petID})}}
         style={{width: "50%", marginTop: 24, color: theme.colors.secondary }}
       >
         View Docs
@@ -122,19 +123,20 @@ const style = StyleSheet.create({
                   </Text>
                 <TouchableOpacity
                   onPress={() => {favoriteGroom(item)}}>
-                  <Text style={{...style.favorite, color: item.favorite ? theme.colors.secondary : 'black'}}>{item.favorite ? '★' : '☆'}</Text>
+                  <Text style={{...style.favorite, color: item.favorited ? theme.colors.secondary : 'black'}}>{item.favorited ? '★' : '☆'}</Text>
                 </TouchableOpacity>
               </View>
               <View style={{ flex: 1, flexDirection: 'row', margin: 1, justifyContent: 'space-between' }}>
                     <TouchableOpacity onPress={() => {
-                      navigation.navigate('NewAppointment', {id: item.aptId, petId: id})
+                      navigation.navigate('NewAppointment', {id: item.aptId, petId: petID, userId: userId })
                     }}>
                       <Text>View and Edit</Text>
                     </TouchableOpacity>
-                    <TouchableOpacity onPress={() => {
+                <TouchableOpacity onPress={() => {
+                  fetch(`${endpoint}/groomingapt/delete/${item.aptId}`).then(() =>
                     setPet({...pet,  groomApts: pet. groomApts.filter(ap => {
                       ap.id != item.aptId
-                  })})}}>
+                  })}))}}>
                       <Text> Delete </Text>
                     </TouchableOpacity>
                 </View>

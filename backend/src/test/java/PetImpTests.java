@@ -61,7 +61,7 @@ public class PetImpTests {
         PetController petCon = new PetController();
         PetImp pimp = new PetImp();
         int petId = pimp.add(pet);
-        assertEquals(petCon.getPet(petId));
+        assertEquals(pet, petCon.getPet(petId));
 
     }
     
@@ -69,7 +69,7 @@ public class PetImpTests {
 
     @Test
     public void updatePetTest() throws SQLException {
-        Blob blob = new SerialBlob(new byte[1024]);
+        SerialBlob blob = new SerialBlob(new byte[1024]);
         Pet pet = new Pet( 1, "Name", "Breed", "Notes", blob);
 
         PetImp petDAO = new PetImp();
@@ -84,7 +84,7 @@ public class PetImpTests {
     
     @Test
     public void deletePetTest() throws SQLException {
-        Blob blob = new SerialBlob(new byte[1024]);
+        SerialBlob blob = new SerialBlob(new byte[1024]);
         Pet pet = new Pet( 1, "Name", "Breed", "Notes", blob);
 
         PetImp petDAO = new PetImp();
@@ -97,7 +97,7 @@ public class PetImpTests {
 
     @Test
     public void getPetsTest() throws SQLException {
-        Blob blob = new SerialBlob(new byte[1024]);
+        SerialBlob blob = new SerialBlob(new byte[1024]);
         Pet pet = new Pet( 1, "Name", "Breed", "Notes", blob);
         Pet pet2 = new Pet( 1, "Name", "Breed", "Notes", blob);
         Pet pet3 = new Pet(1, "Name", "Breed", "Notes", blob);

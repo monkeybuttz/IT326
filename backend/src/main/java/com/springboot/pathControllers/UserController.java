@@ -81,15 +81,7 @@ public class UserController {
 
     @GetMapping("/user/delete/{id}")
     private boolean deleteUser(@PathVariable int id) throws SQLException {
-        String query = """
-            delete u, p, g, m, i
-                from user u
-                LEFT JOIN Pet p on u.userID = p.ownerID
-                LEFT JOIN Groomingappointment g on p.petID = g.petID
-                LEFT JOIN message m on  m.receiverID = u.userID or m.senderID = u.userID
-                LEFT JOIN image i on  i.aid = g.aptID
-                where u.userID = 1;
-                 """;
+        String query = "delete from user where userID =?";
         PreparedStatement ps = con.prepareStatement(query);
         ps.setInt(1, id);
         ps.executeUpdate();

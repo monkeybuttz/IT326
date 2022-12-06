@@ -1,6 +1,7 @@
-import static org.junit.jupiter.api.Assertions.assertEquals;
+
 import static org.junit.jupiter.api.Assertions.assertNotEquals;
 import static org.junit.jupiter.api.Assertions.assertNull;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 import java.sql.Blob;
 import java.sql.SQLException;
@@ -19,11 +20,8 @@ import com.jdbc.model.GroomingAppointment;
 import com.jdbc.model.Image;
 import com.jdbc.model.Owner;
 import com.jdbc.model.Pet;
-<<<<<<< HEAD
-import com.springboot.pathControllers.*;
-=======
-import com.springboot.pathControllers.GroomingAppointementController;
->>>>>>> 01d105feb836f7232ce3804d360a416537759635
+import com.springboot.pathControllers.GroomingAppointmentController;
+import com.springboot.pathControllers.UserController;
 
 public class GroomingAptTests {
     

@@ -13,7 +13,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.ResultSetMetaData;
 
-import org.junit.BeforeClass;
+import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 
 import com.jdbc.main.DownloadPetProfile;
@@ -23,7 +23,7 @@ import com.jdbc.main.DownloadPetProfile;
 public class DownloadPetProfileTest {
 
 	//Test to check database connectivity
-	@BeforeClass
+	@BeforeAll
 	public void getColumnNames() {
 		
 		Connection con = null;

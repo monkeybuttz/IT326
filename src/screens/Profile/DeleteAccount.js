@@ -17,7 +17,7 @@ export default function DeleteAccount({ navigation }) {
       fetch(`${endpoint}/user/delete/${id}`)
       .then(() => { navigation.reset({
       index: 0,
-      routes: [{ name: 'Home' }],
+      routes: [{ name: 'StartScreen' }],
     }) }).catch();
     }
 

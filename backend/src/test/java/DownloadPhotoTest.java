@@ -11,7 +11,7 @@ import java.sql.ResultSetMetaData;
 
 import com.jdbc.util.JDBCConnection;
 
-import org.junit.BeforeClass;
+import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 
 import com.jdbc.main.DownloadPhoto;
@@ -19,7 +19,7 @@ import com.jdbc.main.DownloadPhoto;
 public class DownloadPhotoTest {
 	
 	//Test to check database connectivity
-	@BeforeClass
+	@BeforeAll
 	public void getColumnNames() {
 		
 		Connection con = null;

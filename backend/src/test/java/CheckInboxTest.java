@@ -4,6 +4,7 @@ import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 import java.sql.*;
 
+import org.aspectj.lang.annotation.Before;
 //import org.aspectj.lang.annotation.Before;
 import org.junit.*;
 import org.junit.jupiter.api.BeforeAll;
@@ -11,7 +12,6 @@ import org.junit.jupiter.api.Test;
 
 import com.jdbc.main.CheckInbox;
 import com.jdbc.util.JDBCConnection;
-//import org.junit.Before;
 
 
 
@@ -19,7 +19,7 @@ public class CheckInboxTest {
 	
 
 	//Test to check database connectivity
-	@BeforeClass
+	@BeforeAll
 	public void getColumnNames() {
 		
 		Connection con = null;

@@ -94,7 +94,7 @@ export default function EditProfile({ navigation, route }) {
           />
       <Button
         mode="contained"
-        onPress={() => onUpdatePressed()}
+        onPress={onUpdatePressed}
         style={{ marginTop: 24, color: theme.colors.secondary }}
       >
         Update Account

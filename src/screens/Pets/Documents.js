@@ -10,7 +10,9 @@ import endpoint from '../../helpers/endpoint'
 
 
 
-export default function Documents({ navigation, route, options  }) {
+export default function Documents({ navigation, route, options }) {
+    
+    const { petID } = route.params
 
     const [photos, setPhotos] = useState([]);
     const [photo, setPhoto] = useState();

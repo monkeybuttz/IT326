@@ -24,6 +24,17 @@ public class GroomingAppointment {
         favorited = false;
     }
 
+    public GroomingAppointment(int aptId, String notes, String location, String date, int petId, int groomerId, List<Blob> images, boolean favorited) {
+            this.aptId = aptId;
+            this.notes = notes;
+            this.location = location;
+            this.groomerId = groomerId;
+            this.images = images;
+            this.date = date;
+            this.favorited = favorited;
+            this.petId = petId;
+    }
+
     public int getAptId() {
         return this.aptId;
     }

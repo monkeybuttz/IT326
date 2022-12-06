@@ -27,7 +27,7 @@ CREATE TABLE Pet(
     notes LONGTEXT,
     image LONGBLOB,
     PRIMARY KEY (petID),
-    FOREIGN KEY (ownerID) REFERENCES User(userID)
+    FOREIGN KEY (ownerID) REFERENCES User(userID) ON DELETE CASCADE
 );
 
 CREATE TABLE GroomingAppointment(
@@ -40,8 +40,8 @@ CREATE TABLE GroomingAppointment(
     image BLOB,
     favorited BOOL,
     PRIMARY KEY (aptID),
-    FOREIGN KEY (groomerID) REFERENCES User(userID),
-    FOREIGN KEY (petID) REFERENCES Pet(petID)
+    FOREIGN KEY (groomerID) REFERENCES User(userID) ON DELETE CASCADE,
+    FOREIGN KEY (petID) REFERENCES Pet(petID) ON DELETE CASCADE
 );
 
 
@@ -51,8 +51,8 @@ CREATE TABLE Message(
     senderID INT,
     receiverID INT,
     PRIMARY KEY (messageID),
-    FOREIGN KEY (senderID) REFERENCES User(userID),
-    FOREIGN KEY (receiverID) REFERENCES User(userID)
+    FOREIGN KEY (senderID) REFERENCES User(userID) ON DELETE CASCADE,
+    FOREIGN KEY (receiverID) REFERENCES User(userID) ON DELETE CASCADE
 );
 
 CREATE TABLE Image(
@@ -60,7 +60,7 @@ CREATE TABLE Image(
     image longblob,
     aid INT,
     PRIMARY KEY (id),
-    FOREIGN KEY (aid) REFERENCES GroomingAppointment(aptID)
+    FOREIGN KEY (aid) REFERENCES GroomingAppointment(aptID) ON DELETE CASCADE
 );
 
 INSERT INTO user

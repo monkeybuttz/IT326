@@ -11,7 +11,7 @@ public class Message {
     public Message(int messageId, String str, int senderId, int receiverId)
     {
         this.messageId = messageId;
-        text = str;
+        this.text = str;
         this.senderId = senderId;
         this.receiverId = receiverId;
     }

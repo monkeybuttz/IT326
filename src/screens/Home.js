@@ -10,7 +10,7 @@ import MessageButton from '../components/HomePageStuff.js/MessageButton'
 
 export default function Home({ navigation, route }) {
 
-    const { id, name }  = route.params;
+    const { id,  }  = route.params;
 
   const style = {
     header: {
@@ -27,7 +27,7 @@ export default function Home({ navigation, route }) {
   return (
     <Background>
       <SettingsButton />
-      <Text style={style.header}>Welcome Back {name}</Text>
+      <Text style={style.header}>Welcome Back</Text>
       <Logo />
       <View style={{
         flexDirection: "row",

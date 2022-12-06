@@ -4,6 +4,10 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 import com.jdbc.model.*;
+import com.jdbc.util.JDBCConnection;
+import java.sql.*;
+
+
 /*
  * Tsts the MessageTest.java Program
  * Name: Grant Lane
@@ -15,7 +19,32 @@ public class MessageTest
     public void emptyMessageTest()
     {
         Message emp = new Message();
-        assertNotNull(emp);;
+        assertNotNull(emp);
+        ;
+    }
+    
+    @Test
+    public void sendMessage() throws SQLException {
+        Message message = new Message(0, "jhfjdsgf", 1, 2);
+        Connection con = JDBCConnection.getConnection();
+        String text = message.getText();
+        int senderID = message.getSenderId();
+        int receiverID = message.getReceiverId();
+
+        String query = "INSERT into message(post, senderID, receiverID) VALUES (?, ?, ?)";
+
+        PreparedStatement ps = con.prepareStatement(query, Statement.RETURN_GENERATED_KEYS);
+        ps.setString(1, text);
+        ps.setInt(2, senderID);
+        ps.setInt(3, receiverID);
+        ps.executeUpdate();
+        int id = -1;
+        ResultSet rs = ps.getGeneratedKeys();
+        if (rs.next()) {
+            id = rs.getInt(1);
+        }
+        message.setMessageId(id);
+        assertEquals(1, 1);
     }
 
     @Test

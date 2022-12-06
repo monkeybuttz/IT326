@@ -12,6 +12,7 @@ import { phoneValidator } from '../../helpers/phoneValidator'
 import { passwordValidator } from '../../helpers/passwordValidator'
 import { nameValidator } from '../../helpers/nameValidator'
 import endpoint from '../../helpers/endpoint'
+import { setTokenSourceMapRange } from 'typescript'
 
 
 export default function NewMessage({ navigation, route }) {
@@ -22,7 +23,13 @@ export default function NewMessage({ navigation, route }) {
   const [groomer, setGroomer] = useState({ name: "", id: -1 });
   const [groomers, setGroomers] = useState([]);
 
-useEffect(()=>{},[])  
+  const [temp, setTemp] = useState({t: ""});
+
+  useEffect(() => {
+    if (recieverId) {
+      fetch(`${endpoint}/user/${recieverId}`).then(res => res.json())
+        .then(data => setGroomer(data));
+}},[])  
 
 useEffect(() => {
     if (groomer.name.length > 0 && groomer.id == -1) {
@@ -42,17 +49,17 @@ useEffect(() => {
     fetch(`${endpoint}/message/send`, {
       method: 'POST',
       headers: {
-            'Content-Type': 'application/json'
+        'Content-Type': 'application/json'
       },
-      body: JSON.stringify({messageId:0, senderId: senderId, recieverId: groomer.id, text: content.value})
-    })
+      body: JSON.stringify({ messageId: 0, senderId: senderId, recieverId: groomer.id, text: content.value })
+    }).then(res => res.json()).then(navigation.navigate('Home', {id: senderId}));
   }
     
 
   return (
     <Background>
           <BackButton goBack={navigation.goBack} />
-      <Header>My Information</Header>
+      <Header>New Message</Header>
       <View style={{ width: '100%'}}>
           <TextInput
                 label="To"

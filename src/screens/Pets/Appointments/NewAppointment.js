@@ -17,22 +17,24 @@ import { TouchableOpacity } from 'react-native-gesture-handler'
 
 export default function NewAppointment({ route, navigation }) {
 
-  const { petID } = route.params;
+  const { id, petID, userId  } = route.params;
     const [notes, setNotes] = useState();
     const [address, setAddress] = useState();
     const [groomer, setGroomer] = useState({name: "", id:-1 });
-    const [groomers, setGroomers] = useState([{ name: "barbra", id: 3 }, { name: "natilie", id: 3 }]);
+  const [groomers, setGroomers] = useState([]);
+  const [favorited, setFavorited] = useState(false);
     const [photos, setPhotos] = useState([]);
     const [photo, setPhoto] = useState();
     const [datePicker, setDatePicker] = useState(new Date());
 
   useEffect(() => {
     if (id) {
-      fetch(`${endpoint}/groomApt/${id}`)
+      fetch(`${endpoint}/groomApt/${parseInt(id)}`)
         .then(res => res.json())
         .then(data =>{
           setNotes(data.notes)
           setAddress(data.location)
+          setFavorited(data.favorited)
           //setPhotos(data.images)
           setDatePicker(new Date(data.date))
           fetch(`${endpoint}/user/${data.groomerId}`)
@@ -54,21 +56,22 @@ export default function NewAppointment({ route, navigation }) {
   }, [groomer])
 
   const save = () => {
-        fetch(`${endpoint}/groomingapt${petID ? "/" + petID : ""}`,  {
+        fetch(`${endpoint}/groomingapt${id ? "/" + parseInt(id) : ""}`,  {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json'
         },
           body: JSON.stringify({
-            id: 0,
+            aptId: 0,
             notes: notes,
             location: address,
-            groomerID: groomer.id,
-            photos: photos,
+            groomerId: groomer.id,
+            images: photos,
             date: datePicker.toLocaleDateString("en-US"),
-            petId: petID
+            favorited: favorited,
+            petId: parseInt(petID)
           }),
-    })
+        }).then(() => navigation.navigate("Home", {id: userId }))
     }
 
   return (
@@ -132,7 +135,7 @@ export default function NewAppointment({ route, navigation }) {
             </View>
           <Button
               mode="contained"
-            onPress={() => save('LoginScreen')}
+            onPress={() => save()}
           >
               Save
           </Button>

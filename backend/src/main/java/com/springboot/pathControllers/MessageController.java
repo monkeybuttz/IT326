@@ -41,8 +41,9 @@ public class MessageController
 
 
     @PostMapping("/message/send")
-    public void sendMessage(@RequestBody Message message) throws SQLException
+    public String sendMessage(@RequestBody Message message) throws SQLException
     {
+
         String text = message.getText();
         int senderID = message.getSenderId();
         int receiverID = message.getReceiverId();
@@ -61,6 +62,8 @@ public class MessageController
             id = rs.getInt(1);
         }
         message.setMessageId(id);
+
+        return new Gson().toJson("Success");
     }
 
     @DeleteMapping("/message/{id}")
@@ -114,19 +117,19 @@ public class MessageController
         return gson.toJson(ls);
     }
 
-    @GetMapping("/message/inbox/{recieverID}")
-    public String getRecievedMessages(@PathVariable int receiverID) throws SQLException
+    @GetMapping("/message/inbox/{id}")
+    public String getRecievedMessages(@PathVariable int id) throws SQLException
     {
         List<Message> ls = new ArrayList<Message>();
         String query = "select * from Message where receiverID = ?";
         PreparedStatement ps = con.prepareStatement(query);
-        ps.setInt(1, receiverID);
+        ps.setInt(1, id);
         ResultSet rs = ps.executeQuery();
         while(rs.next())
         {
             Message message = new Message();
             message.setMessageId(rs.getInt("messageID"));
-            message.setReceiverId(receiverID);
+            message.setReceiverId(id);
             message.setSenderId(rs.getInt("senderID"));
             message.setText(rs.getString("post"));
             ls.add(message);

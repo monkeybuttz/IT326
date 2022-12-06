@@ -9,16 +9,16 @@ import Button from '../../components/Button';
 export default function Inbox({ navigation, route }) {
 
   const { id } = route.params;
-    const [mail, setMail] = useState([{ subject: "hi", messageId: 2, from: {name: "Omar", id: 1}, content: "a very long message that will not fit inside the small view screen"} ]);
+    const [mail, setMail] = useState([]);
 
   useEffect(() => { 
-    fetch(`${endpoint}/message/inbox/${id}`).then(
+    fetch(`${endpoint}/message/inbox/${parseInt(id)}`).then(
       res => res.json()
     ).then(data => {
-      data[0] && data.forEach(message => {
+      data[0] && data.map(async message => {
         fetch(`${endpoint}/user/${message.senderId}`, { method: 'GET' })
         .then(res => res.json())
-        .then((info) => { setMail([...mail, {...message, from: info}]) })
+          .then((info) => { setMail([ ...mail, { ...message, from: info }]) })
     });
       });
       
@@ -59,11 +59,11 @@ export default function Inbox({ navigation, route }) {
                           <Text style={{ overflow: 'hidden'}}>From: {item.from?.name}</Text>
                       </View>
                   <Text style={{ margin: 4, width: 190 }}>
-                    {item.content}
+                    {item.text}
                   </Text>
                 </View>
                 <View style={{ flex: 1, flexDirection: 'row', margin: 1, justifyContent: 'space-between' }}>
-                <TouchableOpacity onPress={() => { navigation.navigate("NewMessage", { senderId: id, recieverId: item.recieverId }) }}>
+                <TouchableOpacity onPress={() => { navigation.navigate("NewMessage", { senderId: id, recieverId: item.from.id }) }}>
                       <Text>Respond</Text>
                     </TouchableOpacity>
                     <TouchableOpacity onPress={() => {setMail(mail.filter(m => m.messageId != item.messageId))}}>
