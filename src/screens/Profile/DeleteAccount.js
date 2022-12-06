@@ -9,9 +9,9 @@ import endpoint from '../../helpers/endpoint'
 
 
 
-export default function DeleteAccount({ navigation }) {
+export default function DeleteAccount({ navigation, route }) {
 
-  const id = 1;
+  const {id} = route.params;
 
   const deleteAccount = () => {
       fetch(`${endpoint}/user/delete/${id}`)

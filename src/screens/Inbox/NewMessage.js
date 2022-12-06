@@ -7,27 +7,20 @@ import Button from '../../components/Button'
 import TextInput from '../../components/TextInput'
 import BackButton from '../../components/BackButton'
 import { theme } from '../../core/theme'
-import { emailValidator } from '../../helpers/emailValidator'
-import { phoneValidator } from '../../helpers/phoneValidator'
-import { passwordValidator } from '../../helpers/passwordValidator'
 import { nameValidator } from '../../helpers/nameValidator'
 import endpoint from '../../helpers/endpoint'
-import { setTokenSourceMapRange } from 'typescript'
-
 
 export default function NewMessage({ navigation, route }) {
 
-  const { senderId, recieverId } = route.params;
+  const { senderID, recieverID } = route.params;
 
   const [content, setContent] = useState({ value: '', error: '' })
   const [groomer, setGroomer] = useState({ name: "", id: -1 });
   const [groomers, setGroomers] = useState([]);
 
-  const [temp, setTemp] = useState({t: ""});
-
   useEffect(() => {
-    if (recieverId) {
-      fetch(`${endpoint}/user/${recieverId}`).then(res => res.json())
+    if (recieverID) {
+      fetch(`${endpoint}/user/${recieverID}`).then(res => res.json())
         .then(data => setGroomer(data));
 }},[])  
 
@@ -46,13 +39,13 @@ useEffect(() => {
       setContent({ ...content, error: contentError })
       return
     }
-    fetch(`${endpoint}/message/send`, {
+    fetch(`${endpoint}/message/${senderID}/${groomer.id}`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json'
       },
-      body: JSON.stringify({ messageId: 0, senderId: senderId, recieverId: groomer.id, text: content.value })
-    }).then(res => res.json()).then(navigation.navigate('Home', {id: senderId}));
+      body: JSON.stringify({ messageID: 0, senderID: senderID, recieverID: groomer.id, text: content.value })
+    }).then(res => res.json()).then(navigation.navigate('Home', {id: senderID}));
   }
     
 

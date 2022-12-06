@@ -18,7 +18,7 @@ export default function NewPet({ navigation, route }) {
     const [breed, setBreed] = useState({ value: '', error: '' })
     const [notes, setNotes] = useState({ value: '', error: '' })
 
-    const { id, userId } = route.params;
+    const { id, userID } = route.params;
      
     useEffect(() => {
         if (id) {
@@ -33,18 +33,23 @@ export default function NewPet({ navigation, route }) {
         }
     }, [])
 
-    const onUpdatePressed = () => {
+    const onUpdatePressed = async () => {
         const nameError = nameValidator(name.value)
         if (nameError) {
             setName({ ...name, error: nameError })
             return
         }
-        fetch(`${endpoint}/pet${id ? "/" + parseInt(id) : ""}`, {
+        fetch(`${endpoint}/pet/${id ? parseInt(id) : "add/" + userID}`, {
             method: "POST",
             headers: {
                 'Content-Type': 'application/json'
             },
-            body: JSON.stringify({ petId: parseInt(id), ownerId: parseInt(userId), name: name.value, breed: breed.value, notes: notes.value, image: image })
+            body: JSON.stringify({
+                petID: parseInt(id),
+                ownerID: parseInt(userID),
+                name: name.value, breed: breed.value,
+                notes: notes.value, image: image
+            })
         }).then(navigation.goBack());
     }
     
@@ -87,7 +92,7 @@ export default function NewPet({ navigation, route }) {
             </Button>
             {id && <View style={styles.row}>
                 <Text> Do you want to </Text>
-                <TouchableOpacity onPress={() => fetch(`${endpoint}/pet/delete/${parseInt(id)}`).then(navigation.navigate('Home', { id: userId }))}>
+                <TouchableOpacity onPress={() => fetch(`${endpoint}/pet/delete/${parseInt(id)}`).then(navigation.navigate('Home', { id: userID }))}>
                     <Text style={styles.link}>Delete Pet</Text>
                 </TouchableOpacity>
             </View>}

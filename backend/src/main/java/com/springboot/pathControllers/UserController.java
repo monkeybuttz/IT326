@@ -43,7 +43,7 @@ public class UserController {
         public String getLogin() {
             return this.login;
         }
-        
+
         public String getPassword() {
             return this.password;
         }
@@ -81,45 +81,43 @@ public class UserController {
 
     @GetMapping("/user/delete/{id}")
     private boolean deleteUser(@PathVariable int id) throws SQLException {
-        String query = "delete from user where userID =?";
+        String query = "delete from user where userID =? ";
         PreparedStatement ps = con.prepareStatement(query);
         ps.setInt(1, id);
         ps.executeUpdate();
         return true;
     }
 
-   @PostMapping("/user/{id}")
-   private String updateUser(@PathVariable int id, @RequestBody Owner newUserInfo) throws SQLException {
-       String query = "update user set name = ?, username = ?, password = ?, email = ?, phoneNUM = ?, isGroomer = ? where userId = ? ";
-       PreparedStatement ps = con.prepareStatement(query);
-       ps.setString(1, newUserInfo.getName());
-       ps.setString(2, newUserInfo.getUsername());
-       ps.setString(3, newUserInfo.getPassword());
-       ps.setString(4, newUserInfo.getEmail());
-       ps.setLong(5, newUserInfo.getPhoneNumber());
-       ps.setInt(6, newUserInfo.getIsGroomer());
-       ps.setInt(7, id);
-       ps.executeUpdate();
-       return new Gson().toJson(true);
-   }
-    
-   @PostMapping("/user")
-   public String createUser(@RequestBody Owner user) throws SQLException {
-       String query = "INSERT into user(name, username, password, email, phoneNUM, isGroomer) VALUES (?, ?, ?, ?, ?, ?)";
-       PreparedStatement ps = con.prepareStatement(query, Statement.RETURN_GENERATED_KEYS);
-       ps.setString(1, user.getName());
-       ps.setString(2, user.getUsername());
-       ps.setString(3, user.getPassword());
-       ps.setString(4, user.getEmail());
-       ps.setLong(5, user.getPhoneNumber());
-       ps.setInt(6, user.getIsGroomer());
-       ps.executeUpdate();
-       ResultSet rs = ps.getGeneratedKeys();
-       if (rs.next()) {
-           user.setID(rs.getInt(1));
-       }
-       return new Gson().toJson(user);
-   }
+    @PostMapping("/user/{id}/{phoNUM}")
+    private String updateUser(@RequestBody Owner newUserInfo, @PathVariable int id, @PathVariable Long phoNUM ) throws SQLException {
+        String query = "update user set name = ?, email = ?, phoneNUM = ?, isGroomer = ? where userID = ? ";
+        PreparedStatement ps = con.prepareStatement(query);
+        ps.setString(1, newUserInfo.getName());
+        ps.setString(2, newUserInfo.getEmail());
+        ps.setLong(3, phoNUM);
+        ps.setInt(4, newUserInfo.getIsGroomer());
+        ps.setInt(5, id);
+        ps.executeUpdate();
+        return new Gson().toJson(true);
+    }
+
+    @PostMapping("/user")
+    public String createUser(@RequestBody Owner user) throws SQLException {
+        String query = "INSERT into user(name, username, password, email, phoneNUM, isGroomer) VALUES (?, ?, ?, ?, ?, ?)";
+        PreparedStatement ps = con.prepareStatement(query, Statement.RETURN_GENERATED_KEYS);
+        ps.setString(1, user.getName());
+        ps.setString(2, user.getUsername());
+        ps.setString(3, user.getPassword());
+        ps.setString(4, user.getEmail());
+        ps.setLong(5, user.getPhoneNumber());
+        ps.setInt(6, user.getIsGroomer());
+        ps.executeUpdate();
+        ResultSet rs = ps.getGeneratedKeys();
+        if (rs.next()) {
+            user.setID(rs.getInt(1));
+        }
+        return new Gson().toJson(user);
+    }
 
     @GetMapping("/searchForGroomer/{name}")
     public String searchForGroomer(@PathVariable String name) throws SQLException {
@@ -144,10 +142,9 @@ public class UserController {
         }
         return new Gson().toJson(ls);
     }
- 
+
     @PostMapping("/user/login")
-    public String login(@RequestBody LoginForm credentials) throws SQLException
-    {
+    public String login(@RequestBody LoginForm credentials) throws SQLException {
         String query = "select * from User where (username = ? OR email = ?) and password = ?";
         PreparedStatement ps = con.prepareStatement(query);
         ps.setString(1, credentials.getLogin());
@@ -155,14 +152,10 @@ public class UserController {
         ps.setString(3, credentials.getPassword());
         ResultSet rs = ps.executeQuery();
         User user = null;
-        while (rs.next())
-        {
-            if (rs.getBoolean("isGroomer"))
-            {
+        while (rs.next()) {
+            if (rs.getBoolean("isGroomer")) {
                 user = new Groomer();
-            }
-            else
-            {
+            } else {
                 user = new Owner();
             }
 
@@ -176,5 +169,5 @@ public class UserController {
 
         return new Gson().toJson(user);
     }
-	
+
 }

@@ -65,14 +65,7 @@ export default function LoginScreen({ navigation }) {
         errorText={password.error}
         secureTextEntry
       />
-      <View style={styles.forgotPassword}>
-        <TouchableOpacity
-          onPress={() => navigation.navigate('ResetPasswordScreen')}
-        >
-          <Text style={styles.forgot}>Forgot your password?</Text>
-        </TouchableOpacity>
-      </View>
-      <Button mode="contained" onPress={onLoginPressed}>
+      <Button style={{marginTop: 20}} mode="contained" onPress={onLoginPressed}>
         Login
       </Button>
       {invalid && <Text style={{fontWeight: 'bold', color: theme.colors.primary}}> Your email and password do not match</Text>}

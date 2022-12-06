@@ -71,12 +71,12 @@ public class GroomingAppointmentController {
         return new Gson().toJson("success");
     }
     
-    @PostMapping("/groomingapt")
-    public String addGroomingApt(@RequestBody GroomingAppointment apt) throws SQLException {
-        String query = "Insert into groomingappointment( petID, groomerID, date, location, notes, favorited) VALUES (?, ?, ?, ?, ?, ?)";
+    @PostMapping("/groomingapt/add/{petID}")
+    public String addGroomingApt(@RequestBody GroomingAppointment apt, @PathVariable int petID) throws SQLException {
+        String query = "Insert into groomingappointment( groomerID, petID, date, location, notes, favorited) VALUES (?, ?, ?, ?, ?, ?)";
         PreparedStatement ps = con.prepareStatement(query, Statement.RETURN_GENERATED_KEYS);
         ps.setInt(1, apt.getGroomerId());
-        ps.setInt(2, apt.getPetId());
+        ps.setInt(2, petID);
         ps.setString(3, apt.getDate());
         ps.setString(4, apt.getLocation());
         ps.setString(5, apt.getNotes());
@@ -120,7 +120,10 @@ public class GroomingAppointmentController {
         PreparedStatement ps = con.prepareStatement(query);
         ps.setInt(1, id);
         ResultSet rs = ps.executeQuery();
-        int pid = rs.getInt(1);
+        int pid = -1;
+        while (rs.next()) {
+            pid = rs.getInt("petID");
+        }
         query = "update groomingappointment set favorited = false where petID = ?";
         ps = con.prepareStatement(query);
         ps.setInt(1, pid);

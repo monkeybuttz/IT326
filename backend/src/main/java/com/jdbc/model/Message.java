@@ -3,55 +3,54 @@ package com.jdbc.model;
 public class Message {
     private int receiverId;
     private String text;
-    private int senderId;
-    private int messageId;
+    private int senderID;
+    private int messageID;
 
-    public Message() {}
+    public Message() {
+    }
 
-    public Message(String text, int senderId, int receiverId)
-    {
+    public Message(String text, int senderID, int receiverId) {
         this.text = text;
-        this.senderId = senderId;
+        this.senderID = senderID;
         this.receiverId = receiverId;
     }
 
-    public void setMessageId(int id)
-    {
-        messageId = id;
+    public Message(int id, String text, int senderID, int receiverId) {
+        this.messageID = id;
+        this.text = text;
+        this.senderID = senderID;
+        this.receiverId = receiverId;
     }
 
-    public void setReceiverId(int id)
-    {
+    public void setMessageId(int id) {
+        messageID = id;
+    }
+
+    public void setReceiverId(int id) {
         receiverId = id;
     }
 
-    public void setText(String str)
-    {
+    public void setText(String str) {
         text = str;
     }
 
-    public void setSenderId(int senderId)
-    {
-        this.senderId = senderId;
+    public void setSenderId(int senderID) {
+        this.senderID = senderID;
     }
 
-    public int getMessageId()
-    {
-        return messageId;
+    public int getMessageId() {
+        return messageID;
     }
 
-    public int getReceiverId()
-    {
+    public int getReceiverId() {
         return receiverId;
     }
 
-    public String getText()
-    {
+    public String getText() {
         return text;
     }
 
-    public int getSenderId()
-    {
-        return senderId;
-    }    
+    public int getSenderId() {
+        return senderID;
+    }
 }

@@ -40,20 +40,17 @@ public class MessageController
     }
 
 
-    @PostMapping("/message/send")
-    public String sendMessage(@RequestBody Message message) throws SQLException
+    @PostMapping("/message/{senderID}/{rID}")
+    public String sendMessage(@RequestBody Message message, @PathVariable int senderID, @PathVariable int rID) throws SQLException
     {
-
         String text = message.getText();
-        int senderID = message.getSenderId();
-        int receiverID = message.getReceiverId();
 
         String query = "INSERT into message(post, senderID, receiverID) VALUES (?, ?, ?)";
 
         PreparedStatement ps = con.prepareStatement(query, Statement.RETURN_GENERATED_KEYS);
         ps.setString(1, text);
         ps.setInt(2, senderID);
-        ps.setInt(3, receiverID);
+        ps.setInt(3, rID);
         ps.executeUpdate();
         int id = -1;
         ResultSet rs = ps.getGeneratedKeys();
@@ -66,7 +63,7 @@ public class MessageController
         return new Gson().toJson("Success");
     }
 
-    @DeleteMapping("/message/{id}")
+    @GetMapping("/message/delete/{id}")
     public void delete(@PathVariable int id) throws SQLException
     {
         String query = "delete from message where messageID =?";

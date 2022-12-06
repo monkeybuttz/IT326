@@ -17,7 +17,7 @@ import { TouchableOpacity } from 'react-native-gesture-handler'
 
 export default function NewAppointment({ route, navigation }) {
 
-  const { id, petID, userId  } = route.params;
+  const { id, petID, userID  } = route.params;
     const [notes, setNotes] = useState();
     const [address, setAddress] = useState();
     const [groomer, setGroomer] = useState({name: "", id:-1 });
@@ -25,7 +25,7 @@ export default function NewAppointment({ route, navigation }) {
   const [favorited, setFavorited] = useState(false);
     const [photos, setPhotos] = useState([]);
     const [photo, setPhoto] = useState();
-    const [datePicker, setDatePicker] = useState(new Date());
+  const [datePicker, setDatePicker] = useState(new Date());
 
   useEffect(() => {
     if (id) {
@@ -50,28 +50,28 @@ export default function NewAppointment({ route, navigation }) {
     if (groomer.name.length > 0 && groomer.id == -1) {
       fetch(`${endpoint}/searchForGroomer/${groomer.name}`)
       .then(res => { const resp = res.json(); if (resp) { return resp } else { return []} })
-      .then(data => setGroomers([...data])
+        .then(data => { console.log(data); setGroomers([...data]) }
       );
     }
   }, [groomer])
 
-  const save = () => {
-        fetch(`${endpoint}/groomingapt${id ? "/" + parseInt(id) : ""}`,  {
+  const save = async () => {
+        fetch(`${endpoint}/groomingapt/${id ? parseInt(id) : "add/" + parseInt(petID)}`,  {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json'
         },
           body: JSON.stringify({
-            aptId: 0,
+            aptID: 0,
             notes: notes,
             location: address,
             groomerId: groomer.id,
             images: photos,
             date: datePicker.toLocaleDateString("en-US"),
             favorited: favorited,
-            petId: parseInt(petID)
+            petID: petID
           }),
-        }).then(() => navigation.navigate("Home", {id: userId }))
+        }).then(() => navigation.navigate("Home", {id: userID }))
     }
 
   return (
@@ -90,7 +90,7 @@ export default function NewAppointment({ route, navigation }) {
         />
         {(groomer.id == -1 && groomer.name?.length > 0) && <View>
           {groomers.map(g => {
-            return <TouchableOpacity style={{ width: '100%', fontSize: 13, borderColor: theme.colors.secondary,
+            return <TouchableOpacity key={g.id} style={{ width: '100%', fontSize: 13, borderColor: theme.colors.secondary,
               borderWidth: 1, padding: 12, borderRadius: 4
             }}
               onPress={() => setGroomer(g)}

@@ -16,7 +16,7 @@ export default function Inbox({ navigation, route }) {
       res => res.json()
     ).then(data => {
       data[0] && data.map(async message => {
-        fetch(`${endpoint}/user/${message.senderId}`, { method: 'GET' })
+        fetch(`${endpoint}/user/${message.senderID}`, { method: 'GET' })
         .then(res => res.json())
           .then((info) => { setMail([ ...mail, { ...message, from: info }]) })
     });
@@ -24,9 +24,9 @@ export default function Inbox({ navigation, route }) {
       
   }, [])
   
-  // this.messageId = messageId;
+  // this.messageID = messageID;
   //       text = str;
-  //       this.senderId = senderId;
+  //       this.senderID = senderID;
   //       this.receiverId = receiverId;
   
   const style = StyleSheet.create({
@@ -48,12 +48,12 @@ export default function Inbox({ navigation, route }) {
           <BackButton goBack={navigation.goBack} />
       <View style={{ margin: 12 }}></View>
       <Header>GroomBuddy</Header>
-      <Button style={{width: '100%'}}onPress={() => { navigation.navigate("NewMessage", {senderId: id, recieverId: 0}) } } mode="contained"> New Message </Button>
+      <Button style={{width: '100%'}}onPress={() => { navigation.navigate("NewMessage", {senderID: id, recieverID: 0}) } } mode="contained"> New Message </Button>
       <SafeAreaView style={style.container}>
         <FlatList
         data={mail}
           renderItem={({ item }) => (
-              <View style={{ ...style.button, height: 'auto', paddingBottom: 4}} >
+            <View key={item.id}  style={{ ...style.button, height: 'auto', paddingBottom: 4}} >
                 <View style={{ flex: 1, flexDirection: 'row', margin: 1, }}>
                       <View style={{margin: 4, width: 85 }}>
                           <Text style={{ overflow: 'hidden'}}>From: {item.from?.name}</Text>
@@ -63,10 +63,13 @@ export default function Inbox({ navigation, route }) {
                   </Text>
                 </View>
                 <View style={{ flex: 1, flexDirection: 'row', margin: 1, justifyContent: 'space-between' }}>
-                <TouchableOpacity onPress={() => { navigation.navigate("NewMessage", { senderId: id, recieverId: item.from.id }) }}>
+                <TouchableOpacity onPress={() => { navigation.navigate("NewMessage", { senderID: id, recieverID: item.from.id }) }}>
                       <Text>Respond</Text>
                     </TouchableOpacity>
-                    <TouchableOpacity onPress={() => {setMail(mail.filter(m => m.messageId != item.messageId))}}>
+                <TouchableOpacity onPress={() => {
+                  fetch(`${endpoint}/message/delete/${item.messageID}`).then(
+                  setMail(mail.filter(m => m.messageID != item.messageID)))
+                }}>
                       <Text> Delete </Text>
                     </TouchableOpacity>
                     </View>

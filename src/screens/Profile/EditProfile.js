@@ -21,8 +21,6 @@ export default function EditProfile({ navigation, route }) {
   const [name, setName] = useState({ value: '', error: '' })
   const [phone, setPhone] = useState({ value: '', error: '' })
   const [email, setEmail] = useState({ value: '', error: '' })
-  const [password, setPassword] = useState({ value: '', error: '' })
-  const [user, setUser] = useState({});
 
   useEffect(() => {
     fetch(`${endpoint}/user/${id}`, { method: 'GET' })
@@ -34,26 +32,23 @@ export default function EditProfile({ navigation, route }) {
       }).catch()
   }, [])
 
-  const onUpdatePressed = async () => {
+  function onUpdatePressed() {
     const nameError = nameValidator(name.value)
     const emailError = emailValidator(email.value)
-    const passwordError = passwordValidator(password.value)
     const phoneError = phoneValidator(phone.value)
-    if (emailError || passwordError || nameError || phoneError) {
+    if (emailError || nameError || phoneError) {
       setName({ ...name, error: nameError })
       setEmail({ ...email, error: emailError })
-      setPassword({ ...password, error: passwordError })
       setPhone({ ...phone, error: phoneError })
-      return;
     } else {
-      fetch(`${endpoint}/user/${id}`, {
+      fetch(`${endpoint}/user/${id}/${phone.value}`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json'
         },
-        body: JSON.stringify({ name: name.value, email: email.value, password: Integer.parseInt(password.value), phone: phone.value })
+        body: JSON.stringify({ name: name.value, email: email.value, password: 0, phone: parseInt(phone.value) })
       })
-      .then(() => { navigation.navigate('Home') }).catch()
+      .then(() => { navigation.navigate('Home', {id: id}) }).catch()
     }
   }
 
@@ -101,7 +96,7 @@ export default function EditProfile({ navigation, route }) {
       </Button>
       <View style={styles.row}>
         <Text> Time for a change? </Text>
-        <TouchableOpacity onPress={() => navigation.replace('DeleteAccount')}>
+        <TouchableOpacity onPress={() => navigation.replace('DeleteAccount', {id: id})}>
           <Text style={styles.link}>Delete Account</Text>
         </TouchableOpacity>
       </View>

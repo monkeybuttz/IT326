@@ -6,7 +6,7 @@ import { theme } from '../../core/theme'
 
 export default function PetButton({id, navigation}) {
     return (
-        <TouchableOpacity style={styles.button} onPress={() => { navigation.navigate("PetsPage", {userId: id}) } }>
+        <TouchableOpacity style={styles.button} onPress={() => { navigation.navigate("PetsPage", {userID: id}) } }>
             <>
                 <Image source={require('../../assets/pets.png')} style={styles.image} />
                 <Text style={styles.text} > View Pets </Text>

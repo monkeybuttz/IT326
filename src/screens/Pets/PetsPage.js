@@ -12,16 +12,16 @@ export default function PetsPage({ navigation, route }) {
   const [pets, setPets] = useState([]);
   const [search, setSearch] = useState('');
   // const reload = () => {
-  //     fetch(`${endpoint}/pets/${userId}`, { method: 'GET' }
-  //     ).then((res) => { return res.json() }).then(data => setPets([...data,  ...[{ petId: 0, name: "New Pet", src: "../../../assets/pets.png", link: "NewPet" }]])).catch()
+  //     fetch(`${endpoint}/pets/${userID}`, { method: 'GET' }
+  //     ).then((res) => { return res.json() }).then(data => setPets([...data,  ...[{ petID: 0, name: "New Pet", src: "../../../assets/pets.png", link: "NewPet" }]])).catch()
   //   };
 
-  const { userId } = route.params;
+  const { userID } = route.params;
   // navigation.addListener('willFocus', reload());
 
   useEffect(() => {
-      fetch(`${endpoint}/pets/${userId}`, { method: 'GET' }
-      ).then((res) => { return res.json() }).then(data => setPets([...data,  ...[{ petId: 0, name: "New Pet", src: "../../../assets/pets.png", link: "NewPet" }]])).catch()
+      fetch(`${endpoint}/pets/${userID}`, { method: 'GET' }
+      ).then((res) => { return res.json() }).then(data => setPets([...data,  ...[{ petID: 0, name: "New Pet", src: "../../../assets/pets.png", link: "NewPet" }]])).catch()
     },[]);
 
     const style = StyleSheet.create({
@@ -29,27 +29,8 @@ export default function PetsPage({ navigation, route }) {
         flex: 1,
         borderRadius: 9999,
       },
-      smallImageThumbnail: {
-        backgroundColor: "black",
-        justifyContent: 'center',
-        alignItems: 'center',
-        height: 110,
-        width: 110,
-        margin: 10,
-        borderRadius: 9999,
-        borderStyle: "solid",
-        borderWidth: 5,
-        borderColor: "white"
-      },
-      smallButton: {
-        backgroundColor: "#f2dcdc",
-        margin: 10,
-        height: 150,
-        width: 130,
-        borderRadius: 20,
-      },
       imageThumbnail: {
-        backgroundColor: "black",
+        backgroundColor: "white",
         justifyContent: 'center',
         alignItems: 'center',
         height: 200,
@@ -72,6 +53,7 @@ export default function PetsPage({ navigation, route }) {
 
     return (
       <Background>
+        <View style={{paddingTop: 16}}></View>
         <BackButton goBack={navigation.goBack} />
         <Header>GroomBuddy</Header>
         <TextInput
@@ -85,9 +67,9 @@ export default function PetsPage({ navigation, route }) {
             data={pets}
             renderItem={({ item }) => (
               (!search || item?.name?.startsWith(search) || item?.name == 'New Pet') && <TouchableOpacity style={style.button}
-                onPress={() => { navigation.navigate(`${item.link ? item.link : 'Pet'}`, {petID: item.petId, userId: userId}) }}>
+                onPress={() => { navigation.navigate(`${item.link ? item.link : 'Pet'}`, {petID: item.petID, userID }) }}>
                 <View style={{ flex: 1, flexDirection: 'column', margin: 1, }}>
-                  <Image style={style.imageThumbnail} source={item.src} />
+                  <Image style={style.imageThumbnail} source={{uri: item.image}} />
                   <Text>{item.name}</Text>
                 </View>
               </TouchableOpacity>

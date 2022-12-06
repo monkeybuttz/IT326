@@ -9,24 +9,22 @@ import com.jdbc.model.*;
 import com.jdbc.util.JDBCConnection;
 import java.sql.*;
 
-
 import com.springboot.pathControllers.MessageController;
 import com.springboot.pathControllers.UserController;
+
 /*
  * Tsts the MessageTest.java Program
  * Name: Grant Lane
  */
-public class MessageTest 
-{
+public class MessageTest {
     @Test
-    //Testing creating an empty Message
-    public void emptyMessageTest()
-    {
+    // Testing creating an empty Message
+    public void emptyMessageTest() {
         Message emp = new Message();
         assertNotNull(emp);
         ;
     }
-    
+
     @Test
     public void sendMessage() throws SQLException {
         Message message = new Message(0, "jhfjdsgf", 1, 2);
@@ -52,53 +50,47 @@ public class MessageTest
     }
 
     @Test
-    //Testing creating a Message with all parameters
-    public void createMessageTest()
-    {
+    // Testing creating a Message with all parameters
+    public void createMessageTest() {
         Message message = new Message(1, "Howdy!", 2, 3);
         assertNotNull(message);
     }
 
     @Test
-    //Test get messageId
-    public void getMessageIdTest()
-    {
+    // Test get messageID
+    public void getMessageIdTest() {
         Message message = new Message(1, "Howdy!", 2, 3);
         int id = message.getMessageId();
-        assertEquals(1,id);
+        assertEquals(1, id);
     }
 
     @Test
-    //Test get message text
-    public void getTextTest()
-    {
+    // Test get message text
+    public void getTextTest() {
         Message message = new Message(1, "Howdy!", 2, 3);
         String text = message.getText();
         assertEquals("Howdy!", text);
     }
 
     @Test
-    //Test get messageId
-    public void getSenderIdTest()
-    {
+    // Test get messageID
+    public void getSenderIdTest() {
         Message message = new Message(1, "Howdy!", 2, 3);
         int id = message.getSenderId();
-        assertEquals(2,id);
+        assertEquals(2, id);
     }
 
     @Test
-    //Test get messageId
-    public void getReceiverIdTest()
-    {
+    // Test get messageID
+    public void getReceiverIdTest() {
         Message message = new Message(1, "Howdy!", 2, 3);
         int id = message.getReceiverId();
-        assertEquals(3,id);
+        assertEquals(3, id);
     }
 
     @Test
-    //Test get messageId
-    public void setMessageIdTest()
-    {
+    // Test get messageID
+    public void setMessageIdTest() {
         int id = 1;
 
         Message message = new Message();
@@ -108,9 +100,8 @@ public class MessageTest
     }
 
     @Test
-    //Test get messageId
-    public void setTextTest()
-    {
+    // Test get messageID
+    public void setTextTest() {
         String text = "Hi! How are ya?";
 
         Message message = new Message();
@@ -120,9 +111,8 @@ public class MessageTest
     }
 
     @Test
-    //Test get messageId
-    public void setSenderTest()
-    {
+    // Test get messageID
+    public void setSenderTest() {
         int id = 1;
 
         Message message = new Message();
@@ -132,9 +122,8 @@ public class MessageTest
     }
 
     @Test
-    //Test get messageId
-    public void setReceiverTest()
-    {
+    // Test get messageID
+    public void setReceiverTest() {
         int id = 1;
 
         Message message = new Message();
@@ -154,7 +143,7 @@ public class MessageTest
         groomer1.setPhoneNumber(1234567890);
         UserController ucon1 = new UserController();
         ucon1.createUser(groomer1);
-        
+
         Owner groomer2 = new Owner();
         groomer2.setName("Braydon Hughes");
         groomer2.setEmail("bthuqq3@ilstu.edu");
@@ -164,7 +153,7 @@ public class MessageTest
         groomer2.setPhoneNumber(1234567890);
         UserController ucon2 = new UserController();
         ucon2.createUser(groomer2);
-        
+
         Message msg = new Message("Test message", 1, 2);
         MessageController msgContr = new MessageController();
         msgContr.sendMessage(msg);

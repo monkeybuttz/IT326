@@ -4,43 +4,45 @@ import java.sql.Blob;
 import java.util.List;
 
 public class GroomingAppointment {
-    int aptId;
+    int aptID;
     String notes;
     String location;
     String date;
     int groomerId;
-    int petId;
+    int petID;
     boolean favorited;
     List<Blob> images;
 
-    public GroomingAppointment() {}
+    public GroomingAppointment() {
+    }
 
-    public GroomingAppointment(String notes, String location, String date, int petId, int groomerId) {
+    public GroomingAppointment(String notes, String location, String date, int petID, int groomerId) {
         this.notes = notes;
         this.location = location;
         this.date = date;
-        this.petId = petId;
+        this.petID = petID;
         this.groomerId = groomerId;
         favorited = false;
     }
 
-    public GroomingAppointment(int aptId, String notes, String location, String date, int petId, int groomerId, List<Blob> images, boolean favorited) {
-            this.aptId = aptId;
-            this.notes = notes;
-            this.location = location;
-            this.groomerId = groomerId;
-            this.images = images;
-            this.date = date;
-            this.favorited = favorited;
-            this.petId = petId;
+    public GroomingAppointment(int aptID, String notes, String location, String date, int petID, int groomerId,
+            List<Blob> images, boolean favorited) {
+        this.aptID = aptID;
+        this.notes = notes;
+        this.location = location;
+        this.groomerId = groomerId;
+        this.images = images;
+        this.date = date;
+        this.favorited = favorited;
+        this.petID = petID;
     }
 
     public int getAptId() {
-        return this.aptId;
+        return this.aptID;
     }
 
-    public void setAptId(int aptId) {
-        this.aptId = aptId;
+    public void setAptId(int aptID) {
+        this.aptID = aptID;
     }
 
     public String getNotes() {
@@ -76,11 +78,11 @@ public class GroomingAppointment {
     }
 
     public int getPetId() {
-        return this.petId;
+        return this.petID;
     }
 
-    public void setPetId(int petId) {
-        this.petId = petId;
+    public void setPetId(int petID) {
+        this.petID = petID;
     }
 
     public boolean isFavorited() {
@@ -102,13 +104,12 @@ public class GroomingAppointment {
     @Override
     public String toString() {
         return "{" +
-            " notes='" + getNotes() + "'" +
-            ", location='" + getLocation() + "'" +
-            ", date='" + getDate() + "'" +
-            ", groomerId='" + getGroomerId() + "'" +
-            ", petId='" + getPetId() + "'" +
-            "}";
+                " notes='" + getNotes() + "'" +
+                ", location='" + getLocation() + "'" +
+                ", date='" + getDate() + "'" +
+                ", groomerId='" + getGroomerId() + "'" +
+                ", petID='" + getPetId() + "'" +
+                "}";
     }
-    
 
 }

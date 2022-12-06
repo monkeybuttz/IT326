@@ -47,7 +47,7 @@ public class PetController {
             pet.setName(rs.getString("name"));
             pet.setBreed(rs.getString("breed"));
             pet.setNotes(rs.getString("notes"));
-            pet.setImage(rs.getBlob("image"));
+            pet.setImage(rs.getString("image"));
         }
 
         query = "select * from groomingappointment where petID = ?";
@@ -68,6 +68,18 @@ public class PetController {
             ls.add(gapt);
         }
         pet.setGroomingAppointments(ls);
+
+        query = "select * from petdocument where petID = ?";
+        ps = con.prepareStatement(query);
+        ps.setInt(1, id);
+        rs = ps.executeQuery();
+        List<String> pics = new ArrayList<String>();
+        while (rs.next()) {
+            c = true;
+            pics.add(rs.getString("uri"));
+        }
+        pet.setDocuments(pics);
+
         if (c) {
             return new Gson().toJson(pet);
         } else {
@@ -76,27 +88,42 @@ public class PetController {
     }
 
     @PostMapping("/pet/{id}")
-    public String updatePet(@RequestBody Pet pet) throws SQLException {
+    public String updatePet(@RequestBody Pet pet, @PathVariable int id) throws SQLException {
         String query = "update pet set name = ?, breed = ?, notes = ?, image = ? where petID = ?";
         PreparedStatement ps = con.prepareStatement(query);
         ps.setString(1, pet.getName());
         ps.setString(2, pet.getBreed());
         ps.setString(3, pet.getNotes());
-        ps.setBlob(4, pet.getImage());
-        ps.setInt(5, pet.getPetId());
+        ps.setString(4, pet.getImage());
+        ps.setInt(5, id);
         ps.executeUpdate();
-        return new Gson().toJson("success");
+
+         query = "delete from petdocument where petID =?";
+        ps = con.prepareStatement(query);
+        ps.setInt(1, id);
+        ps.executeUpdate();
+
+        for (String doc : pet.getDocuments()) {
+            query = "INSERT into PetDocument(petID, uri) VALUES ( ?, ? ) ";
+            ps = con.prepareStatement(query);
+            ps.setInt(1, id);
+            ps.setString(2, doc);
+            ps.executeUpdate();
+        }
+
+        return new Gson().toJson(pet);
+
     }
     
-    @PostMapping("/pet")
-    public String addPet(@RequestBody Pet pet) throws SQLException {
+    @PostMapping("/pet/add/{userID}")
+    public String addPet(@RequestBody Pet pet, @PathVariable int userID) throws SQLException {
         String query = "INSERT into pet(ownerID, name, breed, notes, image) VALUES (?, ?, ?, ?, ? )";
         PreparedStatement ps = con.prepareStatement(query, Statement.RETURN_GENERATED_KEYS);
-        ps.setInt(1, pet.getOwnerId());
+        ps.setInt(1, userID);
         ps.setString(2, pet.getName());
         ps.setString(3, pet.getBreed());
         ps.setString(4, pet.getNotes());
-        ps.setBlob(5, pet.getImage());
+        ps.setString(5, pet.getImage());
         ps.executeUpdate();
         int id = -1;
         ResultSet rs = ps.getGeneratedKeys();
@@ -129,7 +156,7 @@ public class PetController {
             pet.setName(rs.getString("name"));
             pet.setBreed(rs.getString("breed"));
             pet.setNotes(rs.getString("notes"));
-            pet.setImage(rs.getBlob("image"));
+            pet.setImage(rs.getString("image"));
             ls.add(pet);
         }
         return new Gson().toJson(ls);

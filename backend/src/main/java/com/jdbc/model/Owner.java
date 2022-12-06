@@ -60,7 +60,7 @@ public class Owner extends User {
 
     @Override
     public boolean updateAccount(User newUserInfo) throws SQLException {
-        String query = "update user set name = ?, username = ?, password = ?, email = ?, phoneNUM = ?, isGroomer = ? where userId = ? ";
+        String query = "update user set name = ?, username = ?, password = ?, email = ?, phoneNUM = ?, isGroomer = ? where userID = ? ";
         PreparedStatement ps = con.prepareStatement(query);
         ps.setString(1, newUserInfo.getName());
         ps.setString(2, newUserInfo.getUsername());

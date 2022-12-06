@@ -12,23 +12,23 @@ import endpoint from '../../helpers/endpoint'
 
 export default function Documents({ navigation, route, options }) {
     
-    const { petID } = route.params
+    const { petID, userID } = route.params
 
     const [photos, setPhotos] = useState([]);
     const [photo, setPhoto] = useState();
-
-    const userId = 1;
+     const [pet, setPet] = useState();
 
     useEffect(() => {
-      fetch(`${endpoint}/pet/docs/${userId}`, { method: 'GET' }
-      ).then((res) => { return res.json() }).then(data => setPhotos(data)).catch()
+      fetch(`${endpoint}/pet/${petID}`, { method: 'GET' }
+      ).then((res) => { return res.json() }).then(data => { setPet(data); setPhotos(data.documents)}).catch()
     }, [])
 
     const save = () => {
-        if (photos.length() > 0) {
-            fetch(`${endpoint}/pet/docs/${userId}`, { method: 'POST', body: {images: photos} }
-            ).then((res) => { return res.json() }).then(data => setPhotos(data)).catch()
-        }
+        fetch(`${endpoint}/pet/${petID}`, {
+            method: 'POST', headers: {
+                'Content-Type': 'application/json'
+            }, body: JSON.stringify({...pet, documents: photos}) }
+            ).then(navigation.navigate('Home', {id: userID})).catch()
     }
 
   return (
@@ -42,7 +42,7 @@ export default function Documents({ navigation, route, options }) {
                 <View style={{ height: 200 }}>
                     <ImagePicker title={'Add Refrence Photo'}
                         imageState={[item, (newP) => {
-                            setPhotos(photos.map((p, i) => i == index? newP : p ))
+                            setPhotos(photos.map((p, i) => (i == index)? newP : p ))
                         }]}
                     />
                 </View>
@@ -58,7 +58,7 @@ export default function Documents({ navigation, route, options }) {
             </View>
           <Button
               mode="contained"
-            onPress={() => save('LoginScreen')}
+            onPress={save}
           >
               Save
           </Button>

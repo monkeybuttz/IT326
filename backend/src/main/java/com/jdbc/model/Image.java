@@ -10,15 +10,16 @@ import com.jdbc.util.JDBCConnection;
 public class Image {
     private int id;
     private Blob photo;
-    private int aptId;
+    private int aptID;
     static Connection con = JDBCConnection.getConnection();
 
-    public Image() {}
+    public Image() {
+    }
 
-    public Image(int id, Blob photo, int aptId) {
+    public Image(int id, Blob photo, int aptID) {
         this.id = id;
         this.photo = photo;
-        this.aptId = aptId;
+        this.aptID = aptID;
     }
 
     public Image(int id, Blob photo) {
@@ -42,12 +43,12 @@ public class Image {
         this.photo = photo;
     }
 
-    public void setAptId(int aptId) {
-        this.aptId = aptId;
+    public void setAptId(int aptID) {
+        this.aptID = aptID;
     }
 
     public int getAptId() {
-        return aptId;
+        return aptID;
     }
 
     public void addImage(Blob photo, int aid) throws SQLException {

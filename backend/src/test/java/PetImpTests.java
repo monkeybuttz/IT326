@@ -15,35 +15,36 @@ import com.jdbc.model.*;
 import com.mysql.cj.jdbc.Blob;
 import com.jdbc.dao.PetImp;
 import com.springboot.pathControllers.*;
+
 public class PetImpTests {
 
     // @Test
     // public void insertPetTest() throws SQLException {
-    //     Blob blob = new SerialBlob(new byte[1024]);
-    //     Pet pet = new Pet( 1, "Name", "Breed", "Notes", blob);
+    // Blob blob = new SerialBlob(new byte[1024]);
+    // Pet pet = new Pet( 1, "Name", "Breed", "Notes", blob);
 
-    //     PetImp petdao = new PetImp();
+    // PetImp petdao = new PetImp();
 
-    //     assertNotEquals(-1, petdao.add(pet));
+    // assertNotEquals(-1, petdao.add(pet));
 
     // }
 
     // @Test
     // public void getPetTest() throws SQLException {
-    //     Owner owner = new Owner();
-    //     owner.setName("Braydon Hughes");
-    //     owner.setEmail("bhughe2@ilstu.edu");
-    //     owner.setUsername("bhughe2");
-    //     owner.setPassword("1234");
-    //     owner.setIsGroomer(0);
-    //     owner.setPhoneNumber(1234567890);
-    //     int oid = owner.createAccount();
+    // Owner owner = new Owner();
+    // owner.setName("Braydon Hughes");
+    // owner.setEmail("bhughe2@ilstu.edu");
+    // owner.setUsername("bhughe2");
+    // owner.setPassword("1234");
+    // owner.setIsGroomer(0);
+    // owner.setPhoneNumber(1234567890);
+    // int oid = owner.createAccount();
 
-    //     Blob blob = new SerialBlob(new byte[1024]);
-    //     Pet pet = new Pet(oid, "Name", "Breed", "Notes", blob);
-    //     PetImp petDAO = new PetImp();
-    //     pet.setPetId(petDAO.add(pet));
-    //     assertEquals(pet, petDAO.getPet(pet.getPetId()));
+    // Blob blob = new SerialBlob(new byte[1024]);
+    // Pet pet = new Pet(oid, "Name", "Breed", "Notes", blob);
+    // PetImp petDAO = new PetImp();
+    // pet.setPetId(petDAO.add(pet));
+    // assertEquals(pet, petDAO.getPet(pet.getPetId()));
 
     // }
 
@@ -60,17 +61,15 @@ public class PetImpTests {
         Pet pet = new Pet(oid, "Name", "Breed", "Notes");
         PetController petCon = new PetController();
         PetImp pimp = new PetImp();
-        int petId = pimp.add(pet);
-        assertEquals(pet, petCon.getPet(petId));
+        int petID = pimp.add(pet);
+        assertEquals(pet, petCon.getPet(petID));
 
     }
-    
-
 
     @Test
     public void updatePetTest() throws SQLException {
-        SerialBlob blob = new SerialBlob(new byte[1024]);
-        Pet pet = new Pet( 1, "Name", "Breed", "Notes", blob);
+       String blob = "";
+        Pet pet = new Pet(1, "Name", "Breed", "Notes", blob);
 
         PetImp petDAO = new PetImp();
         pet.setPetId(petDAO.add(pet));
@@ -81,11 +80,11 @@ public class PetImpTests {
 
         assertEquals(pet, petDAO.getPet(pet.getPetId()));
     }
-    
+
     @Test
     public void deletePetTest() throws SQLException {
-        SerialBlob blob = new SerialBlob(new byte[1024]);
-        Pet pet = new Pet( 1, "Name", "Breed", "Notes", blob);
+       String blob = "";
+        Pet pet = new Pet(1, "Name", "Breed", "Notes", blob);
 
         PetImp petDAO = new PetImp();
         pet.setPetId(petDAO.add(pet));
@@ -97,9 +96,9 @@ public class PetImpTests {
 
     @Test
     public void getPetsTest() throws SQLException {
-        SerialBlob blob = new SerialBlob(new byte[1024]);
-        Pet pet = new Pet( 1, "Name", "Breed", "Notes", blob);
-        Pet pet2 = new Pet( 1, "Name", "Breed", "Notes", blob);
+       String blob = "";
+        Pet pet = new Pet(1, "Name", "Breed", "Notes", blob);
+        Pet pet2 = new Pet(1, "Name", "Breed", "Notes", blob);
         Pet pet3 = new Pet(1, "Name", "Breed", "Notes", blob);
 
         PetImp petDAO = new PetImp();

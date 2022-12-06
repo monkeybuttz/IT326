@@ -1,33 +1,44 @@
 package com.jdbc.model;
 
-import java.sql.Blob;
 import java.util.List;
 
-import  com.jdbc.model.GroomingAppointment;
+import com.jdbc.model.GroomingAppointment;
 
 public class Pet {
-    int petId;
-    int ownerId;
+    int petID;
+    int ownerID;
     String name;
     String breed;
     String notes;
-    Blob image;
+    String image;
     List<GroomingAppointment> groomApts;
+    List<String> documents;
 
     public Pet() {
     }
 
-    public Pet(int petId, int ownerID, String name, String breed, String notes, Blob image) {
-        this.petId = petId;
-        this.ownerId = ownerID;
+    public Pet(int petID, int ownerID, String name, String breed, String notes, String image, List<String> documents) {
+        this.petID = petID;
+        this.ownerID = ownerID;
+        this.name = name;
+        this.breed = breed;
+        this.notes = notes;
+        this.image = image;
+        this.documents = documents;
+    }
+
+    public Pet(int petID, int ownerID, String name, String breed, String notes, String image) {
+        this.petID = petID;
+        this.ownerID = ownerID;
         this.name = name;
         this.breed = breed;
         this.notes = notes;
         this.image = image;
     }
 
-    public Pet(int ownerID, String name, String breed, String notes, Blob image) {
-        this.ownerId = ownerID;
+
+    public Pet(int ownerID, String name, String breed, String notes, String image) {
+        this.ownerID = ownerID;
         this.name = name;
         this.breed = breed;
         this.notes = notes;
@@ -35,27 +46,26 @@ public class Pet {
     }
 
     public Pet(int ownerID, String name, String breed, String notes) {
-        this.ownerId = ownerID;
+        this.ownerID = ownerID;
         this.name = name;
         this.breed = breed;
         this.notes = notes;
     }
 
-
     public int getPetId() {
-        return this.petId;
+        return this.petID;
     }
 
-    public void setPetId(int petId) {
-        this.petId = petId;
+    public void setPetId(int petID) {
+        this.petID = petID;
     }
 
     public int getOwnerId() {
-        return this.ownerId;
+        return this.ownerID;
     }
 
-    public void setOwnerId(int ownerId) {
-        this.ownerId = ownerId;
+    public void setOwnerId(int ownerID) {
+        this.ownerID = ownerID;
     }
 
     public String getName() {
@@ -82,11 +92,11 @@ public class Pet {
         this.breed = breed;
     }
 
-    public Blob getImage() {
+    public String getImage() {
         return this.image;
     }
 
-    public void setImage(Blob image) {
+    public void setImage(String image) {
         this.image = image;
     }
 
@@ -98,18 +108,24 @@ public class Pet {
         this.groomApts = groomApts;
     }
 
+    public List<String> getDocuments() {
+        return this.documents;
+    }
+
+    public void setDocuments(List<String> docs) {
+        this.documents = docs;
+    }
 
     @Override
     public String toString() {
         return "{" +
-            " petId='" + getPetId() + "'" +
-            ", ownerId='" + getOwnerId() + "'" +
-            ", name='" + getName() + "'" +
-            ", breed='" + getBreed() + "'" +
-            ", notes='" + getNotes() + "'" +
-            ", image='" + getImage() + "'" +
-            "}";
+                " petID='" + getPetId() + "'" +
+                ", ownerID='" + getOwnerId() + "'" +
+                ", name='" + getName() + "'" +
+                ", breed='" + getBreed() + "'" +
+                ", notes='" + getNotes() + "'" +
+                ", image='" + getImage() + "'" +
+                "}";
     }
-
 
 }

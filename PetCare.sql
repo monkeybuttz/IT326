@@ -30,6 +30,14 @@ CREATE TABLE Pet(
     FOREIGN KEY (ownerID) REFERENCES User(userID) ON DELETE CASCADE
 );
 
+CREATE TABLE PetDocument(
+	id INT AUTO_INCREMENT,
+	uri LONGTEXT NOT NULL,
+    petID INT,
+    PRIMARY KEY (id)
+    FOREIGN KEY (petID) REFERENCES Pet(petID) ON DELETE CASCADE
+);
+
 CREATE TABLE GroomingAppointment(
 	aptID INT auto_increment,
 	groomerID INT,

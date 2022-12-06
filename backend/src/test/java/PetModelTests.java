@@ -2,7 +2,6 @@ import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 
-import java.sql.Blob;
 import java.sql.SQLException;
 
 import javax.sql.rowset.serial.SerialBlob;
@@ -25,7 +24,7 @@ public class PetModelTests {
     @Test
     // Testing creating a Pet with all parameters
     public void createPetTest() throws SQLException {
-        Blob blob = new SerialBlob(new byte[1024]);
+        String blob = "";
         Pet pet = new Pet(1,  2, "Name", "Breed", "Notes", blob);
         assertNotNull(pet);
     }
@@ -33,7 +32,7 @@ public class PetModelTests {
     @Test
     // Test get PetId
     public void getPetIdTest() throws SQLException {
-        Blob blob = new SerialBlob(new byte[1024]);
+        String blob = "";
         Pet pet = new Pet(1,  2, "Name", "Breed", "Notes",  blob);
         int id = pet.getPetId();
         assertEquals(1, id);
@@ -42,7 +41,7 @@ public class PetModelTests {
     @Test
     // Test get Pet Notes
     public void getNotesTest() throws SQLException {
-        Blob blob = new SerialBlob(new byte[1024]);
+        String blob = "";
         Pet pet = new Pet(1,  2, "Name", "Breed", "Notes",  blob);
         String Notes = pet.getNotes();
         assertEquals("Howdy!", Notes);
@@ -51,7 +50,7 @@ public class PetModelTests {
     @Test
     // Test get PetId
     public void getNameTest() throws SQLException {
-        Blob blob = new SerialBlob(new byte[1024]);
+        String blob = "";
         Pet pet = new Pet(1,  2, "Name", "Breed", "Notes",  blob);
         String name = pet.getName();
         assertEquals(2, name);
@@ -60,7 +59,7 @@ public class PetModelTests {
     @Test
     // Test get PetId
     public void getBreedTest() throws SQLException {
-        Blob blob = new SerialBlob(new byte[1024]);
+        String blob = "";
         Pet pet = new Pet(1, 2, "Name", "Breed", "Notes", blob);
         String breed = pet.getBreed();
         assertEquals(2, breed);
@@ -69,7 +68,7 @@ public class PetModelTests {
     @Test
     // Test get PetId
     public void getOwnerIdTest() throws SQLException {
-        Blob blob = new SerialBlob(new byte[1024]);
+        String blob = "";
         Pet pet = new Pet(1, 2, "Name", "Breed", "Notes", blob);
         int id = pet.getOwnerId();
         assertEquals(3, id);
@@ -78,9 +77,9 @@ public class PetModelTests {
     @Test
     // Test get PetId
     public void getImageTest() throws SQLException {
-        Blob blob = new SerialBlob(new byte[1024]);
+        String blob = "";
         Pet pet = new Pet(1, 2, "Name", "Breed", "Notes", blob);
-        Blob image = pet.getImage();
+        String image = pet.getImage();
         assertEquals(blob, image);
     }
 
@@ -142,7 +141,7 @@ public class PetModelTests {
     @Test
     // Test get PetId
     public void setImageTest() throws SQLException {
-        Blob blob = new SerialBlob(new byte[1024]);
+        String blob = "";
 
         Pet pet = new Pet();
         pet.setImage(blob);
